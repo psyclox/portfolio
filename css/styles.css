@@ -2660,7 +2660,7 @@ section {
 
 .project-image {
     position: relative;
-    height: 220px;
+    height: 180px;
     background: var(--gradient-secondary);
     display: flex;
     align-items: center;
@@ -2670,7 +2670,7 @@ section {
 
 .project-card.featured .project-image {
     height: 100%;
-    min-height: 300px;
+    min-height: 250px;
 }
 
 .project-overlay {
@@ -2794,7 +2794,7 @@ section {
 }
 
 .project-content {
-    padding: var(--space-xl);
+    padding: 1.5rem;
 }
 
 .project-title {
@@ -4306,6 +4306,7 @@ html:not([data-theme="light"]) h2,
 html:not([data-theme="light"]) h3 {
     color: #ffffff !important;
 }
+
 /* ===========================================
    HACKER TEXT EFFECT
    =========================================== */
@@ -4441,4 +4442,3 @@ html:not([data-theme="light"]) h3 {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
     transform: translateY(-2px) !important;
 }
-

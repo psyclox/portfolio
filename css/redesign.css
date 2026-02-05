@@ -2,16 +2,20 @@
    LIVELY ARSENAL (SKILLS REDESIGN)
    =========================================== */
 .arsenal-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    flex-direction: row !important;
+    justify-content: stretch;
+    gap: 1.5rem;
     padding: 1rem 0;
     margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
 }
 
 .arsenal-card {
-    background: rgba(255, 255, 255, 0.03);
+    flex: 1 1 0 !important;
+    width: auto !important;
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 16px;
     padding: 2rem;
@@ -123,6 +127,20 @@
     transform: translateZ(15px);
     position: relative;
     z-index: 1;
+}
+
+.tools-card {
+    grid-column: span 1;
+}
+
+@media (max-width: 768px) {
+    .arsenal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tools-card {
+        grid-column: span 1;
+    }
 }
 
 .tool-icon-item {
@@ -492,14 +510,36 @@
 /* ===========================================
    CYBER RADAR ANIMATION (ABOUT SECTION)
    =========================================== */
+.about-innovative {
+    min-height: auto;
+    gap: 2rem;
+}
+
 .about-hologram {
     position: relative;
-    width: 320px;
-    height: 320px;
+    width: 250px;
+    height: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+}
+
+/* Outline Text - Hidden by default */
+.about-outline-text {
+    display: none;
+    font-size: 8rem;
+    font-weight: 900;
+    font-family: 'Orbitron', sans-serif;
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    left: -50px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .radar-container {
@@ -2540,4 +2580,46 @@ html:not([data-theme="light"]) .target-ring {
 .info-card .info-text {
     display: flex;
     align-items: center;
+}
+
+/* ===========================================
+   ABOUT ME REDESIGN (LIGHT THEME)
+   =========================================== */
+
+/* Override About Me for Light Theme */
+[data-theme="light"] .about-hologram {
+    display: none;
+}
+
+[data-theme="light"] .about-innovative {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 0;
+}
+
+[data-theme="light"] .about-outline-text {
+    display: block;
+    mix-blend-mode: overlay;
+    -webkit-text-stroke: 3px rgba(34, 34, 34, 0.15);
+    background: linear-gradient(to bottom, rgba(34, 34, 34, 0.4), rgba(34, 34, 34, 0.1));
+    -webkit-background-clip: text;
+    background-clip: text;
+    will-change: transform;
+    /* Optimize for scroll */
+}
+
+@keyframes textFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-40%) rotate(-90deg);
+        letter-spacing: 20px;
+    }
+
+    100% {
+        opacity: 0.6;
+        transform: translateY(-50%) rotate(-90deg);
+        letter-spacing: 5px;
+    }
 }
