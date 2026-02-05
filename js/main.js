@@ -692,7 +692,7 @@ function initTypewriter() {
 
     function type() {
         const currentRole = roles[roleIndex];
-        
+
         if (isDeleting) {
             typewriter.textContent = currentRole.substring(0, charIndex - 1);
             charIndex--;
@@ -858,6 +858,8 @@ function initScrollAnimations() {
         delay: 0.2,
         ease: 'power3.out'
     });
+
+
 
     // Skill categories
     gsap.utils.toArray('.skill-category').forEach((category, i) => {
