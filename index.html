@@ -242,7 +242,10 @@
                 </div>
 
                 <div class="about-innovative">
-                    <!-- Left: Animated Data Visualization -->
+                    <!-- Light Theme: Big Outline Text -->
+                    <div class="about-outline-text">PSYCLOX</div>
+
+                    <!-- Left: Animated Data Visualization (Dark Theme) -->
                     <div class="about-hologram">
                         <div class="radar-container">
                             <!-- Dual Theme Grid -->
@@ -568,77 +571,82 @@
                 </div>
 
                 <div class="projects-grid">
-                    <!-- SQLister Project -->
+                    <!-- ReconMate Project -->
                     <article class="project-card" data-tilt>
                         <div class="project-image">
                             <div class="project-overlay">
-                                <span class="project-category">Security Tool</span>
+                                <span class="project-category">OSINT Tool</span>
                             </div>
-                            <div class="project-visual sql-visual">
-                                <span class="code-text">SELECT * FROM targets WHERE vulnerable = true;</span>
+                            <div class="project-visual">
+                                <div class="terminal-window" style="width: 90%; background: #000;">
+                                    <div style="padding: 10px; font-family: monospace; color: #0f0; font-size: 0.8rem;">
+                                        > ./reconmate.py -t target.com<br>
+                                        [+] Enumerating Subdomains...<br>
+                                        [+] Scanning Ports...<br>
+                                        [+] Analyzing DNS Records...
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="project-content">
-                            <h3 class="project-title">SQLister</h3>
+                            <h3 class="project-title">ReconMate</h3>
                             <p class="project-description">
-                                An advanced SQL injection detection and exploitation tool. Automates the
-                                discovery of SQLi vulnerabilities with intelligent payload generation and
-                                database fingerprinting capabilities.
+                                A professional-grade, automated OSINT & Reconnaissance tool tailored for security
+                                analysts. Streamlines DNS enumeration, subdomain discovery, port scanning, and threat
+                                intelligence gathering into a single workflow.
                             </p>
                             <div class="project-tech">
                                 <span class="tech-tag">Python</span>
-                                <span class="tech-tag">SQLi</span>
+                                <span class="tech-tag">OSINT</span>
                                 <span class="tech-tag">Automation</span>
                             </div>
                             <div class="project-links">
-                                <a href="https://github.com/psyclox/sqlister" target="_blank" rel="noopener"
+                                <a href="https://github.com/psyclox/Reconmate" target="_blank" rel="noopener"
                                     class="project-link">
                                     <svg viewBox="0 0 24 24" fill="currentColor">
                                         <path
                                             d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                                     </svg>
-                                    <span>View on GitHub</span>
                                 </a>
                             </div>
                         </div>
                     </article>
 
-                    <!-- Encrypt Anything Project -->
+                    <!-- Netshark Project -->
                     <article class="project-card" data-tilt>
                         <div class="project-image">
                             <div class="project-overlay">
-                                <span class="project-category">Chrome Extension</span>
+                                <span class="project-category">Network Forensics</span>
                             </div>
-                            <div class="project-visual encrypt-visual">
-                                <span class="lock-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            <div class="project-visual">
+                                <div style="display: flex; gap: 5px; align-items: center;">
+                                    <svg viewBox="0 0 24 24" width="40" height="40" stroke="#00d2ff" fill="none"
+                                        stroke-width="2">
+                                        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                                     </svg>
-                                </span>
-                                <span class="encryption-text">AES-256 + PBKDF2</span>
+                                    <span style="font-family: monospace; color: #fff;">Traffic Analysis</span>
+                                </div>
                             </div>
                         </div>
                         <div class="project-content">
-                            <h3 class="project-title">Encrypt Anything</h3>
+                            <h3 class="project-title">Netshark</h3>
                             <p class="project-description">
-                                A Chrome extension that encrypts any text with military-grade AES-256 encryption
-                                using PBKDF2 SHA-256 key derivation combined with random salt for maximum security.
+                                A professional Network Traffic Anomaly Detector for researchers and admins. Analyzes
+                                PCAP files and captures live traffic to identify suspicious patterns and potential
+                                intrusions in real-time.
                             </p>
                             <div class="project-tech">
-                                <span class="tech-tag">JavaScript</span>
-                                <span class="tech-tag">AES-256</span>
-                                <span class="tech-tag">PBKDF2</span>
-                                <span class="tech-tag">Chrome API</span>
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">PCAP</span>
+                                <span class="tech-tag">Network Security</span>
                             </div>
                             <div class="project-links">
-                                <a href="https://github.com/psyclox/Encrypt-Anything" target="_blank" rel="noopener"
+                                <a href="https://github.com/psyclox/Netshark" target="_blank" rel="noopener"
                                     class="project-link">
                                     <svg viewBox="0 0 24 24" fill="currentColor">
                                         <path
                                             d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                                     </svg>
-                                    <span>View on GitHub</span>
                                 </a>
                             </div>
                         </div>
@@ -711,6 +719,80 @@
                                     </span>
                                     <span class="highlight-text">Team Collaboration</span>
                                 </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- SQLister Project (Restored) -->
+                    <article class="project-card" data-tilt>
+                        <div class="project-image">
+                            <div class="project-overlay">
+                                <span class="project-category">Security Tool</span>
+                            </div>
+                            <div class="project-visual sql-visual">
+                                <span class="code-text">SELECT * FROM targets WHERE vulnerable = true;</span>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">SQLister</h3>
+                            <p class="project-description">
+                                An advanced SQL injection detection and exploitation tool. Automates the
+                                discovery of SQLi vulnerabilities with intelligent payload generation and
+                                database fingerprinting capabilities.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">SQLi</span>
+                                <span class="tech-tag">Automation</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/psyclox/sqlister" target="_blank" rel="noopener"
+                                    class="project-link">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Encrypt Anything Project (Restored) -->
+                    <article class="project-card" data-tilt>
+                        <div class="project-image">
+                            <div class="project-overlay">
+                                <span class="project-category">Chrome Extension</span>
+                            </div>
+                            <div class="project-visual encrypt-visual">
+                                <span class="lock-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                    </svg>
+                                </span>
+                                <span class="encryption-text">AES-256 + PBKDF2</span>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title">Encrypt Anything</h3>
+                            <p class="project-description">
+                                A Chrome extension that encrypts any text with military-grade AES-256 encryption
+                                using PBKDF2 SHA-256 key derivation combined with random salt for maximum security.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">AES-256</span>
+                                <span class="tech-tag">PBKDF2</span>
+                                <span class="tech-tag">Chrome API</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/psyclox/Encrypt-Anything" target="_blank" rel="noopener"
+                                    class="project-link">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                                    </svg>
+                                </a>
                             </div>
                         </div>
                     </article>
@@ -986,18 +1068,7 @@
 
                 <div class="contact-content">
                     <div class="contact-info">
-                        <a href="tel:+919025523760" class="info-card" title="Call Karthikeyan">
-                            <div class="info-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path
-                                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                                </svg>
-                            </div>
-                            <div class="info-text">
-                                <span class="info-label">Phone</span>
-                                <span class="info-value">+91 9025523760</span>
-                            </div>
-                        </a>
+
 
                         <a href="https://linkedin.com/in/karthikeyaneh" target="_blank" rel="noopener" class="info-card"
                             title="LinkedIn - Karthikeyan">
