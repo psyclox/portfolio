@@ -83,7 +83,8 @@
         font-size: 15px;
     }
 
-    html, body {
+    html,
+    body {
         overflow-x: hidden;
     }
 
@@ -177,7 +178,13 @@
     }
 
     .hero-badge {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        margin: 0 auto var(--space-lg) auto !important;
         justify-content: center;
+        display: inline-flex;
+        width: auto;
     }
 
     .hero-subtitle {
@@ -302,12 +309,14 @@
         font-size: 1.25rem;
         flex-direction: column;
         gap: var(--space-xs);
-        flex-wrap: wrap; /* Allow wrapping */
+        flex-wrap: wrap;
+        /* Allow wrapping */
         word-break: break-word;
     }
 
     #typewriter {
-        white-space: normal; /* Allow wrapping */
+        white-space: normal;
+        /* Allow wrapping */
         display: inline-block;
     }
 
@@ -700,7 +709,7 @@
     .cube {
         animation-duration: 15s;
     }
-    
+
     /* Remove About Me Animations completely on mobile */
     .about-hologram,
     .radar-container,
@@ -725,5 +734,33 @@
     .cyber-grid,
     .scan-lines {
         display: none;
+    }
+}
+
+/* ========================================
+   MILESTONES HUD RESPONSIVENESS
+   ======================================== */
+@media (max-width: 768px) {
+    .milestone-hud-container {
+        gap: 1.5rem;
+        margin-top: 2rem;
+        padding: 1rem;
+    }
+
+    .hud-divider {
+        display: none;
+    }
+
+    .hud-item {
+        flex: 1 1 100%;
+        margin-bottom: 1.5rem;
+    }
+
+    .hud-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .hud-value {
+        font-size: 2.5rem;
     }
 }

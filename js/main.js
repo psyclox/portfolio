@@ -62,45 +62,164 @@ function initLoader() {
    MODERN THEME TOGGLE - SMOOTH CROSSFADE
    ======================================== */
 
+/* ========================================
+   MODERN THEME TOGGLE - GSAP SVG ANIMATION
+   ======================================== */
+
 function initThemeToggle() {
-    const themeToggle = document.getElementById('theme-toggle');
-    if (!themeToggle) return;
+    const toggleInput = document.getElementById('theme-toggle-input');
+    const themeBack = document.getElementById('theme-back');
+    const themeFront = document.getElementById('theme-front');
+    // Ensure GSAP targets exists
+    if (!toggleInput || !themeBack || !themeFront) return;
 
-    // Check for saved theme preference or system preference
+    // --- CONFIG ---
+    const duration = 0.5;
+    const scale = 60;
+
+    // Internal state to track "Visual" state, separate from Input Checked state
+    let isVisualDay = true;
+
+    // --- ANIMATION FUNCTIONS ---
+    // We use separate functions to guarantee the correct sequence without reverse-logic headaches
+
+    const animateToNight = () => {
+        // Goal: End with Night Mode (Back=Night, Front=Day Knob Right)
+        // Start: Day Mode (Back=Day, Front=Night Knob Left)
+
+        // 1. Ensure Start State
+        themeBack.setAttribute('href', '#day-scene');
+        themeFront.setAttribute('href', '#night-scene');
+        gsap.set('#switch-circle', { attr: { cx: 19, r: 10 }, opacity: 1 });
+
+        const tl = gsap.timeline();
+
+        tl
+            // Step 1: Expand Night "Hole" from Left -> Full
+            .to('#switch-circle', {
+                duration: duration,
+                attr: { r: scale, cx: 30 }, // Move towards center
+                ease: 'power2.inOut'
+            })
+            // Step 2: Swap Background to Night (Seamless because Front covers it)
+            .add(() => {
+                themeBack.setAttribute('href', '#night-scene');
+            })
+            // Step 3: Fade Out Front (Night) -> Reveal Back (Night)
+            .to('#theme-front', { duration: 0.1, opacity: 0 })
+
+            // Step 4: Reset Front to Day Knob (Invisible)
+            .add(() => {
+                themeFront.setAttribute('href', '#day-scene');
+                gsap.set('#switch-circle', { attr: { cx: 41, r: 0 } }); // Start small at Right
+            })
+
+            // Step 5: Pop In Day Knob
+            .to('#theme-front', { duration: 0.05, opacity: 1 }) // Make visible (r=0)
+            .to('#switch-circle', {
+                duration: 0.4,
+                attr: { r: 10 },
+                ease: 'back.out(1.7)' // Nice pop effect
+            });
+
+        isVisualDay = false;
+    };
+
+    const animateToDay = () => {
+        // Goal: End with Day Mode (Back=Day, Front=Night Knob Left)
+        // Start: Night Mode (Back=Night, Front=Day Knob Right)
+
+        // 1. Ensure Start State
+        themeBack.setAttribute('href', '#night-scene');
+        themeFront.setAttribute('href', '#day-scene');
+        gsap.set('#switch-circle', { attr: { cx: 41, r: 10 }, opacity: 1 });
+
+        const tl = gsap.timeline();
+
+        tl
+            // Step 1: Expand Day "Hole" from Right -> Full
+            .to('#switch-circle', {
+                duration: duration,
+                attr: { r: scale, cx: 30 },
+                ease: 'power2.inOut'
+            })
+            // Step 2: Swap Background to Day (Seamless)
+            .add(() => {
+                themeBack.setAttribute('href', '#day-scene');
+            })
+            // Step 3: Fade Out Front (Day) -> Reveal Back (Day)
+            .to('#theme-front', { duration: 0.1, opacity: 0 })
+
+            // Step 4: Reset Front to Night Knob (Invisible)
+            .add(() => {
+                themeFront.setAttribute('href', '#night-scene');
+                gsap.set('#switch-circle', { attr: { cx: 19, r: 0 } }); // Start small at Left
+            })
+
+            // Step 5: Pop In Night Knob
+            .to('#theme-front', { duration: 0.05, opacity: 1 })
+            .to('#switch-circle', {
+                duration: 0.4,
+                attr: { r: 10 },
+                ease: 'back.out(1.7)'
+            });
+
+        isVisualDay = true;
+    };
+
+    // --- INITIALIZATION ---
     const savedTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // Default to Dark if no saved preference, ignoring system preference initially if desired
+    // Or strictly: If saved, use saved. If not saved, force Dark.
+    let startAsDark = true;
 
-    // Set initial theme (dark is default)
     if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? '' : savedTheme);
-    } else if (!systemPrefersDark) {
-        document.documentElement.setAttribute('data-theme', 'light');
+        startAsDark = savedTheme === 'dark';
+    } else {
+        // No saved theme -> Default to Dark
+        startAsDark = true;
     }
 
-    // Toggle theme on button click with smooth transition
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    if (startAsDark) {
+        // Set visual state to Night
+        themeBack.setAttribute('href', '#night-scene');
+        themeFront.setAttribute('href', '#day-scene');
+        gsap.set('#switch-circle', { attr: { cx: 41, r: 10 } });
+        toggleInput.checked = false;
+        document.documentElement.setAttribute('data-theme', ''); // Dark is default/empty
+        isVisualDay = false;
+    } else {
+        // Set visual state to Day
+        themeBack.setAttribute('href', '#day-scene');
+        themeFront.setAttribute('href', '#night-scene');
+        gsap.set('#switch-circle', { attr: { cx: 19, r: 10 } });
+        toggleInput.checked = true;
+        document.documentElement.setAttribute('data-theme', 'light');
+        isVisualDay = true;
+    }
 
-        // Add smooth transition class
-        document.body.classList.add('theme-switching');
+    // --- EVENT LISTENER ---
+    toggleInput.addEventListener('change', () => {
+        const isDayNow = toggleInput.checked;
 
-        // Apply theme change
-        document.documentElement.setAttribute('data-theme', newTheme === 'dark' ? '' : newTheme);
-        localStorage.setItem('theme', newTheme);
-
-        // Remove transition class after animation
-        setTimeout(() => {
-            document.body.classList.remove('theme-switching');
-        }, 600);
-    });
-
-    // Listen for system theme changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        if (!localStorage.getItem('theme')) {
-            document.documentElement.setAttribute('data-theme', e.matches ? '' : 'light');
+        if (isDayNow) {
+            // Turning to Day
+            if (!isVisualDay) animateToDay();
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+        } else {
+            // Turning to Night
+            if (isVisualDay) animateToNight();
+            document.documentElement.setAttribute('data-theme', '');
+            localStorage.setItem('theme', 'dark');
         }
     });
+
+    // Background looping animations
+    gsap.to('.clouds-big', { duration: 15, repeat: -1, x: -74, ease: 'linear' });
+    gsap.to('.clouds-medium', { duration: 20, repeat: -1, x: -65, ease: 'linear' });
+    gsap.to('.clouds-small', { duration: 25, repeat: -1, x: -71, ease: 'linear' });
+    gsap.to('.star', { duration: 'random(0.4, 1.5)', repeat: -1, yoyo: true, opacity: 'random(0.2, 0.5)' });
 }
 
 /* ========================================
@@ -492,9 +611,10 @@ function initCanvasBackground() {
     });
 
     // Reinit layers when theme changes
-    const themeToggle = document.getElementById('theme-toggle');
+    // Reinit layers when theme changes
+    const themeToggle = document.getElementById('theme-toggle-input');
     if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
+        themeToggle.addEventListener('change', () => {
             setTimeout(() => {
                 resizeCanvas(); // Full re-init ensures clean state
             }, 100);
@@ -859,6 +979,32 @@ function initScrollAnimations() {
         ease: 'power3.out'
     });
 
+    // About Section Parallax Text Illusion
+    const parallaxTimeline = gsap.timeline({
+        scrollTrigger: {
+            trigger: "#about",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1
+        }
+    });
+
+    parallaxTimeline
+        .fromTo(".layer-cyan", { xPercent: 10 }, { xPercent: -60, ease: "none" }, 0)
+        .fromTo(".layer-main", { xPercent: 5 }, { xPercent: -40, ease: "none" }, 0);
+
+    // Existing About Animations
+    gsap.from('.about-hologram', {
+        scrollTrigger: {
+            trigger: '.about',
+            start: 'top 70%'
+        },
+        x: -50,
+        opacity: 0,
+        duration: 1,
+        delay: 0.2,
+        ease: 'power3.out'
+    });
 
 
     // Skill categories
@@ -1059,95 +1205,100 @@ function animateCounter(element, target) {
    CONTACT FORM
    ======================================== */
 
+
+
 function initContactForm() {
     const form = document.getElementById('contact-form');
     if (!form) return;
 
-    // Initialize EmailJS (User needs to add their own keys)
-    // Sign up at https://www.emailjs.com/ to get your keys
-    const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY'; // Replace with your key
-    const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID'; // Replace with your service ID
-    const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'; // Replace with your template ID
-
-    // Initialize EmailJS if available
-    if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
-        emailjs.init(EMAILJS_PUBLIC_KEY);
-    }
-
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const submitBtn = form.querySelector('.btn-submit');
-        const originalText = submitBtn.innerHTML;
+        // New cyber button elements
+        const submitBtn = form.querySelector('.cyber-btn');
+        const btnText = submitBtn.querySelector('.btn-glitch-text');
+        const btnProgress = submitBtn.querySelector('.btn-progress');
 
-        // Show loading state
-        submitBtn.innerHTML = '<span>Sending...</span>';
+        const originalText = btnText.textContent;
+
+        // Visual Feedback - Loading
+        btnText.textContent = 'ENCRYPTING_PAYLOAD...';
+        submitBtn.style.borderColor = '#fbbf24'; // Warning yellow
+        btnText.style.boxShadow = '0 0 15px rgba(251, 191, 36, 0.3)';
+        btnText.style.color = '#fbbf24';
         submitBtn.disabled = true;
 
-        // Collect form data
+        // Progress bar simulation
+        btnProgress.style.width = '30%';
+        setTimeout(() => btnProgress.style.width = '70%', 500);
+        setTimeout(() => btnProgress.style.width = '100%', 1000);
+
+        // Get form data
         const formData = new FormData(form);
-        const data = Object.fromEntries(formData);
+        const data = Object.fromEntries(formData.entries());
 
-        // Try EmailJS first, fallback to mailto
         try {
-            if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
-                // Use EmailJS
-                await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-                    from_name: data.name,
-                    from_email: data.email,
-                    subject: data.subject || 'Contact Form Submission',
-                    message: data.message
-                });
+            // Simulate network delay
+            await new Promise(resolve => setTimeout(resolve, 1500));
 
-                // Success
-                submitBtn.innerHTML = '<span>Message Sent! ✓</span>';
-                submitBtn.style.background = 'linear-gradient(135deg, #27ca40 0%, #1fa340 100%)';
+            // Determine if EmailJS is configured (placeholder check)
+            const emailJsConfigured = typeof emailjs !== 'undefined' && false; // Set to true when keys added
+
+            if (emailJsConfigured) {
+                // EmailJS logic would go here
+
+                // Success State
+                btnText.textContent = 'TRANSMISSION_COMPLETE';
+                submitBtn.style.borderColor = '#4ade80'; // Success green
+                btnText.style.color = '#4ade80';
+                submitBtn.style.boxShadow = '0 0 20px rgba(74, 222, 128, 0.4)';
                 form.reset();
             } else {
                 // Fallback to mailto
-                const subject = encodeURIComponent(data.subject || 'Contact from Portfolio');
-                const body = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`);
+                const subject = encodeURIComponent(data.subject || 'Secure Transmission from Portfolio');
+                const body = encodeURIComponent(`IDENTITY: ${data.name}\nREPLY_FREQUENCY: ${data.email}\n\nDATA_PAYLOAD:\n${data.message}`);
                 window.location.href = `mailto:karthikeyaneh@gmail.com?subject=${subject}&body=${body}`;
 
-                submitBtn.innerHTML = '<span>Opening Email Client...</span>';
-                submitBtn.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                btnText.textContent = 'PROTOCOL_REDIRECTED...';
+                submitBtn.style.borderColor = '#667eea';
+                btnText.style.color = '#667eea';
             }
 
             // Reset button after delay
             setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.style.background = '';
+                btnText.textContent = originalText;
+                submitBtn.style.borderColor = '';
+                submitBtn.style.boxShadow = '';
+                btnText.style.color = '';
+                btnProgress.style.width = '0';
                 submitBtn.disabled = false;
             }, 3000);
 
         } catch (error) {
-            console.error('Form submission error:', error);
+            console.error('Transmission error:', error);
             // Error - fallback to mailto
-            const subject = encodeURIComponent(data.subject || 'Contact from Portfolio');
-            const body = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`);
+            const subject = encodeURIComponent(data.subject || 'Secure Transmission from Portfolio');
+            const body = encodeURIComponent(`IDENTITY: ${data.name}\nREPLY_FREQUENCY: ${data.email}\n\nDATA_PAYLOAD:\n${data.message}`);
             window.location.href = `mailto:karthikeyaneh@gmail.com?subject=${subject}&body=${body}`;
 
-            submitBtn.innerHTML = '<span>Opening Email Client...</span>';
+            btnText.textContent = 'PROTOCOL_REDIRECTED...';
 
             setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.style.background = '';
+                btnText.textContent = originalText;
+                submitBtn.style.borderColor = '';
+                btnText.style.color = '';
+                btnProgress.style.width = '0';
                 submitBtn.disabled = false;
             }, 3000);
         }
     });
 
-    // Input animations
-    const inputs = form.querySelectorAll('.form-input, .form-textarea');
+    // Input animations - Cyber Focus
+    const inputs = form.querySelectorAll('.cyber-input, .cyber-textarea');
     inputs.forEach(input => {
+        // Optional: Add sound effect on focus?
         input.addEventListener('focus', () => {
-            input.parentElement.classList.add('focused');
-        });
-
-        input.addEventListener('blur', () => {
-            if (!input.value) {
-                input.parentElement.classList.remove('focused');
-            }
+            // Placeholder for future sound effect
         });
     });
 }
@@ -1296,3 +1447,442 @@ window.addEventListener('load', () => {
 console.log('%c🔐 Psyclox Portfolio', 'font-size: 24px; font-weight: bold; color: #ff6b6b;');
 console.log('%cWelcome, fellow hacker! 👋', 'font-size: 14px; color: #667eea;');
 console.log('%cInterested in security? Let\'s connect: linkedin.com/in/karthikeyaneh', 'font-size: 12px; color: #888;');
+
+/* ========================================
+   FIX: OSCP LOCKED STYLE FORCE OVERRIDE
+   ======================================== */
+function fixOSCPStyle() {
+    // Small delay to ensure DOM update
+    setTimeout(() => {
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        const oscpCards = document.querySelectorAll('.locked-oscp');
+
+        oscpCards.forEach(card => {
+            if (isLight) {
+                // Force Light Theme Styles
+                card.style.setProperty('background', 'linear-gradient(145deg, rgba(255, 77, 77, 0.05), transparent)', 'important');
+                card.style.setProperty('border', '1px dashed rgba(255, 77, 77, 0.4)', 'important');
+                card.style.setProperty('box-shadow', 'none', 'important');
+                card.style.setProperty('cursor', 'not-allowed', 'important');
+                card.style.setProperty('opacity', '1', 'important');
+
+                // Fix Children
+                const icon = card.querySelector('.cert-icon-small');
+                if (icon) {
+                    icon.style.setProperty('background', 'rgba(255, 77, 77, 0.1)', 'important');
+                    icon.style.setProperty('color', '#ff4d4d', 'important');
+                    icon.style.setProperty('border', '1px solid rgba(255, 77, 77, 0.2)', 'important');
+                }
+
+                const title = card.querySelector('h4');
+                if (title) title.style.setProperty('color', 'rgba(255, 77, 77, 0.8)', 'important');
+
+                const status = card.querySelector('.status-locked');
+                if (status) {
+                    status.style.setProperty('color', '#ff4d4d', 'important');
+                    status.style.setProperty('text-shadow', 'none', 'important');
+                }
+
+            } else {
+                // Reset for Dark Mode (let CSS handle it)
+                card.style.removeProperty('background');
+                card.style.removeProperty('border');
+                card.style.removeProperty('box-shadow');
+                card.style.removeProperty('cursor');
+                card.style.removeProperty('opacity');
+
+                const icon = card.querySelector('.cert-icon-small');
+                if (icon) {
+                    icon.style.removeProperty('background');
+                    icon.style.removeProperty('color');
+                    icon.style.removeProperty('border');
+                }
+
+                const title = card.querySelector('h4');
+                if (title) title.style.removeProperty('color');
+
+                const status = card.querySelector('.status-locked');
+                if (status) {
+                    status.style.removeProperty('color');
+                    status.style.removeProperty('text-shadow');
+                }
+            }
+        });
+    }, 50);
+}
+
+// Run on load and theme change
+document.addEventListener('DOMContentLoaded', fixOSCPStyle);
+window.addEventListener('load', fixOSCPStyle);
+
+// Attach to theme toggle
+const toggleBtn = document.getElementById('theme-toggle');
+if (toggleBtn) {
+    toggleBtn.addEventListener('click', fixOSCPStyle);
+}
+
+// MutationObserver to watch for attribute changes on html
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+            fixOSCPStyle();
+        }
+    });
+});
+
+observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme']
+});
+
+// --- TECH FOOTER: CLOCKS & DATA ---
+function initFooterClocks() {
+    const localEl = document.getElementById('clock-local');
+    const utcEl = document.getElementById('clock-utc');
+    const missionEl = document.getElementById('clock-mission');
+    const latencyEl = document.getElementById('net-latency');
+    const tempEl = document.getElementById('core-temp');
+
+    function updateTime() {
+        const now = new Date();
+
+        // Local Time
+        if (localEl) localEl.textContent = now.toLocaleTimeString('en-US', { hour12: false });
+
+        // UTC Time
+        if (utcEl) utcEl.textContent = now.toISOString().substr(11, 8) + ' UTC';
+
+        // Mission Time
+        if (missionEl) {
+            const start = new Date(now.getFullYear(), 0, 1);
+            const diff = now - start;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const mins = Math.floor((diff / (1000 * 60)) % 60);
+            const secs = Math.floor((diff / 1000) % 60);
+            missionEl.textContent = `T+${days}D ${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+    }
+
+    // Fluctuating Data (Random updates)
+    function updateData() {
+        if (latencyEl) {
+            const lat = Math.floor(Math.random() * 40) + 10; // 10-50ms
+            latencyEl.textContent = `${lat}ms`;
+            // Color code
+            latencyEl.style.color = lat > 40 ? '#ff3333' : 'var(--accent-primary)';
+        }
+        if (tempEl) {
+            const temp = (Math.random() * 5 + 40).toFixed(1); // 40.0 - 45.0 C
+            tempEl.textContent = `${temp}°C`;
+        }
+    }
+
+    setInterval(updateTime, 1000);
+    setInterval(updateData, 2000); // 2s update for data
+    updateTime();
+    updateData();
+}
+
+// --- TECH FOOTER: SYSTEM LOG ---
+// --- SYSTEM LOG (Kali Linux Terminal Simulation) ---
+function initSystemLog() {
+    // Priority: Target the specific console ID first
+    const targetElement = document.getElementById('system-log-main') || document.querySelector('.system-log');
+
+    if (!targetElement) {
+        console.warn("System Log Container NOT FOUND");
+        return;
+    }
+
+    // --- LOGS LOGIC ---
+    const messages = [
+        "ESTABLISHING_SECURE_UPLINK...",
+        "VERIFYING_ENCRYPTION_KEYS (AES-256)",
+        "HANDSHAKE_COMPLETED: HOST_VERIFIED",
+        "MONITORING_NETWORK_TRAFFIC...",
+        "DETECTED_INBOUND_PACKET: PORT_443",
+        "FIREWALL_STATUS: ACTIVE [RULES_V4.2]",
+        "SCANNING_FOR_VULNERABILITIES...",
+        "THREAT_INTELLIGENCE_FEED: UPDATED",
+        "ZERO_TRUST_POLICY: ENFORCED",
+        "ANALYZING_HEURISTICS...",
+        "SYSTEM_INTEGRITY: 100%",
+        "LATENCY_OPTIMIZATION: ENGAGED",
+        "PACKET_LOSS: 0.00%",
+        "RESOURCE_ALLOCATION: NOMINAL",
+        "AUTHENTICATING_USER_SESSION...",
+        "ACCESS_GRANTED: CLEARANCE_LEVEL_5",
+        "EXECUTING_RUNTIME_DIAGNOSTICS...",
+        "IDS/IPS: MONITORING_ACTIVE"
+    ];
+
+    function addLog() {
+        const msg = messages[Math.floor(Math.random() * messages.length)];
+        const date = new Date();
+        const time = date.toLocaleTimeString('en-US', { hour12: false });
+
+        const entry = document.createElement('div');
+        entry.className = 'log-entry';
+        // HTML content for colored timestamp
+        entry.innerHTML = `<span style="opacity:0.7; font-size: 0.8em; margin-right: 8px;">[${time}]</span>${msg}`;
+
+        targetElement.appendChild(entry); // Append to bottom
+        targetElement.scrollTop = targetElement.scrollHeight; // Auto scroll
+
+        // Keep buffer size managed
+        if (targetElement.children.length > 20) {
+            targetElement.firstElementChild.remove();
+        }
+    }
+
+    // Initial fill
+    addLog();
+    addLog();
+    addLog();
+    setInterval(addLog, 1500);
+
+    // --- NETWORK INFO LOGIC (Simulated) ---
+    function updateNetworkStatus() {
+        const ipEl = document.getElementById('local-ip');
+
+        // Set static IP once
+        if (ipEl && ipEl.innerText === "::1") {
+            ipEl.innerText = `192.168.1.${Math.floor(Math.random() * 255)}`;
+        }
+    }
+
+    setInterval(updateNetworkStatus, 3000);
+    updateNetworkStatus();
+}
+
+// --- TECH FOOTER: PARTICLE SYSTEM ---
+function initParticleSystem() {
+    const canvas = document.getElementById('footer-particles');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+    const particleCount = 80; // Increased density
+    const connectionDistance = 120;
+    const mouseDistance = 150; // Interaction radius
+
+    // Mouse tracking
+    let mouse = { x: null, y: null };
+
+    // Add event listener to the FOOTER, not just window, to get correct relative coords if needed, 
+    // but window is easier for continuous tracking.
+    window.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        // Only track if near/over footer
+        if (e.clientY > rect.top - 100) {
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+        } else {
+            mouse.x = null;
+            mouse.y = null;
+        }
+    });
+
+    window.addEventListener('mouseleave', () => {
+        mouse.x = null;
+        mouse.y = null;
+    });
+
+    // Resize handling
+    function resize() {
+        const parent = canvas.parentElement;
+        if (parent) {
+            canvas.width = parent.offsetWidth;
+            canvas.height = parent.offsetHeight;
+            width = canvas.width;
+            height = canvas.height;
+        }
+    }
+    window.addEventListener('resize', resize);
+    setTimeout(resize, 100);
+    resize();
+
+    // Particle Class
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.vx = (Math.random() - 0.5) * 1; // Faster drift
+            this.vy = (Math.random() - 0.5) * 1; // Faster drift
+            this.size = Math.random() * 2 + 1;
+            this.baseX = this.x;
+            this.baseY = this.y;
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+
+            // Mouse interaction
+            if (mouse.x != null) {
+                const dx = mouse.x - this.x;
+                const dy = mouse.y - this.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < mouseDistance) {
+                    // Move away from mouse (repel) - or attract? 
+                    // Let's create an "active connection" effect instead of heavy movement
+                    // Actually slight attraction looks 'magnetic'
+                    const forceDirectionX = dx / distance;
+                    const forceDirectionY = dy / distance;
+                    const force = (mouseDistance - distance) / mouseDistance;
+                    const directionX = forceDirectionX * force * 2;
+                    const directionY = forceDirectionY * force * 2;
+
+                    this.x += directionX;
+                    this.y += directionY;
+                }
+            }
+
+            // Bounce off edges
+            if (this.x < 0 || this.x > width) this.vx *= -1;
+            if (this.y < 0 || this.y > height) this.vy *= -1;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--accent-primary') || '#00ff00';
+            ctx.fill();
+        }
+    }
+
+    // Init Particles
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+    }
+
+    // Animation Loop
+    function animate() {
+        ctx.clearRect(0, 0, width, height);
+
+        const accent = getComputedStyle(document.body).getPropertyValue('--accent-primary').trim() || '#00ff00';
+
+        particles.forEach((p, index) => {
+            p.update();
+            p.draw();
+
+            // Connect to Mouse
+            if (mouse.x != null) {
+                const dx = mouse.x - p.x;
+                const dy = mouse.y - p.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < mouseDistance) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = accent;
+                    ctx.lineWidth = 1;
+                    ctx.globalAlpha = 1 - (dist / mouseDistance);
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.stroke();
+                    ctx.globalAlpha = 1;
+                }
+            }
+
+            // Connect to other particles
+            for (let j = index + 1; j < particles.length; j++) {
+                const p2 = particles[j];
+                const dx = p.x - p2.x;
+                const dy = p.y - p2.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < connectionDistance) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = accent;
+                    ctx.globalAlpha = 1 - (dist / connectionDistance);
+                    ctx.lineWidth = 0.5;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                    ctx.globalAlpha = 1;
+                }
+            }
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+}
+
+// --- EXPERIENCE TYPEWRITER ---
+function initExperienceTypewriter() {
+    const listItems = document.querySelectorAll('.timeline-responsibilities li');
+    if (listItems.length === 0) return;
+
+    // Prepare items: store text and clear content
+    listItems.forEach(item => {
+        item.setAttribute('data-text', item.textContent.trim());
+        item.textContent = '';
+        item.style.visibility = 'hidden';
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                observer.unobserve(entry.target);
+                animateList(listItems);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    // Observe the parent container
+    const parent = document.querySelector('.timeline-responsibilities');
+    if (parent) observer.observe(parent);
+
+    async function animateList(items) {
+        for (const item of items) {
+            item.style.visibility = 'visible';
+            item.classList.add('typing-cursor');
+            const text = item.getAttribute('data-text');
+
+            await typeText(item, text);
+
+            item.classList.remove('typing-cursor'); // Remove cursor after done
+        }
+    }
+
+    function typeText(element, text) {
+        return new Promise(resolve => {
+            let i = 0;
+            const speed = 20; // Typing speed in ms (faster is better for lists)
+
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    resolve();
+                }
+            }
+            type();
+        });
+    }
+}
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', () => {
+    initThemeToggle();
+    initFooterClocks();
+    initSystemLog();
+    initParticleSystem();
+    initExperienceTypewriter();
+
+    // Ensure VanillaTilt is initialized if not already
+    if (typeof VanillaTilt !== 'undefined') {
+        VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+            max: 15,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.5
+        });
+    }
+});

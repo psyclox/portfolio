@@ -103,8 +103,18 @@
 }
 
 /* Apply theme to body - CRITICAL */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* HTML & Body Basics */
 html {
     background-color: var(--dark-bg);
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+    width: 100%;
 }
 
 body {
@@ -112,6 +122,9 @@ body {
     color: var(--text-dark) !important;
     position: relative;
     z-index: 1;
+    overflow-x: hidden;
+    /* Double safety */
+    width: 100%;
 }
 
 /* ALL sections use theme variables - WITH !important */
@@ -2660,7 +2673,7 @@ section {
 
 .project-image {
     position: relative;
-    height: 220px;
+    height: 180px;
     background: var(--gradient-secondary);
     display: flex;
     align-items: center;
@@ -2670,7 +2683,7 @@ section {
 
 .project-card.featured .project-image {
     height: 100%;
-    min-height: 300px;
+    min-height: 250px;
 }
 
 .project-overlay {
@@ -2794,7 +2807,7 @@ section {
 }
 
 .project-content {
-    padding: var(--space-xl);
+    padding: 1.5rem;
 }
 
 .project-title {
@@ -3954,23 +3967,14 @@ html:not([data-theme="light"]) .education-highlights .highlight:hover {
         0 0 80px rgba(102, 126, 234, 0.2) !important;
 }
 
-/* Rainbow edge glow on hover */
+/* Rainbow edge glow on hover - REMOVED FOR CLEAN LOOK */
 [data-theme="light"] .cert-card::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: inherit;
-    background: linear-gradient(45deg,
-            #ff6b6b, #feca57, #48dbfb, #667eea, #a55eea, #ff6b6b);
-    background-size: 300% 300%;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    animation: rainbowShift 3s linear infinite;
+    content: none;
+    display: none;
 }
 
 [data-theme="light"] .cert-card:hover::before {
-    opacity: 1;
+    opacity: 0;
 }
 
 @keyframes rainbowShift {
@@ -4306,6 +4310,7 @@ html:not([data-theme="light"]) h2,
 html:not([data-theme="light"]) h3 {
     color: #ffffff !important;
 }
+
 /* ===========================================
    HACKER TEXT EFFECT
    =========================================== */
@@ -4441,4 +4446,3 @@ html:not([data-theme="light"]) h3 {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
     transform: translateY(-2px) !important;
 }
-
