@@ -78,29 +78,14 @@
     --z-overlay: 300;
     --z-modal: 400;
     --z-cursor: 500;
+    /* Light Theme - Removed (Fallback values) */
+    --light-bg: #0a0a0a;
+    --light-bg-secondary: #111111;
+    --light-surface: #1a1a1a;
+    --light-accent: #ff6b6b;
 }
 
-/* Light Theme Variables - COMPLETE OVERRIDE */
-[data-theme="light"] {
-    --dark-bg: #f8f9fc !important;
-    --dark-bg-secondary: #eef1f6 !important;
-    --dark-surface: #ffffff !important;
-    --text-dark: #1a1a2e !important;
-    --text-dark-secondary: #4a4a5a !important;
-    --text-dark-muted: #7a7a8a !important;
-    --accent-primary: #667eea !important;
-    --accent-secondary: #764ba2 !important;
-    --accent-glow: rgba(102, 126, 234, 0.4) !important;
-    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-    --gradient-text: linear-gradient(90deg, #667eea, #764ba2, #667eea) !important;
-    --shadow-glow: 0 0 40px rgba(102, 126, 234, 0.25) !important;
-    --light-bg: #ffffff;
-    --light-bg-secondary: #f0f2f5;
-    --light-surface: #e9ecef;
-    --text-light: #1a1a2e !important;
-    --text-light-secondary: #4a4a5a !important;
-    --text-light-muted: #7a7a8a !important;
-}
+/* Light Theme Variables REMOVED - Defaulting to Dark */
 
 /* Apply theme to body - CRITICAL */
 * {
@@ -2649,7 +2634,9 @@ section {
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-2xl);
+    gap: 3rem;
+    padding: 0 2rem;
+    /* Add horizontal padding to container to visually reduce width */
 }
 
 .project-card {
@@ -2658,6 +2645,7 @@ section {
     overflow: hidden;
     transition: var(--transition-base);
     border: 1px solid rgba(0, 0, 0, 0.05);
+    /* Scale removed to fix alignment/hover issues */
 }
 
 .project-card:hover {
@@ -2693,8 +2681,8 @@ section {
 }
 
 .project-category {
-    background: rgba(0, 0, 0, 0.5);
-    color: #fff;
+    background: rgba(0, 0, 0, 0.6);
+    color: #ffffff;
     padding: var(--space-xs) var(--space-md);
     border-radius: var(--radius-full);
     font-size: 0.75rem;
@@ -2816,7 +2804,7 @@ section {
 }
 
 .project-description {
-    color: var(--text-light-secondary);
+    color: rgba(255, 255, 255, 0.7);
     margin-bottom: var(--space-lg);
     line-height: 1.7;
 }
@@ -2829,12 +2817,13 @@ section {
 }
 
 .tech-tag {
-    background: var(--light-surface);
-    color: var(--text-light);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-dark);
     padding: var(--space-xs) var(--space-md);
     border-radius: var(--radius-full);
     font-size: 0.75rem;
     font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .project-links {

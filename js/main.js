@@ -67,155 +67,16 @@ function initLoader() {
    ======================================== */
 
 function initThemeToggle() {
-    const toggleInput = document.getElementById('theme-toggle-input');
+    // Theme toggle removed - Permanent Dark Theme
     const themeBack = document.getElementById('theme-back');
     const themeFront = document.getElementById('theme-front');
-    // Ensure GSAP targets exists
-    if (!toggleInput || !themeBack || !themeFront) return;
+    if (themeBack) themeBack.setAttribute('href', '#night-scene');
+    if (themeFront) themeFront.setAttribute('href', '#day-scene');
 
-    // --- CONFIG ---
-    const duration = 0.5;
-    const scale = 60;
+    document.documentElement.setAttribute('data-theme', '');
+    localStorage.setItem('theme', 'dark');
 
-    // Internal state to track "Visual" state, separate from Input Checked state
-    let isVisualDay = true;
-
-    // --- ANIMATION FUNCTIONS ---
-    // We use separate functions to guarantee the correct sequence without reverse-logic headaches
-
-    const animateToNight = () => {
-        // Goal: End with Night Mode (Back=Night, Front=Day Knob Right)
-        // Start: Day Mode (Back=Day, Front=Night Knob Left)
-
-        // 1. Ensure Start State
-        themeBack.setAttribute('href', '#day-scene');
-        themeFront.setAttribute('href', '#night-scene');
-        gsap.set('#switch-circle', { attr: { cx: 19, r: 10 }, opacity: 1 });
-
-        const tl = gsap.timeline();
-
-        tl
-            // Step 1: Expand Night "Hole" from Left -> Full
-            .to('#switch-circle', {
-                duration: duration,
-                attr: { r: scale, cx: 30 }, // Move towards center
-                ease: 'power2.inOut'
-            })
-            // Step 2: Swap Background to Night (Seamless because Front covers it)
-            .add(() => {
-                themeBack.setAttribute('href', '#night-scene');
-            })
-            // Step 3: Fade Out Front (Night) -> Reveal Back (Night)
-            .to('#theme-front', { duration: 0.1, opacity: 0 })
-
-            // Step 4: Reset Front to Day Knob (Invisible)
-            .add(() => {
-                themeFront.setAttribute('href', '#day-scene');
-                gsap.set('#switch-circle', { attr: { cx: 41, r: 0 } }); // Start small at Right
-            })
-
-            // Step 5: Pop In Day Knob
-            .to('#theme-front', { duration: 0.05, opacity: 1 }) // Make visible (r=0)
-            .to('#switch-circle', {
-                duration: 0.4,
-                attr: { r: 10 },
-                ease: 'back.out(1.7)' // Nice pop effect
-            });
-
-        isVisualDay = false;
-    };
-
-    const animateToDay = () => {
-        // Goal: End with Day Mode (Back=Day, Front=Night Knob Left)
-        // Start: Night Mode (Back=Night, Front=Day Knob Right)
-
-        // 1. Ensure Start State
-        themeBack.setAttribute('href', '#night-scene');
-        themeFront.setAttribute('href', '#day-scene');
-        gsap.set('#switch-circle', { attr: { cx: 41, r: 10 }, opacity: 1 });
-
-        const tl = gsap.timeline();
-
-        tl
-            // Step 1: Expand Day "Hole" from Right -> Full
-            .to('#switch-circle', {
-                duration: duration,
-                attr: { r: scale, cx: 30 },
-                ease: 'power2.inOut'
-            })
-            // Step 2: Swap Background to Day (Seamless)
-            .add(() => {
-                themeBack.setAttribute('href', '#day-scene');
-            })
-            // Step 3: Fade Out Front (Day) -> Reveal Back (Day)
-            .to('#theme-front', { duration: 0.1, opacity: 0 })
-
-            // Step 4: Reset Front to Night Knob (Invisible)
-            .add(() => {
-                themeFront.setAttribute('href', '#night-scene');
-                gsap.set('#switch-circle', { attr: { cx: 19, r: 0 } }); // Start small at Left
-            })
-
-            // Step 5: Pop In Night Knob
-            .to('#theme-front', { duration: 0.05, opacity: 1 })
-            .to('#switch-circle', {
-                duration: 0.4,
-                attr: { r: 10 },
-                ease: 'back.out(1.7)'
-            });
-
-        isVisualDay = true;
-    };
-
-    // --- INITIALIZATION ---
-    const savedTheme = localStorage.getItem('theme');
-    // Default to Dark if no saved preference, ignoring system preference initially if desired
-    // Or strictly: If saved, use saved. If not saved, force Dark.
-    let startAsDark = true;
-
-    if (savedTheme) {
-        startAsDark = savedTheme === 'dark';
-    } else {
-        // No saved theme -> Default to Dark
-        startAsDark = true;
-    }
-
-    if (startAsDark) {
-        // Set visual state to Night
-        themeBack.setAttribute('href', '#night-scene');
-        themeFront.setAttribute('href', '#day-scene');
-        gsap.set('#switch-circle', { attr: { cx: 41, r: 10 } });
-        toggleInput.checked = false;
-        document.documentElement.setAttribute('data-theme', ''); // Dark is default/empty
-        isVisualDay = false;
-    } else {
-        // Set visual state to Day
-        themeBack.setAttribute('href', '#day-scene');
-        themeFront.setAttribute('href', '#night-scene');
-        gsap.set('#switch-circle', { attr: { cx: 19, r: 10 } });
-        toggleInput.checked = true;
-        document.documentElement.setAttribute('data-theme', 'light');
-        isVisualDay = true;
-    }
-
-    // --- EVENT LISTENER ---
-    toggleInput.addEventListener('change', () => {
-        const isDayNow = toggleInput.checked;
-
-        if (isDayNow) {
-            // Turning to Day
-            if (!isVisualDay) animateToDay();
-            document.documentElement.setAttribute('data-theme', 'light');
-            localStorage.setItem('theme', 'light');
-        } else {
-            // Turning to Night
-            if (isVisualDay) animateToNight();
-            document.documentElement.setAttribute('data-theme', '');
-            localStorage.setItem('theme', 'dark');
-        }
-    });
-
-    // Background looping animations
+    // Background looping animations (Keep these)
     gsap.to('.clouds-big', { duration: 15, repeat: -1, x: -74, ease: 'linear' });
     gsap.to('.clouds-medium', { duration: 20, repeat: -1, x: -65, ease: 'linear' });
     gsap.to('.clouds-small', { duration: 25, repeat: -1, x: -71, ease: 'linear' });
@@ -310,38 +171,20 @@ function initCanvasBackground() {
 
     // Get theme-specific settings
     function getThemeConfig() {
-        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-        if (isLight) {
-            // Light theme: ETHER MESH (Professional Fluid Network)
-            // Colors: Corporate Purple, Coral Accent, Soft Greys
-            return {
-                type: 'ether-mesh',
-                colors: [
-                    '#667eea', // Primary Purple
-                    '#764ba2', // Deep Purple
-                    '#ff6b6b', // Coral Accent (Rare)
-                    '#b2bec3', // Soft Grey (Common)
-                    '#dfe6e9'  // Light Grey
-                ],
-                glowColor: 'transparent',
-                lineColor: 'rgba(102, 126, 234, 0.4)' // Initial line color
-            };
-        } else {
-            // Dark theme: Antigravity "Lively" Confetti
-            return {
-                type: 'antigravity',
-                colors: [
-                    '#4285F4', // Blue
-                    '#EA4335', // Red
-                    '#FBBC04', // Yellow
-                    '#34A853', // Green
-                    '#FF6B6B', // Theme Coral
-                    '#A29BFE'  // Soft Purple
-                ],
-                glowColor: 'transparent',
-                lineColor: 'transparent'
-            };
-        }
+        // Permanently return Antigravity (Dark) theme
+        return {
+            type: 'antigravity',
+            colors: [
+                '#4285F4', // Blue
+                '#EA4335', // Red
+                '#FBBC04', // Yellow
+                '#34A853', // Green
+                '#FF6B6B', // Theme Coral
+                '#A29BFE'  // Soft Purple
+            ],
+            glowColor: 'transparent',
+            lineColor: 'transparent'
+        };
     }
 
     // Initialize parallax/physics layers
@@ -1027,13 +870,13 @@ function initScrollAnimations() {
         gsap.from(card, {
             scrollTrigger: {
                 trigger: card,
-                start: 'top 80%'
+                start: 'top 85%'
             },
-            y: 80,
+            y: 50,
             opacity: 0,
             duration: 0.8,
             delay: i * 0.1,
-            ease: 'power3.out'
+            ease: 'power2.out'
         });
     });
 
@@ -1211,7 +1054,7 @@ function initContactForm() {
     const form = document.getElementById('contact-form');
     if (!form) return;
 
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', async function (e) {
         e.preventDefault();
 
         // New cyber button elements
@@ -1222,7 +1065,7 @@ function initContactForm() {
         const originalText = btnText.textContent;
 
         // Visual Feedback - Loading
-        btnText.textContent = 'ENCRYPTING_PAYLOAD...';
+        btnText.textContent = 'TRANSMISSION_INITIATED...';
         submitBtn.style.borderColor = '#fbbf24'; // Warning yellow
         btnText.style.boxShadow = '0 0 15px rgba(251, 191, 36, 0.3)';
         btnText.style.color = '#fbbf24';
@@ -1230,58 +1073,56 @@ function initContactForm() {
 
         // Progress bar simulation
         btnProgress.style.width = '30%';
-        setTimeout(() => btnProgress.style.width = '70%', 500);
-        setTimeout(() => btnProgress.style.width = '100%', 1000);
 
-        // Get form data
+        // Prepare FormData for Web3Forms
         const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
+        formData.append("access_key", "72a66426-c1f4-4e58-af6f-c3b77c514450");
 
         try {
-            // Simulate network delay
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            // Simulated progress
+            setTimeout(() => btnProgress.style.width = '70%', 500);
 
-            // Determine if EmailJS is configured (placeholder check)
-            const emailJsConfigured = typeof emailjs !== 'undefined' && false; // Set to true when keys added
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                body: formData
+            });
 
-            if (emailJsConfigured) {
-                // EmailJS logic would go here
+            const data = await response.json();
 
+            if (response.ok) {
                 // Success State
+                btnProgress.style.width = '100%';
                 btnText.textContent = 'TRANSMISSION_COMPLETE';
                 submitBtn.style.borderColor = '#4ade80'; // Success green
                 btnText.style.color = '#4ade80';
                 submitBtn.style.boxShadow = '0 0 20px rgba(74, 222, 128, 0.4)';
-                form.reset();
-            } else {
-                // Fallback to mailto
-                const subject = encodeURIComponent(data.subject || 'Secure Transmission from Portfolio');
-                const body = encodeURIComponent(`IDENTITY: ${data.name}\nREPLY_FREQUENCY: ${data.email}\n\nDATA_PAYLOAD:\n${data.message}`);
-                window.location.href = `mailto:karthikeyaneh@gmail.com?subject=${subject}&body=${body}`;
 
-                btnText.textContent = 'PROTOCOL_REDIRECTED...';
-                submitBtn.style.borderColor = '#667eea';
-                btnText.style.color = '#667eea';
+                // Alert as requested
+                alert("Success! Your message has been sent.");
+                form.reset();
+
+                // Reset button after delay
+                setTimeout(() => {
+                    btnText.textContent = originalText;
+                    submitBtn.style.borderColor = '';
+                    submitBtn.style.boxShadow = '';
+                    btnText.style.color = '';
+                    btnProgress.style.width = '0';
+                    submitBtn.disabled = false;
+                }, 5000);
+
+            } else {
+                throw new Error(data.message);
             }
 
-            // Reset button after delay
-            setTimeout(() => {
-                btnText.textContent = originalText;
-                submitBtn.style.borderColor = '';
-                submitBtn.style.boxShadow = '';
-                btnText.style.color = '';
-                btnProgress.style.width = '0';
-                submitBtn.disabled = false;
-            }, 3000);
-
         } catch (error) {
-            console.error('Transmission error:', error);
-            // Error - fallback to mailto
-            const subject = encodeURIComponent(data.subject || 'Secure Transmission from Portfolio');
-            const body = encodeURIComponent(`IDENTITY: ${data.name}\nREPLY_FREQUENCY: ${data.email}\n\nDATA_PAYLOAD:\n${data.message}`);
-            window.location.href = `mailto:karthikeyaneh@gmail.com?subject=${subject}&body=${body}`;
+            console.error("Web3Forms Error:", error);
+            // Error State
+            btnText.textContent = 'TRANSMISSION_FAILED';
+            submitBtn.style.borderColor = '#ff3333'; // Error red
+            btnText.style.color = '#ff3333';
 
-            btnText.textContent = 'PROTOCOL_REDIRECTED...';
+            alert("Error: " + error.message);
 
             setTimeout(() => {
                 btnText.textContent = originalText;
@@ -1584,77 +1425,7 @@ function initFooterClocks() {
     updateData();
 }
 
-// --- TECH FOOTER: SYSTEM LOG ---
-// --- SYSTEM LOG (Kali Linux Terminal Simulation) ---
-function initSystemLog() {
-    // Priority: Target the specific console ID first
-    const targetElement = document.getElementById('system-log-main') || document.querySelector('.system-log');
 
-    if (!targetElement) {
-        console.warn("System Log Container NOT FOUND");
-        return;
-    }
-
-    // --- LOGS LOGIC ---
-    const messages = [
-        "ESTABLISHING_SECURE_UPLINK...",
-        "VERIFYING_ENCRYPTION_KEYS (AES-256)",
-        "HANDSHAKE_COMPLETED: HOST_VERIFIED",
-        "MONITORING_NETWORK_TRAFFIC...",
-        "DETECTED_INBOUND_PACKET: PORT_443",
-        "FIREWALL_STATUS: ACTIVE [RULES_V4.2]",
-        "SCANNING_FOR_VULNERABILITIES...",
-        "THREAT_INTELLIGENCE_FEED: UPDATED",
-        "ZERO_TRUST_POLICY: ENFORCED",
-        "ANALYZING_HEURISTICS...",
-        "SYSTEM_INTEGRITY: 100%",
-        "LATENCY_OPTIMIZATION: ENGAGED",
-        "PACKET_LOSS: 0.00%",
-        "RESOURCE_ALLOCATION: NOMINAL",
-        "AUTHENTICATING_USER_SESSION...",
-        "ACCESS_GRANTED: CLEARANCE_LEVEL_5",
-        "EXECUTING_RUNTIME_DIAGNOSTICS...",
-        "IDS/IPS: MONITORING_ACTIVE"
-    ];
-
-    function addLog() {
-        const msg = messages[Math.floor(Math.random() * messages.length)];
-        const date = new Date();
-        const time = date.toLocaleTimeString('en-US', { hour12: false });
-
-        const entry = document.createElement('div');
-        entry.className = 'log-entry';
-        // HTML content for colored timestamp
-        entry.innerHTML = `<span style="opacity:0.7; font-size: 0.8em; margin-right: 8px;">[${time}]</span>${msg}`;
-
-        targetElement.appendChild(entry); // Append to bottom
-        targetElement.scrollTop = targetElement.scrollHeight; // Auto scroll
-
-        // Keep buffer size managed
-        if (targetElement.children.length > 20) {
-            targetElement.firstElementChild.remove();
-        }
-    }
-
-    // Initial fill
-    addLog();
-    addLog();
-    addLog();
-    setInterval(addLog, 1500);
-
-    // --- NETWORK INFO LOGIC (Simulated) ---
-    function updateNetworkStatus() {
-        const ipEl = document.getElementById('local-ip');
-
-        // Set static IP once
-        if (ipEl && ipEl.innerText === "::1") {
-            ipEl.innerText = `192.168.1.${Math.floor(Math.random() * 255)}`;
-        }
-    }
-
-    setInterval(updateNetworkStatus, 3000);
-    updateNetworkStatus();
-}
 
 // --- TECH FOOTER: PARTICLE SYSTEM ---
 function initParticleSystem() {
@@ -1852,12 +1623,15 @@ function initExperienceTypewriter() {
     function typeText(element, text) {
         return new Promise(resolve => {
             let i = 0;
-            const speed = 20; // Typing speed in ms (faster is better for lists)
+            const speed = 1; // Typing speed in ms
+            const chunkSize = 2; // Type 2 chars at a time for 2x speed
 
             function type() {
                 if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
+                    // Append multiple chars
+                    const chunk = text.substr(i, chunkSize);
+                    element.textContent += chunk;
+                    i += chunkSize;
                     setTimeout(type, speed);
                 } else {
                     resolve();
@@ -1872,9 +1646,9 @@ function initExperienceTypewriter() {
 document.addEventListener('DOMContentLoaded', () => {
     initThemeToggle();
     initFooterClocks();
-    initSystemLog();
     initParticleSystem();
     initExperienceTypewriter();
+    console.log("God Mode: Updates applied v2");
 
     // Ensure VanillaTilt is initialized if not already
     if (typeof VanillaTilt !== 'undefined') {
