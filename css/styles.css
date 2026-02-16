@@ -2089,6 +2089,14 @@ section {
     flex-wrap: wrap;
 }
 
+.hero-cta .btn {
+    width: 160px;
+    height: 50px;
+    padding: 0;
+    justify-content: center;
+    flex: none;
+}
+
 .hero-socials {
     display: flex;
     gap: var(--space-md);
@@ -2236,6 +2244,29 @@ section {
 .btn-dark:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+.btn-cv {
+    background: rgba(255, 107, 107, 0.1);
+    color: var(--text-dark);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.1);
+}
+
+.btn-cv:hover {
+    background: rgba(255, 107, 107, 0.2);
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 25px rgba(255, 107, 107, 0.3);
+    transform: translateY(-2px);
+    color: #fff;
+}
+
+.btn-cv .btn-icon {
+    transition: transform 0.3s ease;
+}
+
+.btn-cv:hover .btn-icon {
+    transform: translateY(3px);
 }
 
 .btn-arrow {
