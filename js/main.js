@@ -977,6 +977,27 @@ function initScrollAnimations() {
             ease: 'power3.out'
         });
     });
+
+    // HOME SLIDER ANIMATION
+    // Pins the home section, slides content to the left, then unpins to scroll down
+    const heroSection = document.querySelector('#home');
+    const heroRight = document.querySelector('.hero-right');
+
+    if (heroSection && heroRight) {
+        gsap.to(heroRight, {
+            x: "-60vw", // Move left significantly
+            opacity: 0, // Fade out as it leaves
+            ease: "none",
+            scrollTrigger: {
+                trigger: heroSection,
+                start: "top top",
+                end: "+=100%", // Pin duration
+                scrub: 1, // Smooth scrubbing
+                pin: true, // Pin the home section
+                anticipatePin: 1
+            }
+        });
+    }
 }
 
 /* ========================================
