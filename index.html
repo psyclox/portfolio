@@ -125,28 +125,18 @@
         <!-- Hero Section - Design 1 (Dark Red/Coral) -->
         <section class="hero section-dark" id="home">
             <div class="hero-bg">
+                <video autoplay muted loop playsinline class="hero-bg-video">
+                    <source src="assets/vids/psyclox.mp4" type="video/mp4">
+                </video>
                 <div class="hero-particles" id="particles"></div>
                 <div class="hero-grid"></div>
+                <!-- OLED Overlay -->
+                <div class="hero-overlay"></div>
             </div>
 
             <div class="hero-content container">
                 <div class="hero-left">
-                    <div class="hero-visual">
-                        <div class="hero-image-wrapper">
-                            <div class="hero-glow"></div>
-                            <div class="hero-image" id="hero-3d">
-                                <img src="assets/hero-dark.png" alt="Cybersecurity 3D Visualization"
-                                    class="hero-3d-image hero-img-dark">
-                                <img src="assets/hero-light.png" alt="3D Geometric Visualization"
-                                    class="hero-3d-image hero-img-light">
-                            </div>
-                            <div class="hero-orbit">
-                                <span class="orbit-dot"></span>
-                                <span class="orbit-dot"></span>
-                                <span class="orbit-dot"></span>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Visual removed/hidden as video is now background -->
                 </div>
 
                 <div class="hero-right">
@@ -810,7 +800,7 @@
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">&lt;experience&gt;</span>
-                    <h2 class="section-title">Work <span class="gradient-text-2">History</span></h2>
+                    <h2 class="section-title">Professional<span class="gradient-text-2"> Journey </span></h2>
                 </div>
 
                 <div class="experience-grid">
@@ -964,7 +954,7 @@
             <div class="cert-grid-lines"></div>
             <div class="container">
                 <div class="section-header">
-                    <span class="section-tag">CREDENTIALS</span>
+                    <span class="section-tag">CERTIFICAITONS</span>
                     <h2 class="section-title">Operative <span class="gradient-text-2">Roadmap</span></h2>
                 </div>
 
@@ -1357,6 +1347,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     <script src="js/hideout.js" defer></script>
     <script src="js/main.js" defer></script>
+
+    <!-- Video Loop Delay Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroVideo = document.querySelector('.hero-bg-video');
+            if (heroVideo) {
+                // Remove loop attribute to handle manually
+                heroVideo.removeAttribute('loop');
+
+                heroVideo.addEventListener('ended', () => {
+                    setTimeout(() => {
+                        heroVideo.play();
+                    }, 3000); // 3 seconds delay
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

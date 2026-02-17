@@ -8038,6 +8038,9 @@ html:not([data-theme="light"]) .target-ring {
         linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
     background-size: 30px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .reflex-card:hover {
@@ -8086,6 +8089,8 @@ html:not([data-theme="light"]) .target-ring {
     margin-bottom: 8px;
     font-family: 'Orbitron', sans-serif;
     line-height: 1.3;
+    padding-right: 20px;
+    /* Space for the absolute badge if needed, though usually badge is above */
 }
 
 .cert-info p {
@@ -8095,32 +8100,94 @@ html:not([data-theme="light"]) .target-ring {
     line-height: 1.4;
 }
 
+/* Default Status Styling (OSCP uses this layout naturally or with overridden classes) */
 .cert-status {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     padding: 6px 16px;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid #00ff9d;
     border-radius: 4px;
     font-size: 0.8rem;
-    color: #00ff9d;
     font-family: 'Space Grotesk', monospace;
     letter-spacing: 1px;
     font-weight: 600;
 }
 
+/* Specific styling for VERIFIED badges to move to top-right */
 .cert-status.verified {
+    position: absolute;
+    top: 20px;
+    right: 20px;
     color: #00ff9d;
-    border-color: #00ff9d;
+    border: 1px solid #00ff9d;
     background: rgba(0, 255, 157, 0.05);
     box-shadow: 0 0 10px rgba(0, 255, 157, 0.1);
 }
 
+/* OSCP/Pending stays in flow (or bottom left) as per user request to "leave as it was" */
 .cert-status.pending {
+    width: fit-content;
+    margin-top: auto;
     color: #ffcc00;
-    border-color: #ffcc00;
+    border: 1px solid #ffcc00;
     background: rgba(255, 204, 0, 0.05);
+}
+
+/* ===========================================
+   HERO VIDEO FIX
+   =========================================== */
+/* ===========================================
+   HERO VIDEO BACKGROUND (OLED)
+   =========================================== */
+#home.hero {
+    background-color: #000000 !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.hero-bg-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Ensures it covers the screen */
+    opacity: 0.85;
+    /* Much clearer video */
+    z-index: 1;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.2) 0%,
+            rgba(0, 0, 0, 0.1) 60%,
+            #000000 100%);
+    /* Fade into next section */
+    z-index: 2;
+    backdrop-filter: blur(2px);
+    /* Slight blur */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+}
+
+/* Hide previous wrapper styles if they conflict */
+.hero-image-wrapper {
+    display: none !important;
 }
 
 .cert-grid-lines {
