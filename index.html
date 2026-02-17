@@ -223,6 +223,8 @@
                 </div>
             </div>
 
+
+
             <div class="scroll-indicator">
 
                 <div class="scroll-arrow">
@@ -578,269 +580,335 @@
                     <p class="section-subtitle">Security tools and real-world assessments</p>
                 </div>
 
-                <div class="projects-grid">
-                    <!-- ReconMate Project -->
-                    <article class="project-card" data-tilt>
-                        <div class="project-image">
-                            <div class="project-overlay">
-                                <span class="project-category">OSINT Tool</span>
-                            </div>
-                            <div class="project-visual">
-                                <div class="terminal-window" style="width: 90%; background: #000;">
-                                    <div style="padding: 10px; font-family: monospace; color: #0f0; font-size: 0.8rem;">
-                                        > ./reconmate.py -t target.com<br>
-                                        [+] Enumerating Subdomains...<br>
-                                        [+] Scanning Ports...<br>
-                                        [+] Analyzing DNS Records...
-                                    </div>
+                <div class="holo-grid">
+                    <!-- Project 1: Encrypt Anything -->
+                    <div class="holo-card" data-tilt data-tilt-glare data-tilt-max-glare="0.3">
+                        <div class="holo-emitter tl"></div>
+                        <div class="holo-emitter tr"></div>
+                        <div class="holo-emitter bl"></div>
+                        <div class="holo-emitter br"></div>
+
+                        <div class="holo-content">
+                            <div class="holo-header">
+                                <h3 class="holo-title">Encrypt Anything</h3>
+                                <div class="holo-status">
+                                    <span class="status-dot"></span>
+                                    Deployed
                                 </div>
                             </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">ReconMate</h3>
-                            <p class="project-description">
-                                A professional-grade, automated OSINT & Reconnaissance tool tailored for security
-                                analysts. Streamlines DNS enumeration, subdomain discovery, port scanning, and threat
-                                intelligence gathering into a single workflow.
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">OSINT</span>
-                                <span class="tech-tag">Automation</span>
+
+                            <div class="holo-terminal">
+                                <span class="terminal-line">init encryption_module</span>
+                                <span class="terminal-line">loading AES-256... [OK]</span>
+                                <span class="terminal-line">derive_key(pbkdf2)... [OK]</span>
                             </div>
-                            <div class="project-links">
-                                <a href="https://github.com/psyclox/Reconmate" target="_blank" rel="noopener"
-                                    class="project-link">
+
+                            <div class="holo-body">
+                                <p>Military-grade text encryption tool. Secures sensitive data using client-side AES-256
+                                    and PBKDF2 key derivation.</p>
+                            </div>
+
+                            <div class="holo-tech-stack">
+                                <span class="holo-tag">JavaScript</span>
+                                <span class="holo-tag">Cryptography</span>
+                                <span class="holo-tag">Chrome Ext</span>
+                            </div>
+
+                            <div class="holo-actions">
+                                <a href="https://github.com/psyclox/Encrypt-Anything" target="_blank" class="holo-btn">
                                     <svg viewBox="0 0 24 24" fill="currentColor">
                                         <path
                                             d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                                     </svg>
+                                    Source
                                 </a>
                             </div>
                         </div>
-                    </article>
+                    </div>
 
-                    <!-- Netshark Project -->
-                    <article class="project-card" data-tilt>
-                        <div class="project-image">
-                            <div class="project-overlay">
-                                <span class="project-category">Network Forensics</span>
-                            </div>
-                            <div class="project-visual">
-                                <div style="display: flex; gap: 5px; align-items: center;">
-                                    <svg viewBox="0 0 24 24" width="40" height="40" stroke="#00d2ff" fill="none"
-                                        stroke-width="2">
-                                        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-                                    </svg>
-                                    <span style="font-family: monospace; color: #fff;">Traffic Analysis</span>
+                    <!-- Project 2: VAPT Assessment -->
+                    <div class="holo-card" data-tilt data-tilt-glare data-tilt-max-glare="0.3">
+                        <div class="holo-emitter tl"></div>
+                        <div class="holo-emitter tr"></div>
+                        <div class="holo-emitter bl"></div>
+                        <div class="holo-emitter br"></div>
+
+                        <div class="holo-content">
+                            <div class="holo-header">
+                                <h3 class="holo-title">VAPT Assessment</h3>
+                                <div class="holo-status">
+                                    <span class="status-dot"></span>
+                                    Classified
                                 </div>
                             </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Netshark</h3>
-                            <p class="project-description">
-                                A professional Network Traffic Anomaly Detector for researchers and admins. Analyzes
-                                PCAP files and captures live traffic to identify suspicious patterns and potential
-                                intrusions in real-time.
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">PCAP</span>
-                                <span class="tech-tag">Network Security</span>
+
+                            <div class="holo-terminal">
+                                <span class="terminal-line">nmap -sV -p- target_ip</span>
+                                <span class="terminal-line">scanning ports... [DONE]</span>
+                                <span class="terminal-line">found critical vuln: CVE-2023-XXXX</span>
                             </div>
-                            <div class="project-links">
-                                <a href="https://github.com/psyclox/Netshark" target="_blank" rel="noopener"
-                                    class="project-link">
+
+                            <div class="holo-body">
+                                <p>Comprehensive vulnerability assessment and penetration testing. Identified critical
+                                    risks and provided remediation strategies.</p>
+                            </div>
+
+                            <div class="holo-tech-stack">
+                                <span class="holo-tag">Network Sec</span>
+                                <span class="holo-tag">Web App PenTest</span>
+                                <span class="holo-tag">Report Writing</span>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+                    <!-- Project 4: ReconMate -->
+                    <div class="holo-card" data-tilt data-tilt-glare data-tilt-max-glare="0.3">
+                        <div class="holo-emitter tl"></div>
+                        <div class="holo-emitter tr"></div>
+                        <div class="holo-emitter bl"></div>
+                        <div class="holo-emitter br"></div>
+
+                        <div class="holo-content">
+                            <div class="holo-header">
+                                <h3 class="holo-title">ReconMate</h3>
+                                <div class="holo-status">
+                                    <span class="status-dot"></span>
+                                    Deployed
+                                </div>
+                            </div>
+
+                            <div class="holo-terminal">
+                                <span class="terminal-line">> ./reconmate.py -t target</span>
+                                <span class="terminal-line">[+] Enumerating Subdomains...</span>
+                                <span class="terminal-line">[+] Analyzing DNS Records...</span>
+                            </div>
+
+                            <div class="holo-body">
+                                <p>Professional-grade OSINT automation tool. Streamlines reconnaissance with
+                                    multi-threaded subdomain enumeration and port scanning.</p>
+                            </div>
+
+                            <div class="holo-tech-stack">
+                                <span class="holo-tag">Python</span>
+                                <span class="holo-tag">OSINT</span>
+                                <span class="holo-tag">Automation</span>
+                            </div>
+
+                            <div class="holo-actions">
+                                <a href="https://github.com/psyclox/Reconmate" target="_blank" class="holo-btn">
                                     <svg viewBox="0 0 24 24" fill="currentColor">
                                         <path
                                             d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                                     </svg>
+                                    Source
                                 </a>
                             </div>
                         </div>
-                    </article>
+                    </div>
 
-                    <!-- VAPT Project -->
-                    <article class="project-card featured" data-tilt>
-                        <div class="project-image">
-                            <div class="project-overlay">
-                                <span class="project-category">Security Assessment</span>
-                            </div>
-                            <div class="project-visual vapt-visual">
-                                <div class="terminal-window">
-                                    <div class="terminal-header">
-                                        <span class="terminal-dot red"></span>
-                                        <span class="terminal-dot yellow"></span>
-                                        <span class="terminal-dot green"></span>
-                                    </div>
-                                    <div class="terminal-body">
-                                        <span class="terminal-prompt">$</span>
-                                        <span class="terminal-command">nmap -sV -p- target</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">VAPT Assessment</h3>
-                            <p class="project-description">
-                                Executed systematic vulnerability scans and authorized penetration tests on
-                                client networks. Identified, documented, and prioritized security risks including
-                                open ports, misconfigurations, and web application flaws. Collaborated with security
-                                team to provide actionable remediations.
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Penetration Testing</span>
-                                <span class="tech-tag">Vulnerability Scan</span>
-                                <span class="tech-tag">Report Writing</span>
-                            </div>
-                            <div class="project-highlights">
-                                <div class="highlight-item">
-                                    <span class="highlight-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <circle cx="12" cy="12" r="10" />
-                                            <circle cx="12" cy="12" r="6" />
-                                            <circle cx="12" cy="12" r="2" />
-                                        </svg>
-                                    </span>
-                                    <span class="highlight-text">Network & Web App Testing</span>
-                                </div>
-                                <div class="highlight-item">
-                                    <span class="highlight-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                                            <polyline points="14 2 14 8 20 8" />
-                                            <line x1="16" y1="13" x2="8" y2="13" />
-                                            <line x1="16" y1="17" x2="8" y2="17" />
-                                            <polyline points="10 9 9 9 8 9" />
-                                        </svg>
-                                    </span>
-                                    <span class="highlight-text">Detailed Risk Documentation</span>
-                                </div>
-                                <div class="highlight-item">
-                                    <span class="highlight-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                            <circle cx="9" cy="7" r="4" />
-                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                                        </svg>
-                                    </span>
-                                    <span class="highlight-text">Team Collaboration</span>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
+                    <!-- Project 5: Netshark -->
+                    <div class="holo-card" data-tilt data-tilt-glare data-tilt-max-glare="0.3">
+                        <div class="holo-emitter tl"></div>
+                        <div class="holo-emitter tr"></div>
+                        <div class="holo-emitter bl"></div>
+                        <div class="holo-emitter br"></div>
 
-                    <!-- SQLister Project (Restored) -->
-                    <article class="project-card" data-tilt>
-                        <div class="project-image">
-                            <div class="project-overlay">
-                                <span class="project-category">Security Tool</span>
+                        <div class="holo-content">
+                            <div class="holo-header">
+                                <h3 class="holo-title">Netshark</h3>
+                                <div class="holo-status">
+                                    <span class="status-dot"></span>
+                                    Active
+                                </div>
                             </div>
-                            <div class="project-visual sql-visual">
-                                <span class="code-text">SELECT * FROM targets WHERE vulnerable = true;</span>
+
+                            <div class="holo-terminal">
+                                <span class="terminal-line">> ./netshark.py --monitor wlan0</span>
+                                <span class="terminal-line">[+] Capturing packets...</span>
+                                <span class="terminal-line">[!] ANOMALY DETECTED: 192.168.1.5</span>
                             </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">SQLister</h3>
-                            <p class="project-description">
-                                An advanced SQL injection detection and exploitation tool. Automates the
-                                discovery of SQLi vulnerabilities with intelligent payload generation and
-                                database fingerprinting capabilities.
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">SQLi</span>
-                                <span class="tech-tag">Automation</span>
+
+                            <div class="holo-body">
+                                <p>Network Traffic Anomaly Detector. Analyzes PCAP files and captures live traffic to
+                                    identify suspicious patterns and potential intrusions.</p>
                             </div>
-                            <div class="project-links">
-                                <a href="https://github.com/psyclox/sqlister" target="_blank" rel="noopener"
-                                    class="project-link">
+
+                            <div class="holo-tech-stack">
+                                <span class="holo-tag">Python</span>
+                                <span class="holo-tag">PCAP</span>
+                                <span class="holo-tag">Network Sec</span>
+                            </div>
+
+                            <div class="holo-actions">
+                                <a href="https://github.com/psyclox/Netshark" target="_blank" class="holo-btn">
                                     <svg viewBox="0 0 24 24" fill="currentColor">
                                         <path
                                             d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                                     </svg>
+                                    Source
                                 </a>
                             </div>
                         </div>
-                    </article>
+                    </div>
 
-                    <!-- Encrypt Anything Project (Restored) -->
-                    <article class="project-card" data-tilt>
-                        <div class="project-image">
-                            <div class="project-overlay">
-                                <span class="project-category">Chrome Extension</span>
+                    <!-- Project 6: SQLister -->
+                    <div class="holo-card" data-tilt data-tilt-glare data-tilt-max-glare="0.3">
+                        <div class="holo-emitter tl"></div>
+                        <div class="holo-emitter tr"></div>
+                        <div class="holo-emitter bl"></div>
+                        <div class="holo-emitter br"></div>
+
+                        <div class="holo-content">
+                            <div class="holo-header">
+                                <h3 class="holo-title">SQLister</h3>
+                                <div class="holo-status">
+                                    <span class="status-dot"></span>
+                                    Deployed
+                                </div>
                             </div>
-                            <div class="project-visual encrypt-visual">
-                                <span class="lock-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                                    </svg>
-                                </span>
-                                <span class="encryption-text">AES-256 + PBKDF2</span>
+
+                            <div class="holo-terminal">
+                                <span class="terminal-line">> ./sqlister.py -u http://target.com</span>
+                                <span class="terminal-line">[+] Testing parameter 'id'...</span>
+                                <span class="terminal-line">[!] VULNERABLE: Union Based SQLi</span>
                             </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Encrypt Anything</h3>
-                            <p class="project-description">
-                                A Chrome extension that encrypts any text with military-grade AES-256 encryption
-                                using PBKDF2 SHA-256 key derivation combined with random salt for maximum security.
-                            </p>
-                            <div class="project-tech">
-                                <span class="tech-tag">JavaScript</span>
-                                <span class="tech-tag">AES-256</span>
-                                <span class="tech-tag">PBKDF2</span>
-                                <span class="tech-tag">Chrome API</span>
+
+                            <div class="holo-body">
+                                <p>Advanced SQL injection detection and exploitation tool. Automates the discovery of
+                                    SQLi vulnerabilities with intelligent payload generation.</p>
                             </div>
-                            <div class="project-links">
-                                <a href="https://github.com/psyclox/Encrypt-Anything" target="_blank" rel="noopener"
-                                    class="project-link">
+
+                            <div class="holo-tech-stack">
+                                <span class="holo-tag">Python</span>
+                                <span class="holo-tag">SQLi</span>
+                                <span class="holo-tag">Automation</span>
+                            </div>
+
+                            <div class="holo-actions">
+                                <a href="https://github.com/psyclox/sqlister" target="_blank" class="holo-btn">
                                     <svg viewBox="0 0 24 24" fill="currentColor">
                                         <path
                                             d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                                     </svg>
+                                    Source
                                 </a>
                             </div>
                         </div>
-                    </article>
+                    </div>
+
+
                 </div>
             </div>
         </section>
 
-        <!-- Experience Section -->
+        <!-- Experience Section - Minimalist Redesign -->
         <section class="experience section-light" id="experience">
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">&lt;experience&gt;</span>
-                    <h2 class="section-title">Work <span class="gradient-text-2">Experience</span></h2>
+                    <h2 class="section-title">Work <span class="gradient-text-2">History</span></h2>
                 </div>
 
-                <div class="timeline">
-                    <div class="timeline-item current">
-                        <div class="timeline-marker">
-                            <span class="marker-dot pulse"></span>
-                        </div>
-                        <div class="timeline-content">
-                            <div class="timeline-header">
-                                <span class="timeline-date">Oct 2025 - Present</span>
-                                <span class="timeline-status">Current</span>
+                <div class="experience-grid">
+                    <!-- Experience 1: Cybervault -->
+                    <div class="experience-card" id="card-1">
+                        <div class="exp-header" data-target="exp-1">
+                            <div class="exp-logo-container">
+                                <img src="assets/exp/cybervault_logo.png" alt="Cybervault" class="exp-logo">
                             </div>
-                            <h3 class="timeline-title">Purple Teamer / Hybrid Security Analyst</h3>
-                            <h4 class="timeline-company">Cybervault Innovations and Technologies Pvt Ltd</h4>
-                            <ul class="timeline-responsibilities">
-                                <li>Conducting vulnerability assessments and penetration testing on client
-                                    infrastructure</li>
-                                <li>Monitoring and analyzing security events in SOC environment</li>
-                                <li>Bridging offensive and defensive security operations</li>
-                                <li>Leveraging AI-driven tools for threat detection and analysis</li>
-                                <li>Collaborating with teams to implement security remediations</li>
-                            </ul>
-                            <div class="timeline-tags">
-                                <span class="tag">VAPT</span>
-                                <span class="tag">SOC</span>
-                                <span class="tag">Purple Team</span>
-                                <span class="tag">AI Analysis</span>
+                            <div class="exp-main-info">
+                                <h3 class="exp-company">CyberVault Innovations</h3>
+                                <div class="exp-meta">
+                                    <span class="exp-role">Cyber Security Analyst</span>
+                                    <span class="exp-divider">|</span>
+                                    <span class="exp-date">Oct 2025 - Present</span>
+                                </div>
+                            </div>
+
+                            <div class="exp-sub-info">
+                                <div class="exp-location">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    <span>Coimbatore</span>
+                                </div>
+                                <button class="exp-toggle-btn" aria-label="Toggle Details">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="exp-details" id="exp-1">
+                            <div class="exp-content">
+                                <ul class="timeline-responsibilities">
+                                    <li>Conducting vulnerability assessments and penetration testing on client
+                                        infrastructure</li>
+                                    <li>Monitoring and analyzing security events in SOC environment</li>
+                                    <li>Bridging offensive and defensive security operations</li>
+                                    <li>Leveraging AI-driven tools for threat detection and analysis</li>
+                                    <li>Collaborating with teams to implement security remediations</li>
+                                </ul>
+                                <div class="timeline-tags">
+                                    <span class="tag">VAPT</span>
+                                    <span class="tag">SOC</span>
+                                    <span class="tag">Purple Team</span>
+                                    <span class="tag">AI Analysis</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Experience 2: HackerOne -->
+                    <div class="experience-card" id="card-2">
+                        <div class="exp-header" data-target="exp-2">
+                            <div class="exp-logo-container">
+                                <img src="assets/exp/hackerone_logo.png" alt="HackerOne" class="exp-logo">
+                            </div>
+                            <div class="exp-main-info">
+                                <h3 class="exp-company">HackerOne</h3>
+                                <div class="exp-meta">
+                                    <span class="exp-role">Bug Bounty Hunter</span>
+                                    <span class="exp-divider">|</span>
+                                    <span class="exp-date">June 2025 - Present</span>
+                                </div>
+                            </div>
+
+                            <div class="exp-sub-info">
+                                <div class="exp-location">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    <span>Remote</span>
+                                </div>
+                                <button class="exp-toggle-btn" aria-label="Toggle Details">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="exp-details" id="exp-2">
+                            <div class="exp-content">
+                                <ul class="timeline-responsibilities">
+                                    <li>identifying and reporting security vulnerabilities in web applications</li>
+                                    <li>Participating in bug bounty programs to secure digital assets</li>
+                                    <li>Analyzing business logic errors and critical security flaws</li>
+                                    <li>Documenting proof-of-concept exploits for remediation</li>
+                                </ul>
+                                <div class="timeline-tags">
+                                    <span class="tag">Web Security</span>
+                                    <span class="tag">Bug Bounty</span>
+                                    <span class="tag">Penetration Testing</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -891,84 +959,89 @@
             </div>
         </section>
 
-        <!-- Professional Certifications (Reverted Timeline / Operative Roadmap Style) -->
-        <section class="obsidian-section section-light" id="certifications">
+        <!-- Professional Certifications (Grid Reflex Design) -->
+        <section class="grid-reflex-section" id="certifications">
+            <div class="cert-grid-lines"></div>
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">CREDENTIALS</span>
                     <h2 class="section-title">Operative <span class="gradient-text-2">Roadmap</span></h2>
                 </div>
 
-                <div class="roadmap-container">
-                    <div class="roadmap-track">
-                        <div class="roadmap-line"></div>
-
-                        <!-- Certified Ethical Hacker -->
-                        <div class="roadmap-node">
-                            <div class="node-point"></div>
-                            <div class="cert-card compact">
-                                <div class="cert-icon-small">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                                    </svg>
-                                </div>
-                                <div class="cert-meta">
-                                    <h4>Certified Ethical Hacker</h4>
-                                    <div class="status-verified">Verified</div>
-                                </div>
+                <div class="reflex-grid">
+                    <!-- CEH Practical -->
+                    <div class="reflex-card" data-tilt data-tilt-glare data-tilt-max-glare="0.2">
+                        <div class="cert-icon">
+                            <img src="assets/logo/CEHPRACTICAL.png" alt="CEH Practical Logo">
+                        </div>
+                        <div class="cert-info">
+                            <h3 class="cert-title">Certified Ethical Hacker (Practical)</h3>
+                            <p>Rigorous practical exam validating real-world ethical hacking skills.</p>
+                            <div class="cert-status verified">
+                                <span class="status-dot"></span>
+                                <span>Verified</span>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Offensive Pentesting -->
-                        <div class="roadmap-node">
-                            <div class="node-point"></div>
-                            <div class="cert-card compact">
-                                <div class="cert-icon-small">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polygon points="12 2 2 7 12 12 22 7 12 2" />
-                                        <polyline points="2 17 12 22 22 17" />
-                                        <polyline points="2 12 12 17 22 12" />
-                                    </svg>
-                                </div>
-                                <div class="cert-meta">
-                                    <h4>Offensive Pentesting</h4>
-                                    <div class="status-verified">Verified</div>
-                                </div>
+                    <!-- TCM Practical Ethical Hacker -->
+                    <div class="reflex-card" data-tilt data-tilt-glare data-tilt-max-glare="0.2">
+                        <div class="cert-icon">
+                            <img src="assets/logo/TCM.png" alt="TCM Security Logo">
+                        </div>
+                        <div class="cert-info">
+                            <h3 class="cert-title">Practical Ethical Hacker</h3>
+                            <p>Hands-on penetration testing certification covering network and AD attacks.</p>
+                            <div class="cert-status verified">
+                                <span class="status-dot"></span>
+                                <span>Verified</span>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- API Pentesting -->
-                        <div class="roadmap-node">
-                            <div class="node-point"></div>
-                            <div class="cert-card compact">
-                                <div class="cert-icon-small">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-                                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-                                    </svg>
-                                </div>
-                                <div class="cert-meta">
-                                    <h4>Certified API Pentester</h4>
-                                    <div class="status-verified">Verified</div>
-                                </div>
+                    <!-- Offensive Pentesting -->
+                    <div class="reflex-card" data-tilt data-tilt-glare data-tilt-max-glare="0.2">
+                        <div class="cert-icon">
+                            <img src="assets/logo/tryhackme.webp" alt="TryHackMe Logo">
+                        </div>
+                        <div class="cert-info">
+                            <h3 class="cert-title">Offensive Pentesting</h3>
+                            <p>Advanced exploitation techniques and red teaming methodologies.</p>
+                            <div class="cert-status verified">
+                                <span class="status-dot"></span>
+                                <span>Verified</span>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- LOCKED: OSCP -->
-                        <div class="roadmap-node future">
-                            <div class="node-point"></div>
-                            <div class="cert-card compact locked-oscp">
-                                <div class="cert-meta">
-                                    <h4>OSCP</h4>
-                                    <div class="status-locked">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                                            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                                        </svg>
-                                        LOCKED // PREPARATION
-                                    </div>
-                                </div>
+                    <!-- API Pentesting -->
+                    <div class="reflex-card" data-tilt data-tilt-glare data-tilt-max-glare="0.2">
+                        <div class="cert-icon">
+                            <img src="assets/logo/capij_logo.png" alt="CAPIJ Logo">
+                        </div>
+                        <div class="cert-info">
+                            <h3 class="cert-title">Certified API Pentester</h3>
+                            <p>Specialized certification in identifying and exploiting API vulnerabilities.</p>
+                            <div class="cert-status verified">
+                                <span class="status-dot"></span>
+                                <span>Verified</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- OSCP (Locked) -->
+                    <div class="reflex-card" data-tilt data-tilt-glare data-tilt-max-glare="0.1"
+                        style="opacity: 0.7; filter: grayscale(0.5);">
+                        <div class="cert-icon">
+                            <img src="assets/logo/OSCP-PEN-200-.png" alt="OSCP Logo">
+                        </div>
+                        <div class="cert-info">
+                            <h3 class="cert-title">OSCP</h3>
+                            <p>Offensive Security Certified Professional. The gold standard in pentesting.</p>
+                            <div class="cert-status pending">
+                                <span class="status-dot"
+                                    style="background: #ffcc00; box-shadow: 0 0 6px #ffcc00;"></span>
+                                <span>Target Locked // Prep</span>
                             </div>
                         </div>
                     </div>

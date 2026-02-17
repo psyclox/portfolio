@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initContactForm();
     initSmoothScroll();
     initActiveNavHighlight();
+    initExperienceCards();
 });
 
 /* ========================================
@@ -1584,54 +1585,60 @@ function initParticleSystem() {
 }
 
 // --- EXPERIENCE TYPEWRITER ---
+// --- EXPERIENCE TYPEWRITER ---
 function initExperienceTypewriter() {
-    const listItems = document.querySelectorAll('.timeline-responsibilities li');
-    if (listItems.length === 0) return;
+    const lists = document.querySelectorAll('.timeline-responsibilities');
+    if (lists.length === 0) return;
 
-    // Prepare items: store text and clear content
-    listItems.forEach(item => {
-        item.setAttribute('data-text', item.textContent.trim());
-        item.textContent = '';
-        item.style.visibility = 'hidden';
-    });
+    lists.forEach(list => {
+        const listItems = list.querySelectorAll('li');
+        if (listItems.length === 0) return;
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                observer.unobserve(entry.target);
-                animateList(listItems);
+        // Prepare items: store text and clear content
+        listItems.forEach(item => {
+            // Only prepare if not already processed
+            if (!item.hasAttribute('data-text')) {
+                item.setAttribute('data-text', item.textContent.trim());
+                item.textContent = '';
+                item.style.visibility = 'hidden';
             }
         });
-    }, { threshold: 0.2 });
 
-    // Observe the parent container
-    const parent = document.querySelector('.timeline-responsibilities');
-    if (parent) observer.observe(parent);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    observer.unobserve(entry.target);
+                    animateList(listItems);
+                }
+            });
+        }, { threshold: 0.1 }); // Lower threshold for better triggering
+
+        observer.observe(list);
+    });
 
     async function animateList(items) {
         for (const item of items) {
             item.style.visibility = 'visible';
-            item.classList.add('typing-cursor');
-            const text = item.getAttribute('data-text');
-
-            await typeText(item, text);
-
-            item.classList.remove('typing-cursor'); // Remove cursor after done
+            // Only animate if content is empty (prevents double animation)
+            if (item.textContent === '') {
+                item.classList.add('typing-cursor');
+                const text = item.getAttribute('data-text');
+                await typeText(item, text);
+                item.classList.remove('typing-cursor');
+            }
         }
     }
 
     function typeText(element, text) {
         return new Promise(resolve => {
             let i = 0;
-            const speed = 1; // Typing speed in ms
-            const chunkSize = 2; // Type 2 chars at a time for 2x speed
+            const speed = 5; // Faster typing for better UX
+            const chunkSize = 1; // 1 char at a time for smoothness
 
             function type() {
                 if (i < text.length) {
-                    // Append multiple chars
-                    const chunk = text.substr(i, chunkSize);
-                    element.textContent += chunk;
-                    i += chunkSize;
+                    element.textContent += text.charAt(i);
+                    i++;
                     setTimeout(type, speed);
                 } else {
                     resolve();
@@ -1660,3 +1667,63 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+/* ========================================
+   EXPERIENCE CARDS INTERACTION
+   ======================================== */
+
+function initExperienceCards() {
+    const cards = document.querySelectorAll('.experience-card');
+
+    cards.forEach(card => {
+        const header = card.querySelector('.exp-header');
+        const toggleBtn = card.querySelector('.exp-toggle-btn');
+
+        if (!header) return;
+
+        // Toggle on header click
+        header.addEventListener('click', (e) => {
+            // Prevent if clicking links or other buttons in header
+            if (e.target.tagName === 'A') return;
+
+            // Critical: Stop propagation to prevent bubbling issues
+            e.stopPropagation();
+
+            toggleCard(card);
+        });
+
+        // Toggle on button click
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent double trigger
+                toggleCard(card);
+            });
+        }
+    });
+
+    function toggleCard(card) {
+        const details = card.querySelector('.exp-details');
+        if (!details) return;
+
+        const isExpanded = card.classList.contains('expanded');
+
+        if (isExpanded) {
+            // Collapse
+            card.classList.remove('expanded');
+            details.style.maxHeight = '0';
+            details.style.opacity = '0';
+        } else {
+            // Expand
+            // Optional: Collapse others for accordion effect?
+            // document.querySelectorAll('.experience-card.expanded').forEach(otherCard => {
+            //     if (otherCard !== card) toggleCard(otherCard); // This would make it an accordion
+            // });
+
+            card.classList.add('expanded');
+            // Set max-height to scrollHeight for smooth transition
+            // Add a small buffer to ensure content fits comfortably
+            details.style.maxHeight = (details.scrollHeight + 20) + 'px';
+            details.style.opacity = '1';
+        }
+    }
+}
