@@ -7785,7 +7785,7 @@ html:not([data-theme="light"]) .target-ring {
     display: none;
 }
 
-/* Corner Accents (Holo Emitters) */
+/* Corner Accents (Holo Emitters) noice */
 .holo-emitter {
     position: absolute;
     width: 10px;
