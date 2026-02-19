@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="css/redesign.css?v=2">
     <!-- <link rel="stylesheet" href="css/light-theme-redesign.css"> REMOVED -->
     <link rel="stylesheet" href="css/hideout.css?v=2">
+    <link rel="stylesheet" href="css/bot.css?v=1">
 
     <!-- FORCE SCROLL TO TOP IMMEDIATELY -->
     <script>
@@ -130,1037 +131,1009 @@
     </div>
 
     <main>
-        <!-- SCROLL TRACK - Defines the scroll distance for the animation -->
-        <!-- Logic: Height 300vh means user scrolls 3 screens to finish animation -->
-        <div class="hero-scroll-track" style="height: 300vh; position: relative; z-index: 10;">
+        <!-- SCROLL TRACK REMOVED - Fixed Empty Section Issue -->
+        <!-- Hero Section -->
+        <section class="hero section-dark" id="home" style="height: 100vh; overflow: hidden; position: relative;">
+            <div class="hero-bg">
+                <video autoplay muted loop playsinline class="hero-bg-video">
+                    <source src="assets/vids/psyclox.mp4" type="video/mp4">
+                </video>
+                <div class="hero-particles" id="particles"></div>
+                <div class="hero-grid"></div>
+                <!-- OLED Overlay -->
+                <div class="hero-overlay"></div>
+            </div>
 
-            <!-- Hero Section - CSS Sticky ensures it stays in view -->
-            <section class="hero section-dark" id="home"
-                style="position: sticky; top: 0; height: 100vh; overflow: hidden;">
-                <div class="hero-bg">
-                    <video autoplay muted loop playsinline class="hero-bg-video">
-                        <source src="assets/vids/psyclox.mp4" type="video/mp4">
-                    </video>
-                    <div class="hero-particles" id="particles"></div>
-                    <div class="hero-grid"></div>
-                    <!-- OLED Overlay -->
-                    <div class="hero-overlay"></div>
+            <div class="hero-content container">
+                <div class="hero-left">
+                    <!-- Visual removed/hidden as video is now background -->
                 </div>
 
-                <div class="hero-content container">
-                    <div class="hero-left">
-                        <!-- Visual removed/hidden as video is now background -->
+                <div class="hero-right">
+
+
+                    <h1 class="hero-title">
+                        <span class="title-line">Hi, I'm</span>
+                        <span class="title-name gradient-text">Karthikeyan</span>
+                    </h1>
+
+                    <h2 class="hero-subtitle">
+                        <span class="subtitle-dynamic" id="typewriter"></span>
+                        <span class="cursor-blink">|</span>
+                    </h2>
+
+                    <p class="hero-description">
+                        Security enthusiast specialized in Vulnerability Assessment, Penetration Testing,
+                        and SOC operations. Breaking systems to make them stronger.
+                    </p>
+
+                    <div class="hero-cta">
+                        <a href="#contact" class="btn btn-primary">
+                            <span>Hire Me</span>
+                            <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                        <a href="#projects" class="btn btn-secondary">
+                            <span>View Projects</span>
+                        </a>
+                        <a href="https://raw.githubusercontent.com/psyclox/psyclox-assets/refs/heads/main/doc/karthikeyan.pdf"
+                            target="_blank" class="btn btn-cv">
+                            <span>Download CV</span>
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                style="width: 18px; height: 18px;">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                        </a>
+
+                        <!-- Relocated Badge -->
+                        <div class="hero-badge">
+                            <span class="badge-dot"></span>
+                            <span>Available</span>
+                        </div>
                     </div>
 
-                    <div class="hero-right">
+                    <div class="hero-socials">
+                        <a href="https://github.com/psyclox" target="_blank" rel="noopener" class="social-link"
+                            aria-label="GitHub">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                            </svg>
+                        </a>
+                        <a href="https://linkedin.com/in/karthikeyaneh" target="_blank" rel="noopener"
+                            class="social-link" aria-label="LinkedIn">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                            </svg>
+                        </a>
+                        <a href="https://linktr.ee/psyclox" target="_blank" rel="noopener" class="social-link"
+                            aria-label="Linktree">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M8.92 11.566L6.926 9.572l1.992-1.994L6.926 5.584l1.994-1.993 3.987 3.986-1.994 1.993 1.994 1.994-1.993 1.994-1.994-1.992zM12.907 8.978l1.993 1.993-.001.001 1.993-1.993-1.993-1.993-1.992 1.992zm0 5.97l1.992-1.992.001.001 1.993 1.992-1.993 1.993-1.993-1.994zM12.907 20.918l-1.993-1.993 1.993-1.993 1.993 1.993-1.993 1.993zm-3.987-5.971l-1.993-1.993 1.993-1.993 1.993 1.993-1.993 1.993z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
 
-                        <h1 class="hero-title">
-                            <span class="title-line">Hi, I'm</span>
-                            <span class="title-name gradient-text">Karthikeyan</span>
-                        </h1>
 
-                        <h2 class="hero-subtitle">
-                            <span class="subtitle-dynamic" id="typewriter"></span>
-                            <span class="cursor-blink">|</span>
+            <div class="scroll-indicator">
+
+                <div class="scroll-arrow">
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </section>
+        <!-- hero-scroll-track removed -->
+
+        <!-- About Section — Floating Glass Dashboard -->
+        <section class="about section-light" id="about">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">&lt;about&gt;</span>
+                    <h2 class="section-title">About <span class="gradient-text-2">Me</span></h2>
+                </div>
+
+                <!-- About: Left Text + Right Card Wall -->
+                <div class="about-split">
+                    <!-- LEFT: Text Content -->
+                    <div class="about-text-side">
+                        <h2 class="about-headline">
+                            Security intelligence,<br>
+                            <span class="about-headline-accent">personified.</span>
                         </h2>
-
-                        <p class="hero-description">
-                            Security enthusiast specialized in Vulnerability Assessment, Penetration Testing,
-                            and SOC operations. Breaking systems to make them stronger.
+                        <p class="about-desc">
+                            Cybersecurity professional bridging offensive and defensive security.
+                            Specialized in <strong>Vulnerability Assessment &amp; Penetration Testing</strong>,
+                            <strong>SOC operations</strong>, and <strong>AI-driven security</strong>.
+                            B.Tech in CS &amp; Business Systems.
                         </p>
-
-                        <div class="hero-cta">
-                            <a href="#contact" class="btn btn-primary">
-                                <span>Hire Me</span>
-                                <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
+                        <div class="about-roles-v3">
+                            <span class="role-badge-v3"><span class="role-dot" style="background:#ff6b6b"></span>Purple
+                                Teamer</span>
+                            <span class="role-badge-v3"><span class="role-dot" style="background:#4ecdc4"></span>Ethical
+                                Hacker</span>
+                            <span class="role-badge-v3"><span class="role-dot"
+                                    style="background:#45b7d1"></span>Security Analyst</span>
+                            <span class="role-badge-v3"><span class="role-dot" style="background:#f9ca24"></span>Bug
+                                Hunter</span>
+                        </div>
+                        <div class="about-cta-row">
+                            <a href="#contact" class="about-cta-primary">
+                                <span>Get in Touch</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"
+                                    height="16">
                                     <path d="M5 12h14M12 5l7 7-7 7" />
                                 </svg>
                             </a>
-                            <a href="#projects" class="btn btn-secondary">
-                                <span>View Projects</span>
-                            </a>
-                            <a href="https://raw.githubusercontent.com/psyclox/psyclox-assets/refs/heads/main/doc/karthikeyan.pdf"
-                                target="_blank" class="btn btn-cv">
-                                <span>Download CV</span>
-                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" style="width: 18px; height: 18px;">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                    <polyline points="7 10 12 15 17 10" />
-                                    <line x1="12" y1="15" x2="12" y2="3" />
-                                </svg>
-                            </a>
+                            <a href="#projects" class="about-cta-ghost"><span>View Projects</span></a>
+                        </div>
+                    </div>
 
-                            <!-- Relocated Badge -->
-                            <div class="hero-badge">
-                                <span class="badge-dot"></span>
-                                <span>Available</span>
+                    <!-- RIGHT: 3D Floating Card Wall -->
+                    <div class="about-card-wall" id="about-card-wall">
+                        <div class="float-card" data-depth="0.3" style="--card-x:5%;--card-y:8%;--card-rot:-6deg;">
+                            <div class="fc-inner fc-dark">
+                                <div class="fc-label">IDENTITY</div>
+                                <div class="fc-identity">
+                                    <div class="fc-avatar">K</div>
+                                    <div>
+                                        <div class="fc-name">Karthikeyan</div>
+                                        <div class="fc-alias">@Psyclox</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="hero-socials">
-                            <a href="https://github.com/psyclox" target="_blank" rel="noopener" class="social-link"
-                                aria-label="GitHub">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                                </svg>
-                            </a>
-                            <a href="https://linkedin.com/in/karthikeyaneh" target="_blank" rel="noopener"
-                                class="social-link" aria-label="LinkedIn">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                                </svg>
-                            </a>
-                            <a href="https://linktr.ee/psyclox" target="_blank" rel="noopener" class="social-link"
-                                aria-label="Linktree">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M8.92 11.566L6.926 9.572l1.992-1.994L6.926 5.584l1.994-1.993 3.987 3.986-1.994 1.993 1.994 1.994-1.993 1.994-1.994-1.992zM12.907 8.978l1.993 1.993-.001.001 1.993-1.993-1.993-1.993-1.992 1.992zm0 5.97l1.992-1.992.001.001 1.993 1.992-1.993 1.993-1.993-1.994zM12.907 20.918l-1.993-1.993 1.993-1.993 1.993 1.993-1.993 1.993zm-3.987-5.971l-1.993-1.993 1.993-1.993 1.993 1.993-1.993 1.993z" />
-                                </svg>
-                            </a>
+                        <div class="float-card" data-depth="0.6" style="--card-x:55%;--card-y:2%;--card-rot:4deg;">
+                            <div class="fc-inner fc-accent">
+                                <div class="fc-status-badge"><span class="fc-live-dot"></span><span>AVAILABLE FOR
+                                        HIRE</span></div>
+                            </div>
+                        </div>
+                        <div class="float-card" data-depth="0.5" style="--card-x:60%;--card-y:28%;--card-rot:-3deg;">
+                            <div class="fc-inner fc-dark">
+                                <div class="fc-label">STATS</div>
+                                <div class="fc-stat-row"><span class="fc-stat-num">3</span><span
+                                        class="fc-stat-text">Certifications</span></div>
+                                <div class="fc-stat-row"><span class="fc-stat-num">10</span><span
+                                        class="fc-stat-text">Projects</span></div>
+                                <div class="fc-stat-row"><span class="fc-stat-num">35+</span><span
+                                        class="fc-stat-text">Vulns Found</span></div>
+                            </div>
+                        </div>
+                        <div class="float-card" data-depth="0.2" style="--card-x:0%;--card-y:48%;--card-rot:5deg;">
+                            <div class="fc-inner fc-accent">
+                                <div class="fc-label">FOCUS</div>
+                                <div class="fc-focus-text">VAPT &amp; Red Teaming</div>
+                            </div>
+                        </div>
+                        <div class="float-card" data-depth="0.7" style="--card-x:42%;--card-y:55%;--card-rot:-2deg;">
+                            <div class="fc-inner fc-dark">
+                                <div class="fc-label">PURSUING</div>
+                                <div class="fc-cert">OSCP</div>
+                                <div class="fc-cert-sub">Offensive Security</div>
+                            </div>
+                        </div>
+                        <div class="float-card" data-depth="0.4" style="--card-x:10%;--card-y:72%;--card-rot:3deg;">
+                            <div class="fc-inner fc-terminal">
+                                <div class="fc-term-line"><span class="fc-prompt">$</span> whoami</div>
+                                <div class="fc-term-output">psyclox</div>
+                                <div class="fc-term-line"><span class="fc-prompt">$</span> cat mission.txt</div>
+                                <div class="fc-term-output">Break systems to make them stronger.</div>
+                            </div>
+                        </div>
+                        <div class="float-card fc-small" data-depth="0.8"
+                            style="--card-x:75%;--card-y:70%;--card-rot:-8deg;">
+                            <div class="fc-inner fc-red-solid"><svg viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" width="24" height="24">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                </svg></div>
+                        </div>
+                        <div class="float-card fc-small" data-depth="0.9"
+                            style="--card-x:82%;--card-y:15%;--card-rot:6deg;">
+                            <div class="fc-inner fc-dark">
+                                <div class="fc-stat-num" style="font-size:1.4rem;">73</div>
+                                <div class="fc-stat-text">CTFs</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
-
-                <div class="scroll-indicator">
-
-                    <div class="scroll-arrow">
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Transition Element -->
-            <div class="section-transition" id="transition-1">
-                <svg class="transition-wave" viewBox="0 0 1440 120" preserveAspectRatio="none">
-                    <path d="M0,60 C360,120 720,0 1080,60 C1260,90 1380,60 1440,60 L1440,120 L0,120 Z"></path>
-                </svg>
             </div>
+        </section>
 
-            <!-- About Section - Innovative Terminal/Hologram Design -->
-            <section class="about section-light" id="about">
-                <div class="container">
-                    <div class="section-header">
-                        <span class="section-tag">&lt;about&gt;</span>
-                        <h2 class="section-title">About <span class="gradient-text-2">Me</span></h2>
+        <!-- Skills Section -->
+        <section class="skills section-light" id="skills">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">&lt;skills&gt;</span>
+                    <h2 class="section-title">My <span class="gradient-text">Skills</span></h2>
+                </div>
+
+                <div class="arsenal-grid">
+                    <!-- Security (Offensive) -->
+                    <div class="arsenal-card" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
+                        <div class="card-glass"></div>
+                        <div class="card-header">
+                            <div class="card-icon security-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                </svg>
+                            </div>
+                            <h3>Offensive Security</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="competency-list">
+                                <li>Web Application VAPT</li>
+                                <li>Network Infrastructure Testing</li>
+                                <li>Manual Exploitation & POCs</li>
+                                <li>LLM & GenAI Security Testing</li>
+                                <li>Cloud Security Assessments</li>
+                                <li>API Security Testing</li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <div class="about-innovative">
-                        <!-- Chromatic Parallax Text -->
-                        <div class="about-parallax-text">
-                            <div class="layer layer-main">PSYCLOX</div>
-                            <div class="layer layer-cyan">PSYCLOX</div>
-                            <div class="layer layer-magenta">PSYCLOX</div>
+                    <!-- Technical Ops -->
+                    <div class="arsenal-card" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
+                        <div class="card-glass"></div>
+                        <div class="card-header">
+                            <div class="card-icon tech-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="16 18 22 12 16 6" />
+                                    <polyline points="8 6 2 12 8 18" />
+                                </svg>
+                            </div>
+                            <h3>Technical Ops</h3>
                         </div>
-
-                        <!-- Left: Animated Data Visualization (Dark Theme) -->
-                        <div class="about-hologram">
-                            <div class="radar-container">
-                                <!-- Dual Theme Grid -->
-                                <div class="radar-grid">
-                                    <!-- Rings will be styled as Ripples (Light) or Glitch Rings (Dark) -->
-                                    <div class="radar-circle c1"></div>
-                                    <div class="radar-circle c2"></div>
-                                    <div class="radar-circle c3"></div>
-
-                                    <div class="radar-crosshair h"></div>
-                                    <div class="radar-crosshair v"></div>
-
-                                    <!-- Dark Theme Only Elements -->
-                                    <div class="virus-glitch-effect"></div>
-                                    <div class="scan-line"></div>
-                                </div>
-                                <div class="radar-sweep"></div>
-
-                                <!-- Detected Targets -->
-                                <div class="radar-target vapt-target" data-label="VAPT">
-                                    <div class="target-dot"></div>
-                                    <div class="target-ring"></div>
-                                </div>
-                                <div class="radar-target soc-target" data-label="SOC">
-                                    <div class="target-dot"></div>
-                                    <div class="target-ring"></div>
-                                </div>
-                                <div class="radar-target ai-target" data-label="AI">
-                                    <div class="target-dot"></div>
-                                    <div class="target-ring"></div>
-                                </div>
-
-                                <!-- Central Core -->
-                                <div class="radar-core">
-                                    <div class="core-dot"></div>
-                                    <div class="core-pulse"></div>
-                                    <!-- Biohazard Icon for Dark Theme -->
-                                    <svg class="virus-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                        <path
-                                            d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"
-                                            opacity="0.5" />
-                                        <path
-                                            d="M12 6a6 6 0 1 0 6 6 6 6 0 0 0-6-6zm0 10a4 4 0 1 1 4-4 4 4 0 0 1-4 4z" />
-                                        <path d="M12 8a4 4 0 0 0-4 4h2a2 2 0 1 1 2 2v2a4 4 0 0 0 0-8z" />
-                                    </svg>
-                                </div>
-                            </div>
+                        <div class="card-body">
+                            <ul class="competency-list">
+                                <li>Secure Code Review & Auditing</li>
+                                <li>AI-Driven Threat Detection</li>
+                                <li>SOC & SIEM Monitoring</li>
+                                <li>Threat Modeling & Analysis</li>
+                                <li>Python Security Automation</li>
+                                <li>Vulnerability Management</li>
+                            </ul>
                         </div>
+                    </div>
 
-                        <!-- Right: Terminal-style info -->
-                        <div class="about-terminal">
-                            <div class="terminal-header">
-                                <div class="terminal-dots">
-                                    <span class="dot red"></span>
-                                    <span class="dot yellow"></span>
-                                    <span class="dot green"></span>
-                                </div>
-                                <span class="terminal-title">psyclox@cybervault:~</span>
+                    <!-- Tools (Icons) -->
+                    <div class="arsenal-card tools-card" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
+                        <div class="card-glass"></div>
+                        <div class="card-header">
+                            <div class="card-icon tools-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                                </svg>
                             </div>
-                            <div class="terminal-body">
-                                <div class="terminal-line">
-                                    <span class="prompt">$</span>
-                                    <span class="command">whoami</span>
-                                </div>
-                                <div class="terminal-output name-output">
-                                    Karthikeyan <span class="muted">aka</span> <span class="accent">Psyclox</span>
-                                </div>
-
-                                <div class="terminal-line">
-                                    <span class="prompt">$</span>
-                                    <span class="command">cat role.txt</span>
-                                </div>
-                                <div class="terminal-output">
-                                    Purple Teamer | Ethical Hacker | Security Analyst
-                                </div>
-
-                                <div class="terminal-line">
-                                    <span class="prompt">$</span>
-                                    <span class="command">cat about.md</span>
-                                </div>
-                                <div class="terminal-output description-output">
-                                    <p>Cybersecurity professional bridging offensive and defensive security. Expert in
-                                        <span class="highlight">VAPT</span> and <span class="highlight">SOC
-                                            operations</span>.
-                                    </p>
-                                    <p>B.Tech in CS & Business Systems. Currently pursuing <span
-                                            class="highlight">OSCP</span> and exploring <span
-                                            class="highlight">AI-driven
-                                            security</span>.</p>
-                                </div>
-
-                                <div class="terminal-line">
-                                    <span class="prompt">$</span>
-                                    <span class="command">./stats --format=json</span>
-                                </div>
-                                <div class="terminal-output stats-output">
-                                    <pre>{
-  "certifications": <span class="number" data-count="3">0</span>,
-  "projects": <span class="number" data-count="10">0</span>,
-  "vulns_found": <span class="number" data-count="35">0</span>,
-  "ctfs_completed": <span class="number" data-count="73">0</span>
-}</pre>
-                                </div>
-
-                                <div class="terminal-line">
-                                    <span class="prompt">$</span>
-                                    <span class="cursor-blink">_</span>
-                                </div>
+                            <h3>Deployment Tools</h3>
+                        </div>
+                        <div class="tools-grid-icons expanded-arsenal">
+                            <!-- Row 1: The Heavy Hitters -->
+                            <div class="tool-icon-item" title="Burp Suite Professional">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9" />
+                                </svg>
+                                <span>Burp Pro</span>
                             </div>
-
-                            <a href="#contact" class="terminal-btn">
-                                <span>./connect.sh</span>
+                            <div class="tool-icon-item" title="Nessus Vulnerability Scanner">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M12 6v6l4 2" />
+                                </svg>
+                                <span>Nessus</span>
+                            </div>
+                            <div class="tool-icon-item" title="Metasploit Framework">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                </svg>
+                                <span>Metasploit</span>
+                            </div>
+                            <div class="tool-icon-item" title="Cobalt Strike / BeEF">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M5 12h14M12 5l7 7-7 7" />
                                 </svg>
-                            </a>
+                                <span>BeEF</span>
+                            </div>
+
+                            <!-- Row 2: Active Directory & Ops -->
+                            <div class="tool-icon-item" title="Active Directory / BloodHound">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                </svg>
+                                <span>Active Dir</span>
+                            </div>
+                            <div class="tool-icon-item" title="Pentest GPT / AI Ops">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2a10 10 0 1 0 10 10H12V2z" />
+                                    <path d="M12 12L2.5 14.5M12 12l9.5-2.5" />
+                                </svg>
+                                <span>PentestGPT</span>
+                            </div>
+                            <div class="tool-icon-item" title="Kali Linux">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                    <polyline points="12 8 12 16" />
+                                </svg>
+                                <span>Kali</span>
+                            </div>
+                            <div class="tool-icon-item" title="Wireshark">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                                <span>Wireshark</span>
+                            </div>
+
+                            <!-- Row 3: Cracking & Web -->
+                            <div class="tool-icon-item" title="Hashcat">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                </svg>
+                                <span>Hashcat</span>
+                            </div>
+                            <div class="tool-icon-item" title="OWASP ZAP">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                                </svg>
+                                <span>ZAP</span>
+                            </div>
+                            <div class="tool-icon-item" title="Nmap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="3 11 22 2 13 21 11 13 3 11" />
+                                </svg>
+                                <span>Nmap</span>
+                            </div>
+                            <div class="tool-icon-item" title="Hydra">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.1.2-2.2.5-3.3.3-1.1 1.09-2.2 2-3.3.99-1.09 2.5-1.9 4-2.7" />
+                                </svg>
+                                <span>Hydra</span>
+                            </div>
+
+                            <!-- Row 4: SOC & Defense -->
+                            <div class="tool-icon-item" title="Splunk SIEM">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                                    <line x1="12" y1="22.08" x2="12" y2="12" />
+                                </svg>
+                                <span>Splunk</span>
+                            </div>
+                            <div class="tool-icon-item" title="Wazuh EDR">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                    <path d="M9 12l2 2 4-4" />
+                                </svg>
+                                <span>Wazuh</span>
+                            </div>
+                            <div class="tool-icon-item" title="Snort IDS">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <line x1="12" y1="8" x2="12" y2="12" />
+                                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                                </svg>
+                                <span>Snort</span>
+                            </div>
+                            <div class="tool-icon-item" title="AlienVault / Sentinel">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                                    <line x1="8" y1="21" x2="16" y2="21" />
+                                    <line x1="12" y1="17" x2="12" y2="21" />
+                                </svg>
+                                <span>AlienVault</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </section>
+        </section>
+        <!-- Projects Section -->
+        <section class="projects section-light" id="projects">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">&lt;projects&gt;</span>
+                    <h2 class="section-title">Featured <span class="gradient-text-2">Projects</span></h2>
+                    <p class="section-subtitle">Security tools and real-world assessments</p>
+                </div>
 
-            <!-- Skills Section -->
-            <section class="skills section-light" id="skills">
-                <div class="container">
-                    <div class="section-header">
-                        <span class="section-tag">&lt;skills&gt;</span>
-                        <h2 class="section-title">My <span class="gradient-text">Skills</span></h2>
+                <div class="holo-grid">
+                    <!-- Project 1: Encrypt Anything -->
+                    <div class="holo-card" data-tilt data-tilt-glare data-tilt-max-glare="0.3">
+                        <div class="holo-emitter tl"></div>
+                        <div class="holo-emitter tr"></div>
+                        <div class="holo-emitter bl"></div>
+                        <div class="holo-emitter br"></div>
+
+                        <div class="holo-content">
+                            <div class="holo-header">
+                                <h3 class="holo-title">Encrypt Anything</h3>
+                                <div class="holo-status">
+                                    <span class="status-dot"></span>
+                                    Deployed
+                                </div>
+                            </div>
+
+                            <div class="holo-terminal">
+                                <span class="terminal-line">init encryption_module</span>
+                                <span class="terminal-line">loading AES-256... [OK]</span>
+                                <span class="terminal-line">derive_key(pbkdf2)... [OK]</span>
+                            </div>
+
+                            <div class="holo-body">
+                                <p>Military-grade text encryption tool. Secures sensitive data using client-side
+                                    AES-256
+                                    and PBKDF2 key derivation.</p>
+                            </div>
+
+                            <div class="holo-tech-stack">
+                                <span class="holo-tag">JavaScript</span>
+                                <span class="holo-tag">Cryptography</span>
+                                <span class="holo-tag">Chrome Ext</span>
+                            </div>
+
+                            <div class="holo-actions">
+                                <a href="https://github.com/psyclox/Encrypt-Anything" target="_blank" class="holo-btn">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                                    </svg>
+                                    Source
+                                </a>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="arsenal-grid">
-                        <!-- Security (Offensive) -->
-                        <div class="arsenal-card" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
-                            <div class="card-glass"></div>
-                            <div class="card-header">
-                                <div class="card-icon security-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                                    </svg>
+                    <!-- Project 2: VAPT Assessment -->
+                    <div class="holo-card" data-tilt data-tilt-glare data-tilt-max-glare="0.3">
+                        <div class="holo-emitter tl"></div>
+                        <div class="holo-emitter tr"></div>
+                        <div class="holo-emitter bl"></div>
+                        <div class="holo-emitter br"></div>
+
+                        <div class="holo-content">
+                            <div class="holo-header">
+                                <h3 class="holo-title">VAPT Assessment</h3>
+                                <div class="holo-status">
+                                    <span class="status-dot"></span>
+                                    Classified
                                 </div>
-                                <h3>Offensive Security</h3>
                             </div>
-                            <div class="card-body">
-                                <ul class="competency-list">
-                                    <li>Web Application VAPT</li>
-                                    <li>Network Infrastructure Testing</li>
-                                    <li>Manual Exploitation & POCs</li>
-                                    <li>LLM & GenAI Security Testing</li>
-                                    <li>Cloud Security Assessments</li>
-                                    <li>API Security Testing</li>
-                                </ul>
+
+                            <div class="holo-terminal">
+                                <span class="terminal-line">nmap -sV -p- target_ip</span>
+                                <span class="terminal-line">scanning ports... [DONE]</span>
+                                <span class="terminal-line">found critical vuln: CVE-2023-XXXX</span>
+                            </div>
+
+                            <div class="holo-body">
+                                <p>Comprehensive vulnerability assessment and penetration testing. Identified
+                                    critical
+                                    risks and provided remediation strategies.</p>
+                            </div>
+
+                            <div class="holo-tech-stack">
+                                <span class="holo-tag">Network Sec</span>
+                                <span class="holo-tag">Web App PenTest</span>
+                                <span class="holo-tag">Report Writing</span>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+                    <!-- Project 4: ReconMate -->
+                    <div class="holo-card" data-tilt data-tilt-glare data-tilt-max-glare="0.3">
+                        <div class="holo-emitter tl"></div>
+                        <div class="holo-emitter tr"></div>
+                        <div class="holo-emitter bl"></div>
+                        <div class="holo-emitter br"></div>
+
+                        <div class="holo-content">
+                            <div class="holo-header">
+                                <h3 class="holo-title">ReconMate</h3>
+                                <div class="holo-status">
+                                    <span class="status-dot"></span>
+                                    Deployed
+                                </div>
+                            </div>
+
+                            <div class="holo-terminal">
+                                <span class="terminal-line">> ./reconmate.py -t target</span>
+                                <span class="terminal-line">[+] Enumerating Subdomains...</span>
+                                <span class="terminal-line">[+] Analyzing DNS Records...</span>
+                            </div>
+
+                            <div class="holo-body">
+                                <p>Professional-grade OSINT automation tool. Streamlines reconnaissance with
+                                    multi-threaded subdomain enumeration and port scanning.</p>
+                            </div>
+
+                            <div class="holo-tech-stack">
+                                <span class="holo-tag">Python</span>
+                                <span class="holo-tag">OSINT</span>
+                                <span class="holo-tag">Automation</span>
+                            </div>
+
+                            <div class="holo-actions">
+                                <a href="https://github.com/psyclox/Reconmate" target="_blank" class="holo-btn">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                                    </svg>
+                                    Source
+                                </a>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Technical Ops -->
-                        <div class="arsenal-card" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
-                            <div class="card-glass"></div>
-                            <div class="card-header">
-                                <div class="card-icon tech-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="16 18 22 12 16 6" />
-                                        <polyline points="8 6 2 12 8 18" />
-                                    </svg>
+                    <!-- Project 5: Netshark -->
+                    <div class="holo-card" data-tilt data-tilt-glare data-tilt-max-glare="0.3">
+                        <div class="holo-emitter tl"></div>
+                        <div class="holo-emitter tr"></div>
+                        <div class="holo-emitter bl"></div>
+                        <div class="holo-emitter br"></div>
+
+                        <div class="holo-content">
+                            <div class="holo-header">
+                                <h3 class="holo-title">Netshark</h3>
+                                <div class="holo-status">
+                                    <span class="status-dot"></span>
+                                    Active
                                 </div>
-                                <h3>Technical Ops</h3>
                             </div>
-                            <div class="card-body">
-                                <ul class="competency-list">
-                                    <li>Secure Code Review & Auditing</li>
-                                    <li>AI-Driven Threat Detection</li>
-                                    <li>SOC & SIEM Monitoring</li>
-                                    <li>Threat Modeling & Analysis</li>
-                                    <li>Python Security Automation</li>
-                                    <li>Vulnerability Management</li>
-                                </ul>
+
+                            <div class="holo-terminal">
+                                <span class="terminal-line">> ./netshark.py --monitor wlan0</span>
+                                <span class="terminal-line">[+] Capturing packets...</span>
+                                <span class="terminal-line">[!] ANOMALY DETECTED: 192.168.1.5</span>
+                            </div>
+
+                            <div class="holo-body">
+                                <p>Network Traffic Anomaly Detector. Analyzes PCAP files and captures live traffic
+                                    to
+                                    identify suspicious patterns and potential intrusions.</p>
+                            </div>
+
+                            <div class="holo-tech-stack">
+                                <span class="holo-tag">Python</span>
+                                <span class="holo-tag">PCAP</span>
+                                <span class="holo-tag">Network Sec</span>
+                            </div>
+
+                            <div class="holo-actions">
+                                <a href="https://github.com/psyclox/Netshark" target="_blank" class="holo-btn">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                                    </svg>
+                                    Source
+                                </a>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Tools (Icons) -->
-                        <div class="arsenal-card tools-card" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
-                            <div class="card-glass"></div>
-                            <div class="card-header">
-                                <div class="card-icon tools-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path
-                                            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-                                    </svg>
+                    <!-- Project 6: SQLister -->
+                    <div class="holo-card" data-tilt data-tilt-glare data-tilt-max-glare="0.3">
+                        <div class="holo-emitter tl"></div>
+                        <div class="holo-emitter tr"></div>
+                        <div class="holo-emitter bl"></div>
+                        <div class="holo-emitter br"></div>
+
+                        <div class="holo-content">
+                            <div class="holo-header">
+                                <h3 class="holo-title">SQLister</h3>
+                                <div class="holo-status">
+                                    <span class="status-dot"></span>
+                                    Deployed
                                 </div>
-                                <h3>Deployment Tools</h3>
                             </div>
-                            <div class="tools-grid-icons expanded-arsenal">
-                                <!-- Row 1: The Heavy Hitters -->
-                                <div class="tool-icon-item" title="Burp Suite Professional">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path
-                                            d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9" />
-                                    </svg>
-                                    <span>Burp Pro</span>
-                                </div>
-                                <div class="tool-icon-item" title="Nessus Vulnerability Scanner">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10" />
-                                        <path d="M12 6v6l4 2" />
-                                    </svg>
-                                    <span>Nessus</span>
-                                </div>
-                                <div class="tool-icon-item" title="Metasploit Framework">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                                    </svg>
-                                    <span>Metasploit</span>
-                                </div>
-                                <div class="tool-icon-item" title="Cobalt Strike / BeEF">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M5 12h14M12 5l7 7-7 7" />
-                                    </svg>
-                                    <span>BeEF</span>
-                                </div>
 
-                                <!-- Row 2: Active Directory & Ops -->
-                                <div class="tool-icon-item" title="Active Directory / BloodHound">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                        <circle cx="9" cy="7" r="4" />
-                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                            <div class="holo-terminal">
+                                <span class="terminal-line">> ./sqlister.py -u http://target.com</span>
+                                <span class="terminal-line">[+] Testing parameter 'id'...</span>
+                                <span class="terminal-line">[!] VULNERABLE: Union Based SQLi</span>
+                            </div>
+
+                            <div class="holo-body">
+                                <p>Advanced SQL injection detection and exploitation tool. Automates the discovery
+                                    of
+                                    SQLi vulnerabilities with intelligent payload generation.</p>
+                            </div>
+
+                            <div class="holo-tech-stack">
+                                <span class="holo-tag">Python</span>
+                                <span class="holo-tag">SQLi</span>
+                                <span class="holo-tag">Automation</span>
+                            </div>
+
+                            <div class="holo-actions">
+                                <a href="https://github.com/psyclox/sqlister" target="_blank" class="holo-btn">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                                     </svg>
-                                    <span>Active Dir</span>
-                                </div>
-                                <div class="tool-icon-item" title="Pentest GPT / AI Ops">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 2a10 10 0 1 0 10 10H12V2z" />
-                                        <path d="M12 12L2.5 14.5M12 12l9.5-2.5" />
+                                    Source
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section - Minimalist Redesign -->
+        <section class="experience section-light" id="experience">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">&lt;experience&gt;</span>
+                    <h2 class="section-title">Professional<span class="gradient-text-2"> Journey </span></h2>
+                </div>
+
+                <div class="exp-timeline">
+                    <!-- Experience 1: Cybervault -->
+                    <div class="exp-card-v2">
+                        <div class="exp-accent-line"></div>
+                        <div class="exp-card-top">
+                            <div class="exp-logo-wrap">
+                                <img src="assets/exp/cybervault_logo.png" alt="Cybervault" class="exp-logo-v2">
+                            </div>
+                            <div class="exp-info-block">
+                                <h3 class="exp-company-v2">CyberVault Innovations</h3>
+                                <span class="exp-role-v2">Cyber Security Analyst</span>
+                            </div>
+                            <div class="exp-meta-block">
+                                <span class="exp-date-v2">Oct 2025 — Present</span>
+                                <span class="exp-loc-v2">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        width="14" height="14">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
                                     </svg>
-                                    <span>PentestGPT</span>
-                                </div>
-                                <div class="tool-icon-item" title="Kali Linux">
+                                    Coimbatore
+                                </span>
+                            </div>
+                            <div class="exp-hover-hint">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"
+                                    height="16">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="exp-card-details">
+                            <ul class="exp-responsibilities">
+                                <li>Conducting vulnerability assessments and penetration testing on client
+                                    infrastructure</li>
+                                <li>Monitoring and analyzing security events in SOC environment</li>
+                                <li>Bridging offensive and defensive security operations</li>
+                                <li>Leveraging AI-driven tools for threat detection and analysis</li>
+                                <li>Collaborating with teams to implement security remediations</li>
+                            </ul>
+                            <div class="exp-tags-v2">
+                                <span class="exp-tag">VAPT</span>
+                                <span class="exp-tag">SOC</span>
+                                <span class="exp-tag">Purple Team</span>
+                                <span class="exp-tag">AI Analysis</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Experience 2: HackerOne -->
+                    <div class="exp-card-v2">
+                        <div class="exp-accent-line"></div>
+                        <div class="exp-card-top">
+                            <div class="exp-logo-wrap">
+                                <img src="assets/exp/hackerone_logo.png" alt="HackerOne" class="exp-logo-v2">
+                            </div>
+                            <div class="exp-info-block">
+                                <h3 class="exp-company-v2">HackerOne</h3>
+                                <span class="exp-role-v2">Bug Bounty Hunter</span>
+                            </div>
+                            <div class="exp-meta-block">
+                                <span class="exp-date-v2">Since June 2025</span>
+                                <span class="exp-loc-v2">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        width="14" height="14">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    Remote
+                                </span>
+                            </div>
+                            <div class="exp-hover-hint">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"
+                                    height="16">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="exp-card-details">
+                            <ul class="exp-responsibilities">
+                                <li>Identifying and reporting security vulnerabilities in web applications</li>
+                                <li>Participating in bug bounty programs to secure digital assets</li>
+                                <li>Analyzing business logic errors and critical security flaws</li>
+                                <li>Documenting proof-of-concept exploits for remediation</li>
+                            </ul>
+                            <div class="exp-tags-v2">
+                                <span class="exp-tag">Web Security</span>
+                                <span class="exp-tag">Bug Bounty</span>
+                                <span class="exp-tag">Penetration Testing</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Professional Certifications (Grid Reflex Design) -->
+        <section class="grid-reflex-section" id="certifications">
+            <div class="cert-grid-lines"></div>
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">CERTIFICAITONS</span>
+                    <h2 class="section-title">Operative <span class="gradient-text-2">Roadmap</span></h2>
+                </div>
+
+                <div class="reflex-grid">
+                    <!-- CEH Practical -->
+                    <div class="reflex-card" data-tilt data-tilt-glare data-tilt-max-glare="0.2">
+                        <div class="cert-icon">
+                            <img src="assets/logo/CEHPRACTICAL.png" alt="CEH Practical Logo">
+                        </div>
+                        <div class="cert-info">
+                            <h3 class="cert-title">Certified Ethical Hacker (Practical)</h3>
+                            <p>Rigorous practical exam validating real-world ethical hacking skills.</p>
+                            <div class="cert-status verified">
+                                <span class="status-dot"></span>
+                                <span>Verified</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TCM Practical Ethical Hacker -->
+                    <div class="reflex-card" data-tilt data-tilt-glare data-tilt-max-glare="0.2">
+                        <div class="cert-icon">
+                            <img src="assets/logo/TCM.png" alt="TCM Security Logo">
+                        </div>
+                        <div class="cert-info">
+                            <h3 class="cert-title">Practical Ethical Hacker</h3>
+                            <p>Hands-on penetration testing certification covering network and AD attacks.</p>
+                            <div class="cert-status verified">
+                                <span class="status-dot"></span>
+                                <span>Verified</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Offensive Pentesting -->
+                    <div class="reflex-card" data-tilt data-tilt-glare data-tilt-max-glare="0.2">
+                        <div class="cert-icon">
+                            <img src="assets/logo/tryhackme.webp" alt="TryHackMe Logo">
+                        </div>
+                        <div class="cert-info">
+                            <h3 class="cert-title">Offensive Pentesting</h3>
+                            <p>Advanced exploitation techniques and red teaming methodologies.</p>
+                            <div class="cert-status verified">
+                                <span class="status-dot"></span>
+                                <span>Verified</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- API Pentesting -->
+                    <div class="reflex-card" data-tilt data-tilt-glare data-tilt-max-glare="0.2">
+                        <div class="cert-icon">
+                            <img src="assets/logo/capij_logo.png" alt="CAPIJ Logo">
+                        </div>
+                        <div class="cert-info">
+                            <h3 class="cert-title">Certified API Pentester</h3>
+                            <p>Specialized certification in identifying and exploiting API vulnerabilities.</p>
+                            <div class="cert-status verified">
+                                <span class="status-dot"></span>
+                                <span>Verified</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- OSCP (Locked) -->
+                    <div class="reflex-card" data-tilt data-tilt-glare data-tilt-max-glare="0.1"
+                        style="opacity: 0.7; filter: grayscale(0.5);">
+                        <div class="cert-icon">
+                            <img src="assets/logo/OSCP-PEN-200-.png" alt="OSCP Logo">
+                        </div>
+                        <div class="cert-info">
+                            <h3 class="cert-title">OSCP</h3>
+                            <p>Offensive Security Certified Professional. The gold standard in pentesting.</p>
+                            <div class="cert-status pending">
+                                <span class="status-dot"
+                                    style="background: #ffcc00; box-shadow: 0 0 6px #ffcc00;"></span>
+                                <span>Target Locked // Prep</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Achievements Section (New Icon List Layout) -->
+        <section class="achievements-section section-light" id="achievements">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">IMPACT</span>
+                    <h2 class="section-title">Operational <span class="gradient-text-2">Milestones</span></h2>
+                </div>
+                <div class="milestone-hud-container">
+                    <!-- Vulnerabilities -->
+                    <div class="hud-item item-1">
+                        <div class="hud-value">35+</div>
+                        <div class="hud-label">VULNERABILITIES</div>
+                    </div>
+
+                    <div class="hud-divider"></div>
+
+                    <!-- Assessments -->
+                    <div class="hud-item item-2">
+                        <div class="hud-value">10+</div>
+                        <div class="hud-label">AUDITS</div>
+                    </div>
+
+                    <div class="hud-divider"></div>
+
+                    <!-- CTFs -->
+                    <div class="hud-item item-3">
+                        <div class="hud-value">73+</div>
+                        <div class="hud-label">CTFS CLEARED</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact section-dark" id="contact">
+            <div class="container">
+                <div class="section-header light">
+                    <span class="section-tag">&lt;contact&gt;</span>
+                    <h2 class="section-title">Get In <span class="gradient-text">Touch</span></h2>
+                    <p class="section-subtitle">Have a project in mind? Let's talk security.</p>
+                </div>
+
+                <div class="cyber-interface">
+                    <!-- Left: Signal Panel -->
+                    <div class="interface-sidebar">
+                        <div class="sidebar-header">
+                            <div class="signal-bars">
+                                <span class="bar b1"></span>
+                                <span class="bar b2"></span>
+                                <span class="bar b3"></span>
+                                <span class="bar b4"></span>
+                            </div>
+                            <span class="status-text">UPLINK_ESTABLISHED</span>
+                        </div>
+
+                        <div class="comm-channels">
+                            <a href="mailto:karthikeyaneh@gmail.com" class="channel-link">
+                                <div class="channel-icon">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path
                                             d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                                        <polyline points="12 8 12 16" />
+                                        <polyline points="22,6 12,13 2,6" />
                                     </svg>
-                                    <span>Kali</span>
                                 </div>
-                                <div class="tool-icon-item" title="Wireshark">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
-                                        <circle cx="12" cy="12" r="3" />
-                                    </svg>
-                                    <span>Wireshark</span>
+                                <div class="channel-info">
+                                    <span class="channel-label">ENCRYPTED_MAIL</span>
+                                    <span class="channel-value">karthikeyaneh@gmail.com</span>
                                 </div>
+                                <div class="channel-status">SECURE</div>
+                            </a>
 
-                                <!-- Row 3: Cracking & Web -->
-                                <div class="tool-icon-item" title="Hashcat">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                                    </svg>
-                                    <span>Hashcat</span>
-                                </div>
-                                <div class="tool-icon-item" title="OWASP ZAP">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                                    </svg>
-                                    <span>ZAP</span>
-                                </div>
-                                <div class="tool-icon-item" title="Nmap">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polygon points="3 11 22 2 13 21 11 13 3 11" />
-                                    </svg>
-                                    <span>Nmap</span>
-                                </div>
-                                <div class="tool-icon-item" title="Hydra">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <a href="https://linkedin.com/in/karthikeyaneh" target="_blank" rel="noopener"
+                                class="channel-link">
+                                <div class="channel-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
                                         <path
-                                            d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.1.2-2.2.5-3.3.3-1.1 1.09-2.2 2-3.3.99-1.09 2.5-1.9 4-2.7" />
+                                            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                                     </svg>
-                                    <span>Hydra</span>
                                 </div>
+                                <div class="channel-info">
+                                    <span class="channel-label">PROFESSIONAL_NET</span>
+                                    <span class="channel-value">LinkedIn Profile</span>
+                                </div>
+                                <div class="channel-status">ACTIVE</div>
+                            </a>
 
-                                <!-- Row 4: SOC & Defense -->
-                                <div class="tool-icon-item" title="Splunk SIEM">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <a href="https://github.com/psyclox" target="_blank" rel="noopener" class="channel-link">
+                                <div class="channel-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
                                         <path
-                                            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                                        <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-                                        <line x1="12" y1="22.08" x2="12" y2="12" />
+                                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                                     </svg>
-                                    <span>Splunk</span>
                                 </div>
-                                <div class="tool-icon-item" title="Wazuh EDR">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                                        <path d="M9 12l2 2 4-4" />
-                                    </svg>
-                                    <span>Wazuh</span>
+                                <div class="channel-info">
+                                    <span class="channel-label">CODE_REPOSITORY</span>
+                                    <span class="channel-value">GitHub</span>
                                 </div>
-                                <div class="tool-icon-item" title="Snort IDS">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10" />
-                                        <line x1="12" y1="8" x2="12" y2="12" />
-                                        <line x1="12" y1="16" x2="12.01" y2="16" />
-                                    </svg>
-                                    <span>Snort</span>
-                                </div>
-                                <div class="tool-icon-item" title="AlienVault / Sentinel">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-                                        <line x1="8" y1="21" x2="16" y2="21" />
-                                        <line x1="12" y1="17" x2="12" y2="21" />
-                                    </svg>
-                                    <span>AlienVault</span>
-                                </div>
-                            </div>
+                                <div class="channel-status">SYNCED</div>
+                            </a>
                         </div>
                     </div>
-            </section>
-            <!-- Projects Section -->
-            <section class="projects section-light" id="projects">
-                <div class="container">
-                    <div class="section-header">
-                        <span class="section-tag">&lt;projects&gt;</span>
-                        <h2 class="section-title">Featured <span class="gradient-text-2">Projects</span></h2>
-                        <p class="section-subtitle">Security tools and real-world assessments</p>
-                    </div>
 
-                    <div class="holo-grid">
-                        <!-- Project 1: Encrypt Anything -->
-                        <div class="holo-card" data-tilt data-tilt-glare data-tilt-max-glare="0.3">
-                            <div class="holo-emitter tl"></div>
-                            <div class="holo-emitter tr"></div>
-                            <div class="holo-emitter bl"></div>
-                            <div class="holo-emitter br"></div>
-
-                            <div class="holo-content">
-                                <div class="holo-header">
-                                    <h3 class="holo-title">Encrypt Anything</h3>
-                                    <div class="holo-status">
-                                        <span class="status-dot"></span>
-                                        Deployed
-                                    </div>
-                                </div>
-
-                                <div class="holo-terminal">
-                                    <span class="terminal-line">init encryption_module</span>
-                                    <span class="terminal-line">loading AES-256... [OK]</span>
-                                    <span class="terminal-line">derive_key(pbkdf2)... [OK]</span>
-                                </div>
-
-                                <div class="holo-body">
-                                    <p>Military-grade text encryption tool. Secures sensitive data using client-side
-                                        AES-256
-                                        and PBKDF2 key derivation.</p>
-                                </div>
-
-                                <div class="holo-tech-stack">
-                                    <span class="holo-tag">JavaScript</span>
-                                    <span class="holo-tag">Cryptography</span>
-                                    <span class="holo-tag">Chrome Ext</span>
-                                </div>
-
-                                <div class="holo-actions">
-                                    <a href="https://github.com/psyclox/Encrypt-Anything" target="_blank"
-                                        class="holo-btn">
-                                        <svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                                        </svg>
-                                        Source
-                                    </a>
-                                </div>
+                    <!-- Right: Transmission Terminal -->
+                    <div class="interface-terminal">
+                        <div class="terminal-bar">
+                            <div class="terminal-dots">
+                                <span></span><span></span><span></span>
                             </div>
+                            <span class="terminal-title">COMPOSE_SECURE_PACKET</span>
                         </div>
 
-                        <!-- Project 2: VAPT Assessment -->
-                        <div class="holo-card" data-tilt data-tilt-glare data-tilt-max-glare="0.3">
-                            <div class="holo-emitter tl"></div>
-                            <div class="holo-emitter tr"></div>
-                            <div class="holo-emitter bl"></div>
-                            <div class="holo-emitter br"></div>
-
-                            <div class="holo-content">
-                                <div class="holo-header">
-                                    <h3 class="holo-title">VAPT Assessment</h3>
-                                    <div class="holo-status">
-                                        <span class="status-dot"></span>
-                                        Classified
-                                    </div>
-                                </div>
-
-                                <div class="holo-terminal">
-                                    <span class="terminal-line">nmap -sV -p- target_ip</span>
-                                    <span class="terminal-line">scanning ports... [DONE]</span>
-                                    <span class="terminal-line">found critical vuln: CVE-2023-XXXX</span>
-                                </div>
-
-                                <div class="holo-body">
-                                    <p>Comprehensive vulnerability assessment and penetration testing. Identified
-                                        critical
-                                        risks and provided remediation strategies.</p>
-                                </div>
-
-                                <div class="holo-tech-stack">
-                                    <span class="holo-tag">Network Sec</span>
-                                    <span class="holo-tag">Web App PenTest</span>
-                                    <span class="holo-tag">Report Writing</span>
-                                </div>
-
-
+                        <form class="cyber-form" id="contact-form">
+                            <div class="cyber-input-group">
+                                <label for="name" class="cyber-label">> IDENTITY</label>
+                                <input type="text" id="name" name="name" class="cyber-input" placeholder="_enter_name"
+                                    required>
+                                <div class="input-line"></div>
                             </div>
-                        </div>
 
-
-
-                        <!-- Project 4: ReconMate -->
-                        <div class="holo-card" data-tilt data-tilt-glare data-tilt-max-glare="0.3">
-                            <div class="holo-emitter tl"></div>
-                            <div class="holo-emitter tr"></div>
-                            <div class="holo-emitter bl"></div>
-                            <div class="holo-emitter br"></div>
-
-                            <div class="holo-content">
-                                <div class="holo-header">
-                                    <h3 class="holo-title">ReconMate</h3>
-                                    <div class="holo-status">
-                                        <span class="status-dot"></span>
-                                        Deployed
-                                    </div>
-                                </div>
-
-                                <div class="holo-terminal">
-                                    <span class="terminal-line">> ./reconmate.py -t target</span>
-                                    <span class="terminal-line">[+] Enumerating Subdomains...</span>
-                                    <span class="terminal-line">[+] Analyzing DNS Records...</span>
-                                </div>
-
-                                <div class="holo-body">
-                                    <p>Professional-grade OSINT automation tool. Streamlines reconnaissance with
-                                        multi-threaded subdomain enumeration and port scanning.</p>
-                                </div>
-
-                                <div class="holo-tech-stack">
-                                    <span class="holo-tag">Python</span>
-                                    <span class="holo-tag">OSINT</span>
-                                    <span class="holo-tag">Automation</span>
-                                </div>
-
-                                <div class="holo-actions">
-                                    <a href="https://github.com/psyclox/Reconmate" target="_blank" class="holo-btn">
-                                        <svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                                        </svg>
-                                        Source
-                                    </a>
-                                </div>
+                            <div class="cyber-input-group">
+                                <label for="email" class="cyber-label">> REPLY_FREQUENCY</label>
+                                <input type="email" id="email" name="email" class="cyber-input"
+                                    placeholder="_enter_email" required>
+                                <div class="input-line"></div>
                             </div>
-                        </div>
 
-                        <!-- Project 5: Netshark -->
-                        <div class="holo-card" data-tilt data-tilt-glare data-tilt-max-glare="0.3">
-                            <div class="holo-emitter tl"></div>
-                            <div class="holo-emitter tr"></div>
-                            <div class="holo-emitter bl"></div>
-                            <div class="holo-emitter br"></div>
-
-                            <div class="holo-content">
-                                <div class="holo-header">
-                                    <h3 class="holo-title">Netshark</h3>
-                                    <div class="holo-status">
-                                        <span class="status-dot"></span>
-                                        Active
-                                    </div>
-                                </div>
-
-                                <div class="holo-terminal">
-                                    <span class="terminal-line">> ./netshark.py --monitor wlan0</span>
-                                    <span class="terminal-line">[+] Capturing packets...</span>
-                                    <span class="terminal-line">[!] ANOMALY DETECTED: 192.168.1.5</span>
-                                </div>
-
-                                <div class="holo-body">
-                                    <p>Network Traffic Anomaly Detector. Analyzes PCAP files and captures live traffic
-                                        to
-                                        identify suspicious patterns and potential intrusions.</p>
-                                </div>
-
-                                <div class="holo-tech-stack">
-                                    <span class="holo-tag">Python</span>
-                                    <span class="holo-tag">PCAP</span>
-                                    <span class="holo-tag">Network Sec</span>
-                                </div>
-
-                                <div class="holo-actions">
-                                    <a href="https://github.com/psyclox/Netshark" target="_blank" class="holo-btn">
-                                        <svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                                        </svg>
-                                        Source
-                                    </a>
-                                </div>
+                            <div class="cyber-input-group full-width">
+                                <label for="message" class="cyber-label">> DATA_PAYLOAD</label>
+                                <textarea id="message" name="message" class="cyber-textarea"
+                                    placeholder="_enter_message_content" rows="4" required></textarea>
+                                <div class="input-line"></div>
                             </div>
-                        </div>
 
-                        <!-- Project 6: SQLister -->
-                        <div class="holo-card" data-tilt data-tilt-glare data-tilt-max-glare="0.3">
-                            <div class="holo-emitter tl"></div>
-                            <div class="holo-emitter tr"></div>
-                            <div class="holo-emitter bl"></div>
-                            <div class="holo-emitter br"></div>
-
-                            <div class="holo-content">
-                                <div class="holo-header">
-                                    <h3 class="holo-title">SQLister</h3>
-                                    <div class="holo-status">
-                                        <span class="status-dot"></span>
-                                        Deployed
-                                    </div>
-                                </div>
-
-                                <div class="holo-terminal">
-                                    <span class="terminal-line">> ./sqlister.py -u http://target.com</span>
-                                    <span class="terminal-line">[+] Testing parameter 'id'...</span>
-                                    <span class="terminal-line">[!] VULNERABLE: Union Based SQLi</span>
-                                </div>
-
-                                <div class="holo-body">
-                                    <p>Advanced SQL injection detection and exploitation tool. Automates the discovery
-                                        of
-                                        SQLi vulnerabilities with intelligent payload generation.</p>
-                                </div>
-
-                                <div class="holo-tech-stack">
-                                    <span class="holo-tag">Python</span>
-                                    <span class="holo-tag">SQLi</span>
-                                    <span class="holo-tag">Automation</span>
-                                </div>
-
-                                <div class="holo-actions">
-                                    <a href="https://github.com/psyclox/sqlister" target="_blank" class="holo-btn">
-                                        <svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                                        </svg>
-                                        Source
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-
+                            <button type="submit" class="cyber-btn">
+                                <span class="btn-glitch-text">INITIALIZE_TRANSMISSION</span>
+                                <div class="btn-progress"></div>
+                            </button>
+                        </form>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Experience Section - Minimalist Redesign -->
-            <section class="experience section-light" id="experience">
-                <div class="container">
-                    <div class="section-header">
-                        <span class="section-tag">&lt;experience&gt;</span>
-                        <h2 class="section-title">Professional<span class="gradient-text-2"> Journey </span></h2>
-                    </div>
-
-                    <div class="experience-grid">
-                        <!-- Experience 1: Cybervault -->
-                        <div class="experience-card" id="card-1">
-                            <div class="exp-header" data-target="exp-1">
-                                <div class="exp-logo-container">
-                                    <img src="assets/exp/cybervault_logo.png" alt="Cybervault" class="exp-logo">
-                                </div>
-                                <div class="exp-main-info">
-                                    <h3 class="exp-company">CyberVault Innovations</h3>
-                                    <div class="exp-meta">
-                                        <span class="exp-role">Cyber Security Analyst</span>
-                                        <span class="exp-divider">|</span>
-                                        <span class="exp-date">Oct 2025 - Present</span>
-                                    </div>
-                                </div>
-
-                                <div class="exp-sub-info">
-                                    <div class="exp-location">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                            <circle cx="12" cy="10" r="3"></circle>
-                                        </svg>
-                                        <span>Coimbatore</span>
-                                    </div>
-                                    <button class="exp-toggle-btn" aria-label="Toggle Details">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <polyline points="6 9 12 15 18 9"></polyline>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="exp-details" id="exp-1">
-                                <div class="exp-content">
-                                    <ul class="timeline-responsibilities">
-                                        <li>Conducting vulnerability assessments and penetration testing on client
-                                            infrastructure</li>
-                                        <li>Monitoring and analyzing security events in SOC environment</li>
-                                        <li>Bridging offensive and defensive security operations</li>
-                                        <li>Leveraging AI-driven tools for threat detection and analysis</li>
-                                        <li>Collaborating with teams to implement security remediations</li>
-                                    </ul>
-                                    <div class="timeline-tags">
-                                        <span class="tag">VAPT</span>
-                                        <span class="tag">SOC</span>
-                                        <span class="tag">Purple Team</span>
-                                        <span class="tag">AI Analysis</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Experience 2: HackerOne -->
-                        <div class="experience-card" id="card-2">
-                            <div class="exp-header" data-target="exp-2">
-                                <div class="exp-logo-container">
-                                    <img src="assets/exp/hackerone_logo.png" alt="HackerOne" class="exp-logo">
-                                </div>
-                                <div class="exp-main-info">
-                                    <h3 class="exp-company">HackerOne</h3>
-                                    <div class="exp-meta">
-                                        <span class="exp-role">Bug Bounty Hunter</span>
-                                        <span class="exp-divider">|</span>
-                                        <span class="exp-date">Since June 2025</span>
-                                    </div>
-                                </div>
-
-                                <div class="exp-sub-info">
-                                    <div class="exp-location">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                            <circle cx="12" cy="10" r="3"></circle>
-                                        </svg>
-                                        <span>Remote</span>
-                                    </div>
-                                    <button class="exp-toggle-btn" aria-label="Toggle Details">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <polyline points="6 9 12 15 18 9"></polyline>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="exp-details" id="exp-2">
-                                <div class="exp-content">
-                                    <ul class="timeline-responsibilities">
-                                        <li>identifying and reporting security vulnerabilities in web applications</li>
-                                        <li>Participating in bug bounty programs to secure digital assets</li>
-                                        <li>Analyzing business logic errors and critical security flaws</li>
-                                        <li>Documenting proof-of-concept exploits for remediation</li>
-                                    </ul>
-                                    <div class="timeline-tags">
-                                        <span class="tag">Web Security</span>
-                                        <span class="tag">Bug Bounty</span>
-                                        <span class="tag">Penetration Testing</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        <!-- Cyber Companion Bot -->
+        <div id="cyber-bot" class="cyber-bot hidden">
+            <div class="bot-core" id="bot-core">
+                <div class="bot-ring bot-ring-outer" id="bot-ring-outer"></div>
+                <div class="bot-ring bot-ring-inner" id="bot-ring-inner"></div>
+                <div class="bot-eye-container" id="bot-eye-container">
+                    <div class="bot-eye">
+                        <div class="bot-pupil" id="bot-pupil"></div>
                     </div>
                 </div>
-            </section>
+            </div>
+            <div class="bot-shadow"></div>
+        </div>
 
-
-
-            <!-- Professional Certifications (Grid Reflex Design) -->
-            <section class="grid-reflex-section" id="certifications">
-                <div class="cert-grid-lines"></div>
-                <div class="container">
-                    <div class="section-header">
-                        <span class="section-tag">CERTIFICAITONS</span>
-                        <h2 class="section-title">Operative <span class="gradient-text-2">Roadmap</span></h2>
-                    </div>
-
-                    <div class="reflex-grid">
-                        <!-- CEH Practical -->
-                        <div class="reflex-card" data-tilt data-tilt-glare data-tilt-max-glare="0.2">
-                            <div class="cert-icon">
-                                <img src="assets/logo/CEHPRACTICAL.png" alt="CEH Practical Logo">
-                            </div>
-                            <div class="cert-info">
-                                <h3 class="cert-title">Certified Ethical Hacker (Practical)</h3>
-                                <p>Rigorous practical exam validating real-world ethical hacking skills.</p>
-                                <div class="cert-status verified">
-                                    <span class="status-dot"></span>
-                                    <span>Verified</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- TCM Practical Ethical Hacker -->
-                        <div class="reflex-card" data-tilt data-tilt-glare data-tilt-max-glare="0.2">
-                            <div class="cert-icon">
-                                <img src="assets/logo/TCM.png" alt="TCM Security Logo">
-                            </div>
-                            <div class="cert-info">
-                                <h3 class="cert-title">Practical Ethical Hacker</h3>
-                                <p>Hands-on penetration testing certification covering network and AD attacks.</p>
-                                <div class="cert-status verified">
-                                    <span class="status-dot"></span>
-                                    <span>Verified</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Offensive Pentesting -->
-                        <div class="reflex-card" data-tilt data-tilt-glare data-tilt-max-glare="0.2">
-                            <div class="cert-icon">
-                                <img src="assets/logo/tryhackme.webp" alt="TryHackMe Logo">
-                            </div>
-                            <div class="cert-info">
-                                <h3 class="cert-title">Offensive Pentesting</h3>
-                                <p>Advanced exploitation techniques and red teaming methodologies.</p>
-                                <div class="cert-status verified">
-                                    <span class="status-dot"></span>
-                                    <span>Verified</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- API Pentesting -->
-                        <div class="reflex-card" data-tilt data-tilt-glare data-tilt-max-glare="0.2">
-                            <div class="cert-icon">
-                                <img src="assets/logo/capij_logo.png" alt="CAPIJ Logo">
-                            </div>
-                            <div class="cert-info">
-                                <h3 class="cert-title">Certified API Pentester</h3>
-                                <p>Specialized certification in identifying and exploiting API vulnerabilities.</p>
-                                <div class="cert-status verified">
-                                    <span class="status-dot"></span>
-                                    <span>Verified</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- OSCP (Locked) -->
-                        <div class="reflex-card" data-tilt data-tilt-glare data-tilt-max-glare="0.1"
-                            style="opacity: 0.7; filter: grayscale(0.5);">
-                            <div class="cert-icon">
-                                <img src="assets/logo/OSCP-PEN-200-.png" alt="OSCP Logo">
-                            </div>
-                            <div class="cert-info">
-                                <h3 class="cert-title">OSCP</h3>
-                                <p>Offensive Security Certified Professional. The gold standard in pentesting.</p>
-                                <div class="cert-status pending">
-                                    <span class="status-dot"
-                                        style="background: #ffcc00; box-shadow: 0 0 6px #ffcc00;"></span>
-                                    <span>Target Locked // Prep</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Achievements Section (New Icon List Layout) -->
-            <section class="achievements-section section-light" id="achievements">
-                <div class="container">
-                    <div class="section-header">
-                        <span class="section-tag">IMPACT</span>
-                        <h2 class="section-title">Operational <span class="gradient-text-2">Milestones</span></h2>
-                    </div>
-                    <div class="milestone-hud-container">
-                        <!-- Vulnerabilities -->
-                        <div class="hud-item item-1">
-                            <div class="hud-value">35+</div>
-                            <div class="hud-label">VULNERABILITIES</div>
-                        </div>
-
-                        <div class="hud-divider"></div>
-
-                        <!-- Assessments -->
-                        <div class="hud-item item-2">
-                            <div class="hud-value">10+</div>
-                            <div class="hud-label">AUDITS</div>
-                        </div>
-
-                        <div class="hud-divider"></div>
-
-                        <!-- CTFs -->
-                        <div class="hud-item item-3">
-                            <div class="hud-value">73+</div>
-                            <div class="hud-label">CTFS CLEARED</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Contact Section -->
-            <section class="contact section-dark" id="contact">
-                <div class="container">
-                    <div class="section-header light">
-                        <span class="section-tag">&lt;contact&gt;</span>
-                        <h2 class="section-title">Get In <span class="gradient-text">Touch</span></h2>
-                        <p class="section-subtitle">Have a project in mind? Let's talk security.</p>
-                    </div>
-
-                    <div class="cyber-interface">
-                        <!-- Left: Signal Panel -->
-                        <div class="interface-sidebar">
-                            <div class="sidebar-header">
-                                <div class="signal-bars">
-                                    <span class="bar b1"></span>
-                                    <span class="bar b2"></span>
-                                    <span class="bar b3"></span>
-                                    <span class="bar b4"></span>
-                                </div>
-                                <span class="status-text">UPLINK_ESTABLISHED</span>
-                            </div>
-
-                            <div class="comm-channels">
-                                <a href="mailto:karthikeyaneh@gmail.com" class="channel-link">
-                                    <div class="channel-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path
-                                                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                                            <polyline points="22,6 12,13 2,6" />
-                                        </svg>
-                                    </div>
-                                    <div class="channel-info">
-                                        <span class="channel-label">ENCRYPTED_MAIL</span>
-                                        <span class="channel-value">karthikeyaneh@gmail.com</span>
-                                    </div>
-                                    <div class="channel-status">SECURE</div>
-                                </a>
-
-                                <a href="https://linkedin.com/in/karthikeyaneh" target="_blank" rel="noopener"
-                                    class="channel-link">
-                                    <div class="channel-icon">
-                                        <svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                                        </svg>
-                                    </div>
-                                    <div class="channel-info">
-                                        <span class="channel-label">PROFESSIONAL_NET</span>
-                                        <span class="channel-value">LinkedIn Profile</span>
-                                    </div>
-                                    <div class="channel-status">ACTIVE</div>
-                                </a>
-
-                                <a href="https://github.com/psyclox" target="_blank" rel="noopener"
-                                    class="channel-link">
-                                    <div class="channel-icon">
-                                        <svg viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                                        </svg>
-                                    </div>
-                                    <div class="channel-info">
-                                        <span class="channel-label">CODE_REPOSITORY</span>
-                                        <span class="channel-value">GitHub</span>
-                                    </div>
-                                    <div class="channel-status">SYNCED</div>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Right: Transmission Terminal -->
-                        <div class="interface-terminal">
-                            <div class="terminal-bar">
-                                <div class="terminal-dots">
-                                    <span></span><span></span><span></span>
-                                </div>
-                                <span class="terminal-title">COMPOSE_SECURE_PACKET</span>
-                            </div>
-
-                            <form class="cyber-form" id="contact-form">
-                                <div class="cyber-input-group">
-                                    <label for="name" class="cyber-label">> IDENTITY</label>
-                                    <input type="text" id="name" name="name" class="cyber-input"
-                                        placeholder="_enter_name" required>
-                                    <div class="input-line"></div>
-                                </div>
-
-                                <div class="cyber-input-group">
-                                    <label for="email" class="cyber-label">> REPLY_FREQUENCY</label>
-                                    <input type="email" id="email" name="email" class="cyber-input"
-                                        placeholder="_enter_email" required>
-                                    <div class="input-line"></div>
-                                </div>
-
-                                <div class="cyber-input-group full-width">
-                                    <label for="message" class="cyber-label">> DATA_PAYLOAD</label>
-                                    <textarea id="message" name="message" class="cyber-textarea"
-                                        placeholder="_enter_message_content" rows="4" required></textarea>
-                                    <div class="input-line"></div>
-                                </div>
-
-                                <button type="submit" class="cyber-btn">
-                                    <span class="btn-glitch-text">INITIALIZE_TRANSMISSION</span>
-                                    <div class="btn-progress"></div>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </section>
     </main>
 
     <!-- Footer -->
@@ -1168,76 +1141,83 @@
         <!-- Tech Particle Background -->
         <canvas id="footer-particles"></canvas>
 
-        <div class="container footer-grid">
-            <!-- Left Column: Brand & Mission -->
-            <div class="footer-col brand-col">
-                <div class="tech-brand">
-                    <span class="brand-symbol">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                            <path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99zM11 16h2v2h-2zm0-6h2v4h-2z" />
-                        </svg>
-                    </span>
-                    <span class="brand-name">PSYCLOX_SYSTEMS</span>
+        <!-- Large Masked Text -->
+        <div class="footer-mask-text" aria-hidden="true">PSYCLOX</div>
+
+        <div class="container footer-v3">
+            <div class="footer-grid">
+
+                <!-- Col 1: Brand -->
+                <div class="footer-col brand-col">
+                    <div class="footer-brand-v3">
+                        <span class="brand-symbol-v3">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                                <path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99zM11 16h2v2h-2zm0-6h2v4h-2z" />
+                            </svg>
+                        </span>
+                        <span class="brand-name-v3">PSYCLOX</span>
+                    </div>
+                    <p class="brand-desc">A deep-dive portfolio showcasing cybersecurity concepts, UI engineering, and
+                        experimental interactions.</p>
                 </div>
-                <p class="mission-statement">
-                    ELECTROMAGNETIC LAUNCH POTENTIAL.<br>
-                    POWERING NEXT-GEN INTERFACES.
-                </p>
-                <div class="system-status">
-                    <span class="status-dot"></span>
-                    <span class="status-text">SYSTEM NOMINAL</span>
+
+                <!-- Col 2: Navigation -->
+                <div class="footer-col nav-col">
+                    <h4 class="col-title">NAVIGATION</h4>
+                    <nav class="footer-links">
+                        <a href="#about">About Core</a>
+                        <a href="#skills">Skill Matrix</a>
+                        <a href="#projects">Project Archive</a>
+                        <a href="#experience">Operation Logs</a>
+                        <a href="#contact">Secure Comm Link</a>
+                    </nav>
+                </div>
+
+                <!-- Col 3: Features -->
+                <div class="footer-col list-col">
+                    <h4 class="col-title">FEATURES</h4>
+                    <ul class="footer-links">
+                        <li><a href="#"
+                                onclick="document.getElementById('hideout-toggle-input').click(); return false;">The
+                                Hideout</a></li>
+                        <li><a href="#projects">VAPT Dashboard</a></li>
+                        <li><a href="#skills">Tech Stack</a></li>
+                        <li><a href="#home">OS Simulation</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Transmission -->
+                <div class="footer-col contact-col">
+                    <h4 class="col-title">TRANSMISSION</h4>
+                    <div class="footer-socials-grid">
+                        <a href="https://github.com/psyclox" target="_blank" rel="noopener" class="social-box"
+                            title="GitHub">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                                <path
+                                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                            </svg>
+                        </a>
+                        <a href="https://linkedin.com/in/karthikeyaneh" target="_blank" rel="noopener"
+                            class="social-box" title="LinkedIn">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                                <path
+                                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                            </svg>
+                        </a>
+                    </div>
+                    <a href="mailto:karthikeyaneh@gmail.com" class="footer-email">karthikeyaneh@gmail.com</a>
                 </div>
             </div>
 
-            <!-- Middle Column: Live Data HUD -->
-            <div class="footer-col data-col">
-                <div class="data-row">
-                    <div class="data-block">
-                        <span class="data-label">LOC // CHENNAI</span>
-                        <span class="data-value" id="clock-local">00:00:00</span>
-                    </div>
-                    <div class="data-block">
-                        <span class="data-label">UTC // ORBIT</span>
-                        <span class="data-value" id="clock-utc">00:00:00</span>
-                    </div>
-                </div>
-                <div class="data-row">
-                    <div class="data-block">
-                        <span class="data-label">MISSION TIME</span>
-                        <span class="data-value" id="clock-mission">T+00:00:00</span>
-                    </div>
-                    <div class="data-block">
-                        <span class="data-label">NET LATENCY</span>
-                        <span class="data-value tech-highlight" id="net-latency">12ms</span>
-                    </div>
-                </div>
-                <!-- New Live Data Row -->
-                <div class="data-row">
-                    <div class="data-block">
-                        <span class="data-label">CORE TEMP</span>
-                        <span class="data-value" id="core-temp">42°C</span>
-                    </div>
-                    <div class="data-block">
-                        <span class="data-label">ENCRYPTION</span>
-                        <span class="data-value tech-highlight">AES-256</span>
-                    </div>
-                </div>
-
-                <div class="scan-line"></div>
-            </div>
-
-            <!-- Right Column: Links & Copyright -->
-            <div class="footer-col links-col">
-                <div class="tech-links">
-                    <a href="#" class="tech-link">GITHUB</a>
-                    <a href="#" class="tech-link">LINKEDIN</a>
-                    <a href="mailto:karthikeyan@psyclox.com" class="tech-link">CONTACT</a>
-                </div>
-                <div class="copyright-block">
-                    <p>&copy; 2024 Psyclox. All Rights Reserved.</p>
+            <!-- Bottom Row: Copyright + Status -->
+            <div class="footer-bottom-v3">
+                <p class="copyright-v3">&copy; 2024 Psyclox Systems. All Rights Reserved.</p>
+                <div class="system-status-v3">
+                    <span class="status-dot-v3"></span>
+                    <span>SYSTEM NOMINAL</span>
                 </div>
             </div>
-        </div> <!-- /footer-grid -->
+        </div> <!-- /footer-v3 -->
 
         <!-- Hideout Toggle Switch (always visible, z-index above all) -->
         <div class="hideout-toggle-wrap">
@@ -1278,6 +1258,9 @@
                     </button>
                     <button class="sidebar-btn" data-game="chess" title="Chess">
                         <span class="sb-icon">♟</span><span class="sb-label">CHESS</span>
+                    </button>
+                    <button class="sidebar-btn" data-game="cube" title="3D Cube">
+                        <span class="sb-icon">🎲</span><span class="sb-label">CUBE</span>
                     </button>
                 </div>
                 <div class="sidebar-actions">
@@ -1326,6 +1309,7 @@
     <!-- Vanilla Tilt -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     <script src="js/hideout.js" defer></script>
+    <script src="js/bot.js" defer></script>
     <!-- EMERGENCY FIXES for Visibility & Scroll -->
     <style>
         /* Force Nav Items Visible */
@@ -1370,7 +1354,21 @@
     </script>
 
     <script src="js/main.js" defer></script>
-    <script src="js/scroll-illusion.js?v=FINAL_FIX_10"></script>
+    <script src="js/scroll-illusion.js?v=FINAL_FIX_11"></script>
+
+
+    <!-- SAFETY VISIBILITY ENFORCER -->
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelectorAll('.hero-content, .hero-title, .title-name, .hero-subtitle, .hero-cta').forEach(el => {
+                    el.style.opacity = '1';
+                    el.style.visibility = 'visible';
+                });
+                console.log("Health Check: Hero Visibility Enforced");
+            }, 500);
+        });
+    </script>
 
     <!-- Video Loop Delay Script -->
     <script>

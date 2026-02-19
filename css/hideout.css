@@ -489,3 +489,134 @@ canvas.game-canvas {
         font-size: 1.2rem;
     }
 }
+
+/* ═══════════════════════════════════
+   3D RUBIK'S CUBE GAME
+   ═══════════════════════════════════ */
+.cube-game-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    height: 100%;
+    width: 100%;
+}
+
+.cube-scene.rubik {
+    width: 180px;
+    height: 180px;
+    perspective: 700px;
+}
+
+.cube-3d {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.cube-face {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    background: rgba(15, 15, 15, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    backface-visibility: visible;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 3px;
+    padding: 6px;
+    box-sizing: border-box;
+}
+
+.cube-tile {
+    border-radius: 4px;
+    background: rgba(30, 30, 30, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cube-tile:hover {
+    transform: scale(1.08);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.cube-face.front {
+    transform: rotateY(0deg) translateZ(90px);
+}
+
+.cube-face.back {
+    transform: rotateY(180deg) translateZ(90px);
+}
+
+.cube-face.right {
+    transform: rotateY(90deg) translateZ(90px);
+}
+
+.cube-face.left {
+    transform: rotateY(-90deg) translateZ(90px);
+}
+
+.cube-face.top {
+    transform: rotateX(90deg) translateZ(90px);
+}
+
+.cube-face.bottom {
+    transform: rotateX(-90deg) translateZ(90px);
+}
+
+.cube-info {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.cube-level {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.85rem;
+    color: #ff4757;
+    letter-spacing: 3px;
+}
+
+.cube-level span {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.cube-status {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.78rem;
+    color: #888;
+    letter-spacing: 2px;
+    transition: color 0.3s;
+}
+
+.cube-moves {
+    font-family: 'Rajdhani', monospace;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 2px;
+}
+
+.cube-target {
+    margin-top: 0.5rem;
+}
+
+.target-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.55rem;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+}
+
+.target-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 18px);
+    gap: 2px;
+}

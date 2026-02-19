@@ -1,10 +1,20 @@
 /* ===========================================
-   THE HIDEOUT — Game Center v2
-   Mario platformer · Full-width canvases
+   THE HIDEOUT — Game Center v3
+   Infinite Runner · Highscores · Full-width canvases
    Chess captured pieces · Fixed toggle colors
    =========================================== */
 (function () {
     'use strict';
+
+    // ── highscore helpers ──
+    function getHighscore(game) {
+        return parseInt(localStorage.getItem('hideout_hs_' + game) || '0', 10);
+    }
+    function setHighscore(game, score) {
+        const prev = getHighscore(game);
+        if (score > prev) { localStorage.setItem('hideout_hs_' + game, score); return true; }
+        return false;
+    }
 
     // ── shared state ──
     let activeGame = null;
@@ -113,6 +123,7 @@
             case 'flappy': startFlappy(); break;
             case 'xo': startXO(); break;
             case 'chess': startChess(); break;
+            case 'cube': startCube(); break;
         }
     }
 
@@ -163,7 +174,7 @@
             if (head.x >= cols) head.x = 0;
             if (head.y < 0) head.y = rows - 1;
             if (head.y >= rows) head.y = 0;
-            if (snake.some(p => p.x === head.x && p.y === head.y)) { init(); draw(); return; }
+            if (snake.some(p => p.x === head.x && p.y === head.y)) { setHighscore('snake', score); init(); draw(); return; }
             snake.unshift(head);
             if (head.x === food.x && head.y === food.y) { score += 10; setScore(score); food = spawn(); } else snake.pop();
             draw();
@@ -210,12 +221,10 @@
         const c = makeCanvas();
         const ctx = c.getContext('2d');
 
-        const GRAVITY = 0.6; // Slightly heavier feel
-        const JUMP_FORCE = -13; // Higher jump to clear obstacles
+        const GRAVITY = 0.6;
+        const JUMP_FORCE = -13;
         const MOVE_SPEED = 5;
-        const SCROLL_SPEED = 2; // Faster scroll for challenge
 
-        // Keys
         const keys = {};
         keyHandler = e => {
             if (activeGame !== 'mario') return;
@@ -227,83 +236,99 @@
         window.addEventListener('keydown', keyHandler);
         window.addEventListener('keyup', upHandler);
 
-        let score, gameOver, player, platforms, enemies, coins, cameraX, spawnTimer;
+        let score, gameOver, player, platforms, enemies, coins, cameraX;
         const PW = 24, PH = 30;
+
+        // ── Infinite Generation State ──
+        let floorGenX = 0;      // rightmost floor x generated
+        let platGenX = 400;     // rightmost elevated platform x generated
+        let platGenY;           // last elevated platform Y
+        let enemyGenX = 600;    // rightmost enemy x generated
+        let coinGenX = 250;     // rightmost coin x generated
+        const SPAWN_AHEAD = 1200; // how far ahead of camera to spawn
+        const DESPAWN_BEHIND = 800; // how far behind camera to remove
 
         function reset() {
             const floorY = c.height - 30;
-            score = 0; gameOver = false; setScore(0); cameraX = 0; spawnTimer = 0;
+            score = 0; gameOver = false; setScore(0); cameraX = 0;
             player = { x: 80, y: floorY - PH, w: PW, h: PH, vx: 0, vy: 0, grounded: false, facing: 1 };
 
-            // Generate platforms and floor
             platforms = [];
-            // Floor spans far
-            for (let i = -200; i < 10000; i += 400) {
-                platforms.push({ x: i, y: floorY, w: 420, h: 30, type: 'floor' });
-            }
-
-            // Elevated platforms - LOGIC FIX: Maintain reachable height
-            // Max jump height is approx (vy^2)/(2*g) = 169/1.2 = ~140px.
-            // We act conservative: max platform height diff 110px.
-            let lastX = 400;
-            let lastY = floorY;
-
-            for (let i = 0; i < 40; i++) {
-                const gap = 80 + Math.random() * 100; // Jumpable gap
-                const x = lastX + gap + (Math.random() * 100);
-
-                // Height constrained to be reachable from roughly floor level 
-                // or previous platform, but bias towards floor to not go into sky forever
-                let y = floorY - (50 + Math.random() * 80);
-
-                // Ensure next platform isn't too high above previous if close
-                if (y < lastY - 110) y = lastY - 100;
-
-                const w = 80 + Math.random() * 120;
-                platforms.push({ x: x, y: y, w: w, h: 16, type: 'platform' });
-
-                lastX = x + w;
-                lastY = y;
-            }
-
-            // Enemies & coins
             enemies = [];
             coins = [];
 
-            // Spawn enemies with variety
-            for (let i = 600; i < 5000; i += 300 + Math.random() * 400) {
+            // Reset generation state
+            floorGenX = -200;
+            platGenX = 400;
+            platGenY = floorY;
+            enemyGenX = 600;
+            coinGenX = 250;
+
+            // Seed initial content
+            generateAhead(c.width + SPAWN_AHEAD);
+        }
+
+        function generateAhead(targetX) {
+            const floorY = c.height - 30;
+
+            // Floor: continuous overlapping segments
+            while (floorGenX < targetX) {
+                platforms.push({ x: floorGenX, y: floorY, w: 420, h: 30, type: 'floor' });
+                floorGenX += 400;
+            }
+
+            // Elevated platforms
+            while (platGenX < targetX) {
+                const gap = 80 + Math.random() * 100;
+                const x = platGenX + gap + Math.random() * 80;
+                let y = floorY - (50 + Math.random() * 80);
+                if (y < platGenY - 110) y = platGenY - 100;
+                // Bias back towards floor periodically
+                if (Math.random() < 0.3) y = floorY - (40 + Math.random() * 50);
+                const w = 80 + Math.random() * 120;
+                platforms.push({ x: x, y: y, w: w, h: 16, type: 'platform' });
+                platGenX = x + w;
+                platGenY = y;
+            }
+
+            // Enemies
+            while (enemyGenX < targetX) {
                 const typeRoll = Math.random();
                 let type = 'walker';
-                let yOffset = 0;
-
                 if (typeRoll > 0.7) type = 'spike';
                 else if (typeRoll > 0.4) type = 'flyer';
-
-                // Walkers are on ground, Spikes on ground, Flyers in air
                 let y = floorY - 20;
                 if (type === 'flyer') y = floorY - 50 - Math.random() * 60;
-
                 enemies.push({
-                    x: i,
-                    y: y,
-                    w: 24,
-                    h: 24,
+                    x: enemyGenX, y: y, w: 24, h: 24,
                     vx: type === 'walker' ? -1 - Math.random() : (type === 'flyer' ? -0.5 : 0),
-                    alive: true,
-                    baseY: y,
-                    type: type,
+                    alive: true, baseY: y, type: type,
                     floatOffset: Math.random() * Math.PI * 2
                 });
+                enemyGenX += 300 + Math.random() * 400;
             }
 
-            for (let i = 250; i < 5000; i += 150 + Math.random() * 200) {
-                coins.push({ x: i, y: c.height - 80 - Math.random() * 120, collected: false });
+            // Coins
+            while (coinGenX < targetX) {
+                coins.push({ x: coinGenX, y: c.height - 80 - Math.random() * 120, collected: false });
+                coinGenX += 150 + Math.random() * 200;
             }
+        }
+
+        function cleanup() {
+            const removeX = cameraX - DESPAWN_BEHIND;
+            platforms = platforms.filter(p => p.x + p.w > removeX);
+            enemies = enemies.filter(e => e.x + e.w > removeX);
+            coins = coins.filter(co => co.x > removeX - 50);
         }
 
         function tick() {
             if (gameOver) return;
             const floorY = c.height - 30;
+
+            // Infinite generation
+            generateAhead(cameraX + c.width + SPAWN_AHEAD);
+            cleanup();
 
             // Move
             player.vx = 0;
@@ -318,20 +343,21 @@
             player.x += player.vx;
             player.y += player.vy;
 
+            // Distance score (1 point per 10px forward)
+            const distScore = Math.max(0, Math.floor(player.x / 10));
+            if (distScore > score) { score = distScore; setScore(score); }
+
             // Platform collision
             player.grounded = false;
-            // Check floor limit
-            if (player.y > c.height + 100) gameOver = true; // Fell off world
+            if (player.y > c.height + 100) gameOver = true;
 
             for (const p of platforms) {
                 if (player.x + player.w > p.x && player.x < p.x + p.w) {
-                    // Landing on top
                     if (player.vy >= 0 && player.y + player.h >= p.y && player.y + player.h < p.y + p.h + 16) {
                         player.y = p.y - player.h;
                         player.vy = 0;
                         player.grounded = true;
                     }
-                    // Hitting head on bottom
                     else if (player.vy < 0 && player.y > p.y + p.h && player.y < p.y + p.h + 10) {
                         player.y = p.y + p.h;
                         player.vy = 0;
@@ -342,11 +368,8 @@
             // Enemies
             for (const e of enemies) {
                 if (!e.alive) continue;
-
-                // AI Behavior
                 if (e.type === 'walker') {
                     e.x += e.vx;
-                    // Patrol logic: turn around if hitting platform edge
                     let onPlatform = false;
                     for (const p of platforms) {
                         if (e.x + e.w > p.x && e.x < p.x + p.w && e.y + e.h >= p.y && e.y + e.h <= p.y + 5) {
@@ -358,24 +381,16 @@
                     e.x += e.vx;
                     e.y = e.baseY + Math.sin(Date.now() / 300 + e.floatOffset) * 20;
                 }
-                // Spikes don't move
 
-                // Collision with player
                 if (player.x + player.w > e.x + 4 && player.x < e.x + e.w - 4 &&
                     player.y + player.h > e.y + 4 && player.y < e.y + e.h) {
-
-                    // Stomping logic
                     const isStomp = player.vy > 0 && player.y + player.h < e.y + e.h / 2 + 10;
-
                     if (isStomp && e.type !== 'spike') {
-                        // Success stomp
                         e.alive = false;
-                        player.vy = JUMP_FORCE * 0.7; // Bounce
+                        player.vy = JUMP_FORCE * 0.7;
                         score += 150;
                         setScore(score);
-                        // Spawn particle?
                     } else {
-                        // Hit by enemy
                         gameOver = true;
                     }
                 }
@@ -388,23 +403,26 @@
                 if (dist < 20) { co.collected = true; score += 50; setScore(score); }
             }
 
-            // Camera follow
             cameraX = player.x - c.width / 3;
 
             draw();
             if (!gameOver) requestAnimationFrame(tick);
             else {
+                const isNew = setHighscore('mario', score);
+                const hs = getHighscore('mario');
                 ctx.fillStyle = 'rgba(0,0,0,0.7)';
                 ctx.fillRect(0, 0, c.width, c.height);
                 ctx.fillStyle = '#ff4757';
                 ctx.font = '30px "Orbitron"';
                 ctx.textAlign = 'center';
-                ctx.fillText('GAME OVER', c.width / 2, c.height / 2);
+                ctx.fillText('GAME OVER', c.width / 2, c.height / 2 - 20);
                 ctx.font = '16px "Rajdhani"';
                 ctx.fillStyle = '#fff';
-                ctx.fillText('PRESS R TO RESTART', c.width / 2, c.height / 2 + 30);
+                ctx.fillText('SCORE: ' + score + (isNew ? '  ★ NEW HIGH!' : ''), c.width / 2, c.height / 2 + 10);
+                ctx.fillStyle = '#888';
+                ctx.fillText('HIGH SCORE: ' + hs, c.width / 2, c.height / 2 + 30);
+                ctx.fillText('PRESS R TO RESTART', c.width / 2, c.height / 2 + 55);
 
-                // One-time restart listener
                 const restartHandler = (e) => {
                     if (e.key.toLowerCase() === 'r') {
                         window.removeEventListener('keydown', restartHandler);
@@ -423,11 +441,15 @@
             ctx.save();
             ctx.translate(-cameraX, 0);
 
+            // Only draw visible items
+            const viewLeft = cameraX - 50;
+            const viewRight = cameraX + c.width + 50;
+
             // Platforms
             ctx.fillStyle = '#333';
             for (const p of platforms) {
+                if (p.x + p.w < viewLeft || p.x > viewRight) continue;
                 ctx.fillRect(p.x, p.y, p.w, p.h);
-                // Top highlight
                 ctx.fillStyle = '#ff4757';
                 ctx.fillRect(p.x, p.y, p.w, 2);
                 ctx.fillStyle = '#333';
@@ -436,11 +458,10 @@
             // Coins
             ctx.fillStyle = '#ffd700';
             for (const co of coins) {
-                if (co.collected) continue;
+                if (co.collected || co.x < viewLeft || co.x > viewRight) continue;
                 ctx.beginPath();
                 ctx.arc(co.x, co.y, 8, 0, Math.PI * 2);
                 ctx.fill();
-                // Shine
                 ctx.fillStyle = '#fff';
                 ctx.beginPath();
                 ctx.arc(co.x - 2, co.y - 2, 3, 0, Math.PI * 2);
@@ -450,26 +471,23 @@
 
             // Enemies
             for (const e of enemies) {
-                if (!e.alive) continue;
-
+                if (!e.alive || e.x + e.w < viewLeft || e.x > viewRight) continue;
                 if (e.type === 'walker') {
-                    ctx.fillStyle = '#ef0e0e'; // Red
+                    ctx.fillStyle = '#ef0e0e';
                     ctx.fillRect(e.x, e.y, e.w, e.h);
-                    // Eyes
                     ctx.fillStyle = '#fff';
                     ctx.fillRect(e.x + (e.vx < 0 ? 4 : 14), e.y + 4, 6, 6);
                 } else if (e.type === 'flyer') {
-                    ctx.fillStyle = '#a55eea'; // Purple
+                    ctx.fillStyle = '#a55eea';
                     ctx.beginPath();
                     ctx.arc(e.x + e.w / 2, e.y + e.h / 2, e.w / 2, 0, Math.PI * 2);
                     ctx.fill();
-                    // Wings animation check
                     ctx.fillStyle = 'rgba(255,255,255,0.5)';
                     ctx.beginPath();
                     ctx.ellipse(e.x + e.w / 2, e.y + 4, 12, 4, 0, 0, Math.PI * 2);
                     ctx.fill();
                 } else if (e.type === 'spike') {
-                    ctx.fillStyle = '#d1ccc0'; // Silver
+                    ctx.fillStyle = '#d1ccc0';
                     ctx.beginPath();
                     ctx.moveTo(e.x, e.y + e.h);
                     ctx.lineTo(e.x + e.w / 2, e.y);
@@ -481,7 +499,6 @@
             // Player
             ctx.fillStyle = '#2ed573';
             ctx.fillRect(player.x, player.y, player.w, player.h);
-            // Face
             ctx.fillStyle = '#000';
             const eyeX = player.facing === 1 ? player.x + 14 : player.x + 4;
             ctx.fillRect(eyeX, player.y + 6, 4, 4);
@@ -576,10 +593,14 @@
             });
             if (dead) {
                 ctx.fillStyle = 'rgba(0,0,0,0.65)'; ctx.fillRect(0, 0, c.width, c.height);
+                const isNew = setHighscore('flappy', score);
+                const hs = getHighscore('flappy');
                 ctx.fillStyle = '#ff4757'; ctx.font = 'bold 28px Orbitron,monospace'; ctx.textAlign = 'center';
-                ctx.fillText('GAME OVER', c.width / 2, c.height / 2 - 8);
+                ctx.fillText('GAME OVER', c.width / 2, c.height / 2 - 18);
+                ctx.fillStyle = '#fff'; ctx.font = '14px monospace';
+                ctx.fillText('SCORE: ' + score + (isNew ? '  ★ NEW HIGH!' : ''), c.width / 2, c.height / 2 + 6);
                 ctx.fillStyle = '#888'; ctx.font = '13px monospace';
-                ctx.fillText('SPACE / Click to retry', c.width / 2, c.height / 2 + 18);
+                ctx.fillText('HIGH: ' + hs + '  |  SPACE / Click to retry', c.width / 2, c.height / 2 + 24);
                 ctx.textAlign = 'start';
             }
         }
@@ -947,6 +968,210 @@
     }
 
     // ═══════════════════════════════════════════
+    //  🎲  3D RUBIK'S CUBE — Pattern Match
+    // ═══════════════════════════════════════════
+    function startCube() {
+        setHint('MATCH THE TARGET PATTERN DIRECTLY ON THE CUBE');
+        setPlayerVisibility(false);
+        canvasContainer.innerHTML = '';
+
+        if (controlsHint) {
+            controlsHint.innerHTML = `
+                <div style="font-family:'Rajdhani',monospace; font-size:14px; line-height:1.6;">
+                    <strong style="color:#fff; font-size:16px;">CUBE CONTROLS:</strong>
+                    <br><br>
+                    <span style="color:#ff6b6b">ARROWS / WASD</span><br>Rotate 3D Cube
+                    <br><br>
+                    <span style="color:#ff6b6b">LEFT CLICK</span><br>Paint Tile Color
+                    <br><br>
+                    <span style="color:#ff6b6b">SPACE</span><br>Generate New Target
+                    <br><br>
+                    <em style="color:#aaa;">Match the target pattern on the active face to advance to the next level!</em>
+                </div>
+            `;
+        }
+
+        const COLORS = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#a55eea', '#2ed573'];
+        const FACES = ['front', 'back', 'right', 'left', 'top', 'bottom'];
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'cube-game-area';
+
+        let facesHTML = '';
+        FACES.forEach((face, fi) => {
+            let tilesHTML = '';
+            for (let t = 0; t < 9; t++) {
+                tilesHTML += `<div class="cube-tile" data-face="${fi}" data-tile="${t}"></div>`;
+            }
+            facesHTML += `<div class="cube-face ${face}" data-face="${fi}">${tilesHTML}</div>`;
+        });
+
+        wrapper.innerHTML = `
+            <div class="cube-scene rubik">
+                <div class="cube-3d" id="cube3d">${facesHTML}</div>
+            </div>
+            <div class="cube-info">
+                <div class="cube-level">LEVEL <span id="cube-level-num">1</span></div>
+                <div class="cube-status" id="cube-status">MATCH THE PATTERN!</div>
+                <div class="cube-moves">MOVES: <span id="cube-moves">0</span></div>
+                <div class="cube-target" id="cube-target"></div>
+            </div>
+        `;
+        canvasContainer.appendChild(wrapper);
+
+        const cube = document.getElementById('cube3d');
+        const tiles = wrapper.querySelectorAll('.cube-tile');
+        const levelEl = document.getElementById('cube-level-num');
+        const statusEl = document.getElementById('cube-status');
+        const movesEl = document.getElementById('cube-moves');
+        const targetEl = document.getElementById('cube-target');
+
+        let level = 1, score = 0, moves = 0;
+        let rotX = -25, rotY = 35;
+
+        // We will store the current colors for EVERY tile [face][tile]
+        let cubeState = Array(6).fill(0).map(() => Array(9).fill(0));
+        let targetPattern = [];
+        let numColors = 2; // Starts with 2 colors
+
+        function updateRotation() {
+            cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        }
+        updateRotation();
+
+        function generateTarget() {
+            numColors = Math.min(2 + Math.floor(level / 3), COLORS.length);
+            targetPattern = [];
+            for (let i = 0; i < 9; i++) {
+                targetPattern.push(Math.floor(Math.random() * numColors));
+            }
+            renderTarget();
+        }
+
+        function renderTarget() {
+            targetEl.innerHTML = '<div class="target-label">TARGET PATTERN:</div><div class="target-grid"></div>';
+            const grid = targetEl.querySelector('.target-grid');
+            grid.style.display = 'grid';
+            grid.style.gridTemplateColumns = 'repeat(3, 22px)';
+            grid.style.gap = '3px';
+            grid.style.marginTop = '10px';
+            targetPattern.forEach(c => {
+                const sq = document.createElement('div');
+                sq.style.cssText = `width:22px;height:22px;border-radius:3px;background:${COLORS[c]};box-shadow:inset 0 0 5px rgba(0,0,0,0.3)`;
+                grid.appendChild(sq);
+            });
+        }
+
+        function initAllFaces() {
+            cubeState = Array(6).fill(0).map(() => Array(9).fill(0)); // Reset all to color 0
+            tiles.forEach(t => {
+                t.style.background = COLORS[0];
+                t.style.boxShadow = `inset 0 0 10px rgba(0,0,0,0.2)`;
+            });
+        }
+
+        function checkWin(faceIndex) {
+            for (let i = 0; i < 9; i++) {
+                if (cubeState[faceIndex][i] !== targetPattern[i]) return false;
+            }
+            return true;
+        }
+
+        function startLevel() {
+            moves = 0;
+            movesEl.textContent = '0';
+            statusEl.textContent = 'MATCH THE PATTERN!';
+            statusEl.style.color = '#fff';
+            levelEl.textContent = level;
+            initAllFaces();
+            generateTarget();
+        }
+
+        tiles.forEach(tile => {
+            tile.addEventListener('click', (e) => {
+                const fi = parseInt(tile.dataset.face);
+                const ti = parseInt(tile.dataset.tile);
+
+                // Cycle color for this tile
+                cubeState[fi][ti] = (cubeState[fi][ti] + 1) % numColors;
+
+                moves++;
+                movesEl.textContent = moves;
+                tile.style.background = COLORS[cubeState[fi][ti]];
+                tile.style.boxShadow = `inset 0 0 10px rgba(0,0,0,0.2), 0 0 8px ${COLORS[cubeState[fi][ti]]}60`;
+                tile.style.transform = 'scale(1.1)';
+                setTimeout(() => tile.style.transform = 'scale(1)', 150);
+
+                if (checkWin(fi)) {
+                    const bonus = Math.max(0, 50 - moves * 2);
+                    score += level * 15 + bonus;
+                    setScore(score);
+                    setHighscore('cube', score);
+                    statusEl.textContent = `✓ LEVEL ${level} CLEARED!`;
+                    statusEl.style.color = '#2ed573';
+
+                    // Small celebration spin
+                    rotY += 360; updateRotation();
+
+                    setTimeout(() => { level++; startLevel(); }, 1500);
+                }
+            });
+        });
+
+        // Mouse Drag Rotation Variables
+        let isDragging = false;
+        let pMx = 0, pMy = 0;
+
+        cube.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            pMx = e.clientX;
+            pMy = e.clientY;
+            cube.style.cursor = 'grabbing';
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            let dx = e.clientX - pMx;
+            let dy = e.clientY - pMy;
+            rotY += dx * 0.5;
+            rotX -= dy * 0.5;
+            updateRotation();
+            pMx = e.clientX;
+            pMy = e.clientY;
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+            cube.style.cursor = 'grab';
+        });
+
+        function onKeyDown(e) {
+            if (activeGame !== 'cube') { document.removeEventListener('keydown', onKeyDown); return; }
+            if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) {
+                e.preventDefault();
+            }
+
+            const rotSpeed = 15;
+            if (e.code === 'ArrowUp' || e.code === 'KeyW') { rotX += rotSpeed; updateRotation(); }
+            if (e.code === 'ArrowDown' || e.code === 'KeyS') { rotX -= rotSpeed; updateRotation(); }
+            if (e.code === 'ArrowLeft' || e.code === 'KeyA') { rotY -= rotSpeed; updateRotation(); }
+            if (e.code === 'ArrowRight' || e.code === 'KeyD') { rotY += rotSpeed; updateRotation(); }
+
+            if (e.code === 'Space') {
+                moves = 0;
+                movesEl.textContent = '0';
+                statusEl.textContent = 'NEW TARGET GENERATED';
+                statusEl.style.color = '#f9ca24';
+                generateTarget();
+                initAllFaces();
+                setTimeout(() => { statusEl.textContent = 'MATCH THE PATTERN!'; statusEl.style.color = '#fff'; }, 1000);
+            }
+        }
+        document.addEventListener('keydown', onKeyDown);
+        startLevel();
+    }
+
+    // ═══════════════════════════════════════════
     //  BOOT
     // ═══════════════════════════════════════════
     document.addEventListener('DOMContentLoaded', () => {
@@ -954,7 +1179,7 @@
         toggleTrack = document.getElementById('toggle-track');
         switchCircle = document.getElementById('switch-circle-hideout');
         container = document.getElementById('hideout-container');
-        footerGrid = document.querySelector('.footer-grid');
+        footerGrid = document.querySelector('.footer-v2');
         canvasContainer = document.getElementById('game-canvas-container');
         scoreDisplay = document.getElementById('game-score');
         controlsHint = document.getElementById('game-controls-hint');

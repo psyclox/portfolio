@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSmoothScroll();
     initActiveNavHighlight();
     initExperienceCards();
+    initAboutCardsParallax();
 });
 
 /* ========================================
@@ -544,12 +545,12 @@ function initCustomCursor() {
     // Animate cursor with lerp
     function animateCursor() {
         // Dot follows quickly
-        dotX += (mouseX - dotX) * 0.2;
-        dotY += (mouseY - dotY) * 0.2;
+        dotX += (mouseX - dotX) * 0.5;
+        dotY += (mouseY - dotY) * 0.5;
 
-        // Ring follows slower
-        ringX += (mouseX - ringX) * 0.1;
-        ringY += (mouseY - ringY) * 0.1;
+        // Ring follows with smooth trail
+        ringX += (mouseX - ringX) * 0.25;
+        ringY += (mouseY - ringY) * 0.25;
 
         cursorDot.style.left = `${dotX}px`;
         cursorDot.style.top = `${dotY}px`;
@@ -588,26 +589,24 @@ function initCustomCursor() {
    NAVIGATION
    ======================================== */
 
+/* ========================================
+   NAVIGATION
+   ======================================== */
+
 function initNavigation() {
-    const header = document.getElementById('header');
+    const header = document.querySelector('.header') || document.getElementById('header');
     const navToggle = document.getElementById('nav-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 
     // Header scroll effect
-    let lastScroll = 0;
-
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
-
-        // Add scrolled class
         if (currentScroll > 50) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
         }
-
-        lastScroll = currentScroll;
     });
 
     // Mobile menu toggle
@@ -648,7 +647,7 @@ function initTypewriter() {
     if (!typewriter) return;
 
     // Roles to cycle through
-    const roles = ['Purple Teamer', 'Cybersecurity Analyst'];
+    const roles = ['Purple Teamer', 'Cybersecurity Analyst', 'Penetration Tester'];
     let roleIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
@@ -978,26 +977,7 @@ function initScrollAnimations() {
         });
     });
 
-    // HOME SLIDER ANIMATION
-    // Pins the home section, slides content to the left, then unpins to scroll down
-    const heroSection = document.querySelector('#home');
-    const heroRight = document.querySelector('.hero-right');
-
-    if (heroSection && heroRight) {
-        gsap.to(heroRight, {
-            x: "-60vw", // Move left significantly
-            opacity: 0, // Fade out as it leaves
-            ease: "none",
-            scrollTrigger: {
-                trigger: heroSection,
-                start: "top top",
-                end: "+=100%", // Pin duration
-                scrub: 1, // Smooth scrubbing
-                pin: true, // Pin the home section
-                anticipatePin: 1
-            }
-        });
-    }
+    // HOME SLIDER ANIMATION REMOVED (Handled by scroll-illusion.js)
 }
 
 /* ========================================
@@ -1170,20 +1150,36 @@ function initContactForm() {
    SMOOTH SCROLL
    ======================================== */
 
+/* ========================================
+   SMOOTH SCROLL (FIXED FOR STICKY HERO)
+   ======================================== */
+
 function initSmoothScroll() {
     const links = document.querySelectorAll('a[href^="#"]');
 
     links.forEach(link => {
         link.addEventListener('click', (e) => {
             const href = link.getAttribute('href');
-            if (href === '#') return;
+            if (href === '#' || !href) return;
 
             e.preventDefault();
 
+            // Special handling for Home
+            if (href === '#home') {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                return;
+            }
+
             const target = document.querySelector(href);
             if (target) {
-                const headerHeight = document.getElementById('header').offsetHeight;
-                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                const header = document.querySelector('.header');
+                const headerHeight = header ? header.offsetHeight : 80;
+
+                // Calculate position considering header offset
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - (headerHeight - 2);
 
                 window.scrollTo({
                     top: targetPosition,
@@ -1198,31 +1194,69 @@ function initSmoothScroll() {
    ACTIVE NAV HIGHLIGHT
    ======================================== */
 
+/* ========================================
+   ACTIVE NAV HIGHLIGHT (FIXED FOR HERO TRACK)
+   ======================================== */
+
 function initActiveNavHighlight() {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link');
+    /* Helper to find link by href */
+    const getLink = (id) => document.querySelector(`.nav-link[href="#${id}"]`);
 
     function highlightNav() {
-        const scrollPosition = window.scrollY + 100;
+        const scrollPosition = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
 
+        let current = '';
+
+        // 1. Check for Home (Hero Track logic)
+        // If we are within the first page or so, definitely Home
+        // Or if we are inside the huge hero-scroll-track
+        const heroTrack = document.querySelector('.hero-scroll-track');
+        if (heroTrack) {
+            if (scrollPosition < heroTrack.offsetHeight - (windowHeight * 0.5)) {
+                current = 'home';
+            }
+        } else {
+            if (scrollPosition < windowHeight * 0.5) {
+                current = 'home';
+            }
+        }
+
+        // 2. Check other sections
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.offsetHeight;
             const sectionId = section.getAttribute('id');
 
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${sectionId}`) {
-                        link.classList.add('active');
-                    }
-                });
+            // Skip home loop if we handled it, or let this overwrite if it's more specific
+            if (sectionId === 'home') return;
+
+            // Standard Offset check (Header approx 100px)
+            if (scrollPosition >= (sectionTop - 200) && scrollPosition < (sectionTop + sectionHeight - 200)) {
+                current = sectionId;
+            }
+        });
+
+        // 3. Bottom of page check (Contact / Footer)
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+            // current = 'contact'; // Optional: force contact active at very bottom
+        }
+
+        // Apply active class
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (current && link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
             }
         });
     }
 
     window.addEventListener('scroll', highlightNav);
-    highlightNav(); // Initial check
+    window.addEventListener('resize', highlightNav);
+    setTimeout(highlightNav, 500); // Check on load
 }
 
 /* ========================================
@@ -1747,4 +1781,49 @@ function initExperienceCards() {
             details.style.opacity = '1';
         }
     }
+}
+
+/* ========================================
+   ABOUT CARDS PARALLAX (ISOMETRIC)
+   ======================================== */
+function initAboutCardsParallax() {
+    const wall = document.getElementById('about-card-wall');
+    if (!wall) return;
+
+    // We listen to the document or just the section
+    const aboutSection = document.getElementById('about');
+    if (!aboutSection) return;
+
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    aboutSection.addEventListener('mousemove', (e) => {
+        const rect = aboutSection.getBoundingClientRect();
+        // Calculate mouse position relative to center of the section (-1 to 1)
+        const x = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
+        const y = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
+
+        // Target rotation variations
+        targetX = y * -10; // degrees
+        targetY = x * 10;
+    });
+
+    aboutSection.addEventListener('mouseleave', () => {
+        targetX = 0;
+        targetY = 0;
+    });
+
+    function animate() {
+        currentX += (targetX - currentX) * 0.1;
+        currentY += (targetY - currentY) * 0.1;
+
+        // Combine base rotation with parallax
+        wall.style.transform = `rotateX(${15 + currentX}deg) rotateY(${-15 + currentY}deg) rotateZ(5deg)`;
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
 }

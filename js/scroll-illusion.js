@@ -1,22 +1,46 @@
+/* =============================================
+   SCROLL ILLUSION — Hero Text Animation
+   Uses GSAP ScrollTrigger with the #about section
+   as the trigger endpoint. As user scrolls past
+   the hero, text scatters → nav-logo fades in.
+   ============================================= */
+
 window.addEventListener('load', () => {
-    // 1. FORCE VISIBILITY INSTANTLY
-    document.querySelectorAll('.hero-content, .title-name, .title-name span, .hero-subtitle').forEach(el => {
+    // 1. Force visibility — no FOUC
+    const heroElements = document.querySelectorAll('.hero-content, .title-name, .title-name span, .hero-subtitle');
+    heroElements.forEach(el => {
         el.style.opacity = '1';
         el.style.visibility = 'visible';
+        el.style.color = '#ffffff';
     });
 
     history.scrollRestoration = "manual";
     window.scrollTo(0, 0);
 
+    // Wait for GSAP
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        setTimeout(() => initScrollIllusion(), 300);
+    } else {
+        initScrollIllusion();
+    }
+});
+
+function initScrollIllusion() {
     gsap.registerPlugin(ScrollTrigger);
 
+    const heroSection = document.getElementById('home');
     const heroName = document.querySelector('.title-name');
     const navLogo = document.querySelector('.nav-logo');
     const header = document.querySelector('.header');
-    const heroElementsToFade = document.querySelectorAll('.hero-subtitle, .hero-description, .hero-bg-video, .hero-overlay');
-    const scrambleChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";
+    const heroElementsToFade = document.querySelectorAll(
+        '.hero-subtitle, .hero-description, .hero-cta, .hero-socials, .hero-bg-video, .hero-overlay, .title-line, .scroll-indicator'
+    );
 
-    // Prepare Text
+    if (!heroName || !navLogo || !heroSection) return;
+
+    const scrambleChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*_+-=<>?";
+
+    // --- Prepare hero text into individual characters ---
     function prepareHeroText(element) {
         if (!element) return [];
         const text = element.innerText;
@@ -38,90 +62,77 @@ window.addEventListener('load', () => {
         });
         return chars;
     }
+
     const heroChars = prepareHeroText(heroName);
 
-    // Initial States
+    // Initial state — hide nav-logo
     gsap.set(navLogo, { autoAlpha: 0 });
 
-    function getExplosionGeometry() {
-        // Logo is fixed in header, so logic remains same
-        const logoRect = navLogo.getBoundingClientRect();
-        return {
-            targetX: logoRect.left + (logoRect.width / 2),
-            targetY: logoRect.top + (logoRect.height / 2)
-        };
-    }
+    // --- Gradient masking animation on hero name (runs on load) ---
+    const maskTl = gsap.timeline({ repeat: -1, yoyo: true });
+    maskTl.to(heroName, {
+        backgroundPosition: '200% center',
+        duration: 4,
+        ease: 'sine.inOut'
+    });
 
-    // DELAY FOR SAFETY
+    // --- Main scroll timeline ---
     setTimeout(() => {
         const tl = gsap.timeline({
             scrollTrigger: {
-                trigger: ".hero-scroll-track", // TRIGGER IS THE TALL WRAPPER
+                trigger: heroSection,
                 start: "top top",
-                end: "bottom bottom", // Animate over the full height of track
-                scrub: 1,
-                pin: false, // DISABLED PINNING (Handled by CSS Sticky)
-                anticipatePin: 1
+                end: "bottom top",      // When hero scrolls completely out
+                scrub: 1.2,
+                pin: false,
+                anticipatePin: 0
             }
         });
 
-        // ANIMATION LOGIC (Same as before, simplified)
-
-        // PHASE 1: CHARACTERS
-        heroChars.forEach((char) => {
-            const geom = getExplosionGeometry();
+        // PHASE 1: Smooth character transition to nav-logo
+        heroChars.forEach((char, i) => {
+            const logoRect = navLogo.getBoundingClientRect();
             const charRect = char.getBoundingClientRect();
-            const startX = 0;
-            const startY = 0;
-            const charCenterX = charRect.left + (charRect.width / 2);
-            const charCenterY = charRect.top + (charRect.height / 2);
 
-            const finalDistX = geom.targetX - charCenterX;
-            const finalDistY = geom.targetY - charCenterY;
-
-            const scatterX = (Math.random() - 0.5) * 300;
-            const scatterY = (Math.random() - 0.5) * 300;
+            const finalDistX = logoRect.left + (logoRect.width / 2) - (charRect.left + charRect.width / 2);
+            const finalDistY = logoRect.top + (logoRect.height / 2) - (charRect.top + charRect.height / 2);
 
             tl.fromTo(char,
-                { x: 0, y: 0, opacity: 1, scale: 1, rotation: 0, color: "#ffffff", textShadow: "none" },
+                { x: 0, y: 0, opacity: 1, scale: 1, rotation: 0, color: "#ffffff" },
                 {
-                    keyframes: [
-                        { x: scatterX, y: scatterY, rotation: Math.random() * 360, scale: 1.5, color: "#00fff9", textShadow: "0 0 10px #00fff9", duration: 0.3 },
-                        { x: finalDistX, y: finalDistY, rotation: 0, scale: 0.1, opacity: 0, color: "#ffffff", textShadow: "none", duration: 0.7 }
-                    ],
-                    onUpdate: function () {
-                        const p = this.progress();
-                        if (p > 0.1 && p < 0.9 && Math.random() > 0.7) {
-                            char.innerText = scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
-                        } else if (p <= 0.1) {
-                            char.innerText = char.dataset.original;
-                        }
-                    }
+                    x: finalDistX,
+                    y: finalDistY,
+                    scale: 0.2,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "power3.inOut"
                 }, 0);
         });
 
-        // PHASE 2: FADE OUT
+        // PHASE 2: Fade out other hero elements with stagger
         tl.fromTo(heroElementsToFade,
             { opacity: 1, y: 0, scale: 1 },
-            { opacity: 0, y: -100, scale: 0.9, stagger: 0.05, duration: 0.2 },
-            0);
+            { opacity: 0, y: -40, scale: 0.97, duration: 0.4, stagger: 0.03 },
+            0.15
+        );
 
-        // PHASE 3: LOGO
+        // PHASE 3: Nav-logo appears (late in the scroll)
         tl.fromTo(navLogo,
             { autoAlpha: 0, scale: 0.5, filter: "blur(10px)" },
-            { autoAlpha: 1, scale: 1, filter: "blur(0px)", duration: 0.1, ease: "back.out(2)" },
-            0.9);
+            { autoAlpha: 1, scale: 1, filter: "blur(0px)", duration: 0.2, ease: "back.out(2)" },
+            0.75
+        );
 
-        // PHASE 4: HEADER
+        // PHASE 4: Header gets background
         tl.to(header, {
-            backgroundColor: "rgba(10, 10, 10, 0.9)",
-            backdropFilter: "blur(15px)",
-            borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
-            duration: 0.2
-        }, 0.5);
+            backgroundColor: "rgba(10, 10, 10, 0.92)",
+            backdropFilter: "blur(20px)",
+            borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+            duration: 0.15
+        }, 0.75);
 
-        // Force refresh for geometry
+        // Force refresh geometry
         ScrollTrigger.refresh();
 
-    }, 100);
-});
+    }, 200);
+}

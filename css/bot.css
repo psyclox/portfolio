@@ -1,0 +1,194 @@
+/* ========================================
+   CYBER BOT COMPANION
+   sleek, glowing, red/black theme
+   ======================================== */
+
+.cyber-bot {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 100;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        opacity 0.5s ease;
+    pointer-events: none;
+    filter: drop-shadow(0 4px 15px rgba(255, 71, 87, 0.15));
+}
+
+.cyber-bot.hidden {
+    transform: translateX(-150px) scale(0.5);
+    opacity: 0;
+}
+
+.bot-core {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center;
+    transition: transform 0.2s ease-out;
+    background: radial-gradient(circle at 30% 30%, #2a2a2a, #0d0d0d);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8),
+        inset 0 0 10px rgba(255, 71, 87, 0.2);
+    border: 1px solid rgba(255, 71, 87, 0.3);
+}
+
+.bot-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.bot-ring-outer {
+    width: 80px;
+    height: 80px;
+    border-top-color: rgba(255, 71, 87, 0.8);
+    border-bottom-color: rgba(255, 71, 87, 0.2);
+    animation: rotateOuter 8s linear infinite;
+}
+
+.bot-ring-inner {
+    width: 70px;
+    height: 70px;
+    border-left-color: rgba(255, 255, 255, 0.5);
+    border-right-color: rgba(255, 71, 87, 0.5);
+    animation: rotateInner 5s linear infinite reverse;
+}
+
+.bot-eye-container {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    background: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 8px rgba(255, 71, 87, 0.5);
+    overflow: hidden;
+}
+
+.bot-eye {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.bot-pupil {
+    width: 14px;
+    height: 14px;
+    background: #ff4757;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #ff4757, 0 0 20px #ff4757;
+    transition: transform 0.1s ease-out, width 0.3s, height 0.3s;
+    position: relative;
+}
+
+.bot-pupil::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.bot-shadow {
+    width: 40px;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    margin: 15px auto 0;
+    filter: blur(4px);
+    animation: shadowPulse 4s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes rotateOuter {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotateInner {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes shadowPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.2;
+    }
+}
+
+.cyber-bot.idle .bot-core {
+    animation: floatIdle 4s ease-in-out infinite;
+}
+
+@keyframes floatIdle {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* Curious State */
+.cyber-bot.curious .bot-pupil {
+    width: 20px;
+    height: 20px;
+    box-shadow: 0 0 15px #ff4757, 0 0 30px #ff4757;
+}
+
+.cyber-bot.curious .bot-ring-outer {
+    border-top-color: #ff4757;
+    border-bottom-color: #ff4757;
+    animation-duration: 3s;
+}
+
+.cyber-bot.curious .bot-ring-inner {
+    border-left-color: #fff;
+    border-right-color: #fff;
+    animation-duration: 2s;
+}
+
+/* Blinking */
+.cyber-bot.blinking .bot-eye-container {
+    transform: scaleY(0.1);
+    transition: transform 0.08s ease;
+}
+
+@media (max-width: 768px) {
+    .cyber-bot {
+        display: none;
+    }
+}
