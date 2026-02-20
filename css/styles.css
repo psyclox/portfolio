@@ -4902,3 +4902,316 @@ html:not([data-theme="light"]) h3 {
         grid-column: 1;
     }
 }
+
+/* ========================================
+   EXPERIENCE SECTION — Expand on Hover
+   ======================================== */
+
+.experience {
+    background: #0a0a0f;
+    position: relative;
+    overflow: hidden;
+}
+
+.experience::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+}
+
+.exp-grid-v4 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* ---- Card ---- */
+.exp-card-v4 {
+    position: relative;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+}
+
+.exp-card-v4::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255, 71, 87, 0), rgba(255, 71, 87, 0));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    transition: background 0.4s ease;
+    pointer-events: none;
+}
+
+.exp-card-v4:hover {
+    border-color: rgba(255, 71, 87, 0.25);
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow:
+        0 10px 50px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(255, 71, 87, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
+}
+
+.exp-card-v4:hover::before {
+    background: linear-gradient(135deg, rgba(255, 71, 87, 0.4), rgba(255, 71, 87, 0.05), rgba(255, 255, 255, 0.1));
+}
+
+/* ---- Face (always visible) ---- */
+.exp-card-face {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 24px;
+}
+
+/* Large prominent logo */
+.exp-logo-hero {
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    transition: all 0.4s ease;
+}
+
+.exp-card-v4:hover .exp-logo-hero {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 71, 87, 0.25);
+    box-shadow: 0 0 20px rgba(255, 71, 87, 0.1);
+    transform: scale(1.05);
+}
+
+.exp-logo-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: brightness(1.2) contrast(1.05);
+    transition: filter 0.3s ease;
+}
+
+.exp-card-v4:hover .exp-logo-hero img {
+    filter: brightness(1.4) contrast(1.1);
+}
+
+/* Company / Role Text */
+.exp-card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.exp-v4-company {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 2px 0;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+}
+
+.exp-v4-role {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.95rem;
+    color: #ff4757;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.exp-v4-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+/* Green ACTIVE badge */
+.exp-v4-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'Rajdhani', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #00cc44;
+    background: rgba(0, 204, 68, 0.08);
+    border: 1px solid rgba(0, 204, 68, 0.2);
+    border-radius: 20px;
+    padding: 2px 10px;
+}
+
+.exp-v4-live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #00cc44;
+    box-shadow: 0 0 6px #00cc44;
+    animation: v4LiveBlink 1.5s ease-in-out infinite;
+}
+
+@keyframes v4LiveBlink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.2;
+    }
+}
+
+.exp-v4-period {
+    font-family: 'Rajdhani', monospace;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.45);
+    letter-spacing: 0.5px;
+}
+
+/* Chevron (rotates on hover) */
+.exp-v4-chevron {
+    color: rgba(255, 255, 255, 0.3);
+    transition: all 0.4s ease;
+    flex-shrink: 0;
+}
+
+.exp-card-v4:hover .exp-v4-chevron {
+    color: #ff4757;
+    transform: rotate(180deg);
+}
+
+/* ---- Expand Panel (hidden → revealed) ---- */
+.exp-card-expand {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0 24px;
+    transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        opacity 0.4s ease 0.1s,
+        padding 0.4s ease;
+}
+
+.exp-card-v4:hover .exp-card-expand {
+    max-height: 400px;
+    opacity: 1;
+    padding: 0 24px 20px;
+}
+
+/* Divider line */
+.exp-v4-divider {
+    height: 1px;
+    background: linear-gradient(90deg,
+            rgba(255, 71, 87, 0.3),
+            rgba(255, 255, 255, 0.06),
+            transparent);
+    margin-bottom: 14px;
+}
+
+/* Task list */
+.exp-v4-tasks {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 14px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.exp-v4-tasks li {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.4;
+    padding-left: 16px;
+    position: relative;
+}
+
+.exp-v4-tasks li::before {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    color: #ff4757;
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+/* Skill Chips */
+.exp-v4-chips {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.exp-v4-chips span {
+    font-family: 'Rajdhani', monospace;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: rgba(255, 71, 87, 0.08);
+    color: rgba(255, 71, 87, 0.75);
+    border: 1px solid rgba(255, 71, 87, 0.12);
+    transition: all 0.3s ease;
+}
+
+.exp-v4-chips span:hover {
+    background: rgba(255, 71, 87, 0.16);
+    color: #ff4757;
+    border-color: rgba(255, 71, 87, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .exp-card-face {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .exp-logo-hero {
+        width: 60px;
+        height: 60px;
+        min-width: 60px;
+    }
+
+    .exp-v4-chevron {
+        position: absolute;
+        right: 16px;
+        top: 20px;
+    }
+
+    .exp-card-expand {
+        padding: 0 16px;
+    }
+
+    .exp-card-v4:hover .exp-card-expand {
+        padding: 0 16px 16px;
+    }
+}
