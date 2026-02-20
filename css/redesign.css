@@ -8260,14 +8260,14 @@ html:not([data-theme="light"]) .target-ring {
    ========================================= */
 
 .hero-title {
-    opacity: 1 !important;
-    visibility: visible !important;
+    opacity: 1;
+    visibility: visible;
 }
 
 .title-name,
 .title-name span {
-    opacity: 1 !important;
-    visibility: visible !important;
+    opacity: 1;
+    visibility: visible;
     display: inline-block !important;
     -webkit-text-fill-color: var(--accent-primary) !important;
     color: var(--accent-primary) !important;

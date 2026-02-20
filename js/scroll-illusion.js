@@ -138,10 +138,10 @@ function initScrollIllusion() {
 
         // "Im Karthikeyan" explodes outward
         tl.to(heroChars, {
-            x: () => random(-800, 800),
-            y: () => random(200, 800),
-            rotationZ: () => random(-360, 360),
-            scale: () => random(0.2, 1.5),
+            x: "random(-800, 800, 10)",
+            y: "random(200, 800, 10)",
+            rotationZ: "random(-360, 360, 5)",
+            scale: "random(0.2, 1.5, 0.1)",
             opacity: 0,
             duration: 0.25,
             ease: "power2.in",
@@ -156,9 +156,9 @@ function initScrollIllusion() {
 
         // Description, CTAs, socials scatter
         tl.to('.hero-description, .hero-cta > *, .social-link', {
-            x: () => random(-400, 400),
-            y: () => random(100, 600),
-            rotationZ: () => random(-60, 60),
+            x: "random(-400, 400, 10)",
+            y: "random(100, 600, 10)",
+            rotationZ: "random(-60, 60, 5)",
             opacity: 0,
             scale: 0.5,
             duration: 0.25,

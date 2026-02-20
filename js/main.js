@@ -732,57 +732,6 @@ function initScrollAnimations() {
     // Register ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
-    // Hero animations
-    gsap.from('.hero-badge', {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        delay: 1.8
-    });
-
-    gsap.from('.hero-title', {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        delay: 2
-    });
-
-    gsap.from('.hero-subtitle', {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        delay: 2.2
-    });
-
-    gsap.from('.hero-description', {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        delay: 2.4
-    });
-
-    gsap.from('.hero-cta', {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        delay: 2.6
-    });
-
-    gsap.from('.hero-socials', {
-        y: 20,
-        opacity: 0,
-        duration: 0.8,
-        delay: 2.8
-    });
-
-    gsap.from('.hero-visual', {
-        scale: 0.8,
-        opacity: 0,
-        duration: 1.2,
-        delay: 1.6,
-        ease: 'back.out(1.7)'
-    });
-
     // Section headers
     gsap.utils.toArray('.section-header').forEach(header => {
         gsap.from(header, {
