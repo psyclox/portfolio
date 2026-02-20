@@ -8259,12 +8259,18 @@ html:not([data-theme="light"]) .target-ring {
    DEFINITIVE VISIBILITY RESET (User Request)
    ========================================= */
 
-.hero-title,
+.hero-title {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
 .title-name,
 .title-name span {
     opacity: 1 !important;
     visibility: visible !important;
     display: inline-block !important;
+    -webkit-text-fill-color: var(--accent-primary) !important;
+    color: var(--accent-primary) !important;
 }
 
 .nav-logo {

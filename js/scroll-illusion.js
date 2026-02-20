@@ -15,7 +15,6 @@ window.addEventListener('load', () => {
     heroElements.forEach(el => {
         el.style.opacity = '1';
         el.style.visibility = 'visible';
-        el.style.color = '#ffffff';
     });
 
     history.scrollRestoration = "manual";
@@ -61,6 +60,8 @@ function initScrollIllusion() {
             span.style.visibility = 'visible';
             span.style.minWidth = (char === ' ') ? '0.3em' : 'auto';
             span.style.willChange = 'transform, opacity';
+            span.style.color = 'inherit';
+            span.style.webkitTextFillColor = 'inherit';
             element.appendChild(span);
             chars.push(span);
         });
@@ -126,6 +127,7 @@ function initScrollIllusion() {
                 end: "+=900",
                 scrub: 1,
                 pin: true,
+                invalidateOnRefresh: true,
                 onLeave: () => ScrollTrigger.refresh()
             }
         });
@@ -135,17 +137,16 @@ function initScrollIllusion() {
         // ═══════════════════════════════════════
 
         // "Im Karthikeyan" explodes outward
-        heroChars.forEach(char => {
-            tl.to(char, {
-                x: random(-800, 800),
-                y: random(200, 800),
-                rotationZ: random(-360, 360),
-                scale: random(0.2, 1.5),
-                opacity: 0,
-                duration: 0.25,
-                ease: "power2.in"
-            }, 0);
-        });
+        tl.to(heroChars, {
+            x: () => random(-800, 800),
+            y: () => random(200, 800),
+            rotationZ: () => random(-360, 360),
+            scale: () => random(0.2, 1.5),
+            opacity: 0,
+            duration: 0.25,
+            ease: "power2.in",
+            stagger: 0.005
+        }, 0);
 
         // Subtitle flies up
         const typingText = document.querySelector('.hero-subtitle');
@@ -154,50 +155,47 @@ function initScrollIllusion() {
         }
 
         // Description, CTAs, socials scatter
-        document.querySelectorAll('.hero-description, .hero-cta > *, .social-link').forEach(el => {
-            tl.to(el, {
-                x: random(-400, 400),
-                y: random(100, 600),
-                rotationZ: random(-60, 60),
-                opacity: 0,
-                scale: 0.5,
-                duration: 0.25,
-                ease: "power2.in"
-            }, 0);
-        });
+        tl.to('.hero-description, .hero-cta > *, .social-link', {
+            x: () => random(-400, 400),
+            y: () => random(100, 600),
+            rotationZ: () => random(-60, 60),
+            opacity: 0,
+            scale: 0.5,
+            duration: 0.25,
+            ease: "power2.in",
+            stagger: 0.02
+        }, 0);
 
         // ═══════════════════════════════════════════
         // PHASE 2 (0.15 → 0.5): PSYCLOX assembles
         // ═══════════════════════════════════════════
 
-        psycloxChars.forEach((char, i) => {
-            tl.to(char, {
-                x: 0,
-                y: 0,
-                rotationZ: 0,
-                opacity: 1,
-                scale: 1,
-                duration: 0.3,
-                ease: "back.out(1.7)"
-            }, 0.15 + i * 0.01);
-        });
+        tl.to(psycloxChars, {
+            x: 0,
+            y: 0,
+            rotationZ: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.3,
+            ease: "back.out(1.7)",
+            stagger: 0.01
+        }, 0.15);
 
         // ═══════════════════════════════════════════════
         // PHASE 2.5 (0.25 → 0.55): Landing words assemble
         // ═══════════════════════════════════════════════
 
         landingWordChars.forEach((wordChars, wordIndex) => {
-            wordChars.forEach((char, charIndex) => {
-                tl.to(char, {
-                    x: 0,
-                    y: 0,
-                    rotationZ: 0,
-                    opacity: 1,
-                    scale: 1,
-                    duration: 0.25,
-                    ease: "back.out(1.4)"
-                }, 0.25 + wordIndex * 0.06 + charIndex * 0.008);
-            });
+            tl.to(wordChars, {
+                x: 0,
+                y: 0,
+                rotationZ: 0,
+                opacity: 1,
+                scale: 1,
+                duration: 0.25,
+                ease: "back.out(1.4)",
+                stagger: 0.008
+            }, 0.25 + wordIndex * 0.06);
         });
 
         // ═══════════════════════════════════════════
@@ -242,8 +240,8 @@ function initScrollIllusion() {
 
         tl.to(morphLayer, {
             opacity: 0,
-            y: -80,
-            scale: 0.95,
+            y: -100,
+            scale: 0.9,
             duration: 0.2,
             ease: "power2.in"
         }, 0.8);
