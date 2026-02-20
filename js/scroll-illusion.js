@@ -201,20 +201,19 @@ function initScrollIllusion() {
         });
 
         // ═══════════════════════════════════════════
-        // PHASE 3 (0.55 → 0.7): Color shift to red
+        // PHASE 3 (0.55 → 0.7): PSYCLOX glows brighter (stays white as identity)
         // ═══════════════════════════════════════════
 
         tl.to(psycloxTitle, {
-            color: '#ff4757',
-            textShadow: '0 0 60px rgba(255, 71, 87, 0.8), 0 0 120px rgba(255, 71, 87, 0.3)',
+            textShadow: '0 0 60px rgba(255, 255, 255, 0.6), 0 0 120px rgba(255, 71, 87, 0.3)',
             duration: 0.15,
             ease: "power2.inOut"
         }, 0.55);
 
-        // Landing words shift to subtle red
+        // Landing words are already red from HTML — just intensify their glow
         landingWords.forEach((word, i) => {
             tl.to(word, {
-                color: 'rgba(255, 71, 87, 0.6)',
+                textShadow: '0 0 20px rgba(255, 71, 87, 0.4)',
                 duration: 0.1,
                 ease: "power1.inOut"
             }, 0.58 + i * 0.03);
