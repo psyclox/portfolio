@@ -2019,7 +2019,7 @@ section {
 }
 
 .hero-title {
-    margin-bottom: var(--space-lg);
+    margin-bottom: 12px;
 }
 
 .title-line {
@@ -2042,7 +2042,7 @@ section {
     font-size: 1.75rem;
     font-weight: 500;
     color: var(--text-dark-secondary);
-    margin-bottom: var(--space-xl);
+    margin-bottom: 14px;
     display: flex;
     align-items: center;
     gap: var(--space-sm);
@@ -2079,13 +2079,13 @@ section {
     font-size: 1.125rem;
     color: var(--text-dark-secondary);
     line-height: 1.8;
-    margin-bottom: var(--space-2xl);
+    margin-bottom: 16px;
 }
 
 .hero-cta {
     display: flex;
     gap: var(--space-lg);
-    margin-bottom: var(--space-2xl);
+    margin-bottom: 16px;
     flex-wrap: wrap;
 }
 
