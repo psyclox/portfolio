@@ -92,12 +92,14 @@
     }
     function openHideout() {
         container.classList.remove('hidden');
-        if (footerGrid) footerGrid.style.display = 'none';
+        // Trigger reflow before adding active class for transition
+        void container.offsetHeight;
+        container.classList.add('active');
     }
     function closeHideout() {
         stopGame();
+        container.classList.remove('active');
         container.classList.add('hidden');
-        if (footerGrid) footerGrid.style.display = '';
         showWelcome();
         sidebarBtns.forEach(b => b.classList.remove('active'));
     }
@@ -971,20 +973,27 @@
     //  🎲  3D RUBIK'S CUBE — Pattern Match
     // ═══════════════════════════════════════════
     function startCube() {
-        setHint('DRAG TO ROTATE CUBE | DBL CLICK TO SCRAMBLE');
+        setHint('KEYBOARD: U D L R F B | SHIFT = REVERSE');
         setPlayerVisibility(false);
         canvasContainer.innerHTML = ''; // Clear previous games
 
         if (controlsHint) {
             controlsHint.innerHTML = `
-                <div style="font-family:'Rajdhani',monospace; font-size:14px; line-height:1.6;">
-                    <strong style="color:#fff; font-size:16px;">CUBE CONTROLS:</strong>
-                    <br><br>
-                    <span style="color:#ff6b6b">DRAG IN SPACE</span><br>Rotate Whole Cube
-                    <br><br>
-                    <span style="color:#ff6b6b">DRAG ON CUBE</span><br>Rotate Specific Layer
-                    <br><br>
-                    <span style="color:#ff6b6b">SCRAMBLE</span><br>Click 'SCRAMBLE' button
+                <div style="font-family:'Rajdhani',monospace; font-size:14px; line-height:1.8;">
+                    <strong style="color:#ff4757; font-size:16px;">FACE ROTATIONS:</strong>
+                    <br>
+                    <span style="color:#fff; font-weight:700;">U</span> <span style="color:#aaa">=</span> <span style="color:#00cc44">Top layer CW</span><br>
+                    <span style="color:#fff; font-weight:700;">D</span> <span style="color:#aaa">=</span> <span style="color:#00cc44">Bottom CW</span><br>
+                    <span style="color:#fff; font-weight:700;">L</span> <span style="color:#aaa">=</span> <span style="color:#00cc44">Left CW</span><br>
+                    <span style="color:#fff; font-weight:700;">R</span> <span style="color:#aaa">=</span> <span style="color:#00cc44">Right CW</span><br>
+                    <span style="color:#fff; font-weight:700;">F</span> <span style="color:#aaa">=</span> <span style="color:#00cc44">Front CW</span><br>
+                    <span style="color:#fff; font-weight:700;">B</span> <span style="color:#aaa">=</span> <span style="color:#00cc44">Back CW</span><br>
+                    <br>
+                    <span style="color:#ff4757; font-weight:700;">SHIFT + key</span> = <span style="color:#fff;">Counter-CW</span><br>
+                    <br>
+                    <strong style="color:#ff4757; font-size:16px;">CAMERA:</strong><br>
+                    <span style="color:#fff;">Drag empty space</span><br>
+                    <span style="color:#00cc44;">to orbit cube</span>
                 </div>
             `;
         }
@@ -1334,6 +1343,53 @@
         }
 
         scrambleBtn.addEventListener('click', scramble);
+
+        // --- Keyboard Face Rotation ---
+        // U=Top, D=Bottom, L=Left, R=Right, F=Front, B=Back
+        // Shift reverses direction
+        function rotateFaceByKey(axis, layerVal, direction) {
+            if (isScrambling) return;
+            const threshold = 0.5;
+            const rotAngle = direction * Math.PI / 2;
+            const layer = cubies.filter(c => Math.abs(c.position[axis] - layerVal) < threshold);
+            const axisVec = new THREE.Vector3(
+                axis === 'x' ? 1 : 0,
+                axis === 'y' ? 1 : 0,
+                axis === 'z' ? 1 : 0
+            );
+            layer.forEach(c => {
+                c.position.applyAxisAngle(axisVec, rotAngle);
+                c.rotateOnWorldAxis(axisVec, rotAngle);
+                c.position.x = Math.round(c.position.x / (size + gap)) * (size + gap);
+                c.position.y = Math.round(c.position.y / (size + gap)) * (size + gap);
+                c.position.z = Math.round(c.position.z / (size + gap)) * (size + gap);
+                const euler = new THREE.Euler().setFromQuaternion(c.quaternion);
+                euler.x = Math.round(euler.x / (Math.PI / 2)) * (Math.PI / 2);
+                euler.y = Math.round(euler.y / (Math.PI / 2)) * (Math.PI / 2);
+                euler.z = Math.round(euler.z / (Math.PI / 2)) * (Math.PI / 2);
+                c.quaternion.setFromEuler(euler);
+                c.updateMatrix();
+                c.userData.x = Math.round(c.position.x / (size + gap));
+                c.userData.y = Math.round(c.position.y / (size + gap));
+                c.userData.z = Math.round(c.position.z / (size + gap));
+            });
+        }
+
+        keyHandler = function (e) {
+            if (e.type !== 'keydown') return;
+            const dir = e.shiftKey ? -1 : 1;
+            const topVal = (size + gap);
+            const botVal = -(size + gap);
+            switch (e.key.toLowerCase()) {
+                case 'u': rotateFaceByKey('y', topVal, dir); break;     // Top
+                case 'd': rotateFaceByKey('y', botVal, -dir); break;    // Bottom
+                case 'l': rotateFaceByKey('x', botVal, -dir); break;    // Left
+                case 'r': rotateFaceByKey('x', topVal, dir); break;     // Right
+                case 'f': rotateFaceByKey('z', topVal, dir); break;     // Front
+                case 'b': rotateFaceByKey('z', botVal, -dir); break;    // Back
+            }
+        };
+        window.addEventListener('keydown', keyHandler);
 
         // Render Loop
         gameLoopId = requestAnimationFrame(function animate() {

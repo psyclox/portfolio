@@ -1,7 +1,7 @@
 /* ========================================
-   FOOTER REALISTIC RAIN EFFECT
-   Canvas-based rain with streaks, splashes,
-   layered depth, and lightning flashes.
+   FOOTER REALISTIC RAIN — Enhanced v2
+   Thinner streaks, variable wind, ground mist,
+   puddle ripples, and depth-of-field blur
    ======================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,162 +9,186 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
+    let W, H;
 
-    // Resize canvas
-    function resizeCanvas() {
+    function resize() {
         const footer = canvas.parentElement;
-        canvas.width = footer.offsetWidth;
-        canvas.height = footer.offsetHeight;
+        W = canvas.width = footer.offsetWidth;
+        H = canvas.height = footer.offsetHeight;
     }
+    window.addEventListener('resize', resize);
+    resize();
 
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+    // --- Config ---
+    const WIND = 0.18;           // base wind angle (radians)
+    let windOscillation = 0;     // oscillates over time for natural wind shift
+    let windTarget = WIND;
+    let windCurrent = WIND;
 
-    // --- Rain Configuration ---
-    const WIND_ANGLE = 0.25; // radians (~15 degrees lean)
-    const LAYER_COUNT = 3;   // background, mid, foreground
-
+    // 5 depth layers for parallax realism
     const layers = [
-        { count: 60, speedMin: 1.5, speedMax: 3, lenMin: 10, lenMax: 20, opacity: 0.08, width: 0.5 },  // far background
-        { count: 80, speedMin: 3, speedMax: 5, lenMin: 15, lenMax: 30, opacity: 0.15, width: 1 },  // mid
-        { count: 50, speedMin: 5, speedMax: 8, lenMin: 25, lenMax: 45, opacity: 0.3, width: 1.5 },  // foreground
+        { count: 40, sMin: 1, sMax: 2, lMin: 8, lMax: 14, op: 0.04, w: 0.3 },
+        { count: 50, sMin: 2, sMax: 3.5, lMin: 10, lMax: 18, op: 0.07, w: 0.5 },
+        { count: 60, sMin: 3.5, sMax: 5, lMin: 12, lMax: 25, op: 0.12, w: 0.7 },
+        { count: 45, sMin: 5, sMax: 7, lMin: 18, lMax: 35, op: 0.2, w: 1.0 },
+        { count: 30, sMin: 7, sMax: 10, lMin: 25, lMax: 45, op: 0.32, w: 1.3 },
     ];
 
-    // --- Raindrop class ---
-    class Raindrop {
+    // --- Raindrop ---
+    class Drop {
         constructor(layer) {
-            this.layer = layer;
+            this.L = layer;
             this.reset(true);
         }
-
-        reset(initial = false) {
-            const L = this.layer;
-            this.x = Math.random() * (canvas.width + 100) - 50;
-            this.y = initial ? Math.random() * canvas.height : -20 - Math.random() * 80;
-            this.speed = L.speedMin + Math.random() * (L.speedMax - L.speedMin);
-            this.length = L.lenMin + Math.random() * (L.lenMax - L.lenMin);
-            this.opacity = L.opacity * (0.6 + Math.random() * 0.4);
-            this.width = L.width;
+        reset(init = false) {
+            this.x = Math.random() * (W + 120) - 60;
+            this.y = init ? Math.random() * H : -10 - Math.random() * 100;
+            this.speed = this.L.sMin + Math.random() * (this.L.sMax - this.L.sMin);
+            this.len = this.L.lMin + Math.random() * (this.L.lMax - this.L.lMin);
+            this.op = this.L.op * (0.5 + Math.random() * 0.5);
+            this.w = this.L.w;
         }
-
-        update() {
-            this.x += Math.sin(WIND_ANGLE) * this.speed;
-            this.y += Math.cos(WIND_ANGLE) * this.speed;
-
-            if (this.y > canvas.height) {
-                // Spawn splash
-                if (this.layer.opacity > 0.1 && Math.random() > 0.5) {
-                    spawnSplash(this.x, canvas.height - 2);
-                }
+        update(wind) {
+            this.x += Math.sin(wind) * this.speed * 1.2;
+            this.y += Math.cos(wind) * this.speed;
+            if (this.y > H) {
+                // Splash for visible drops
+                if (this.op > 0.08 && Math.random() > 0.4) spawnSplash(this.x, H - 1);
+                // Ripple for close drops
+                if (this.op > 0.15 && Math.random() > 0.6) spawnRipple(this.x);
                 this.reset();
             }
         }
-
-        draw() {
-            const dx = Math.sin(WIND_ANGLE) * this.length;
-            const dy = Math.cos(WIND_ANGLE) * this.length;
-
+        draw(wind) {
+            const dx = Math.sin(wind) * this.len;
+            const dy = Math.cos(wind) * this.len;
             ctx.beginPath();
             ctx.moveTo(this.x, this.y);
             ctx.lineTo(this.x + dx, this.y + dy);
-            ctx.strokeStyle = `rgba(180, 200, 230, ${this.opacity})`;
-            ctx.lineWidth = this.width;
+            ctx.strokeStyle = `rgba(180, 205, 240, ${this.op})`;
+            ctx.lineWidth = this.w;
             ctx.stroke();
         }
     }
 
-    // --- Splash Particles ---
+    // --- Splashes ---
     const splashes = [];
-
     class Splash {
         constructor(x, y) {
-            this.x = x;
-            this.y = y;
-            this.vx = (Math.random() - 0.5) * 3;
-            this.vy = -Math.random() * 2.5 - 0.5;
-            this.radius = Math.random() * 1.5 + 0.5;
+            this.x = x; this.y = y;
+            this.vx = (Math.random() - 0.5) * 2.5;
+            this.vy = -Math.random() * 2 - 1;
+            this.r = Math.random() * 1.2 + 0.3;
             this.life = 1.0;
-            this.decay = 0.03 + Math.random() * 0.04;
+            this.decay = 0.04 + Math.random() * 0.03;
         }
-
         update() {
-            this.x += this.vx;
-            this.y += this.vy;
-            this.vy += 0.1; // gravity
+            this.x += this.vx; this.y += this.vy;
+            this.vy += 0.12;
             this.life -= this.decay;
         }
-
         draw() {
             if (this.life <= 0) return;
             ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(180, 200, 230, ${this.life * 0.4})`;
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(200, 220, 255, ${this.life * 0.35})`;
             ctx.fill();
         }
     }
-
     function spawnSplash(x, y) {
-        const count = 2 + Math.floor(Math.random() * 3);
-        for (let i = 0; i < count; i++) {
+        for (let i = 0; i < 2 + Math.floor(Math.random() * 3); i++)
             splashes.push(new Splash(x, y));
-        }
     }
 
-    // --- Initialize drops ---
-    const drops = [];
-    layers.forEach(layer => {
-        for (let i = 0; i < layer.count; i++) {
-            drops.push(new Raindrop(layer));
+    // --- Puddle Ripples ---
+    const ripples = [];
+    class Ripple {
+        constructor(x) {
+            this.x = x;
+            this.y = H - 2 - Math.random() * 4;
+            this.radius = 0;
+            this.maxRadius = 6 + Math.random() * 10;
+            this.life = 1.0;
+            this.speed = 0.3 + Math.random() * 0.3;
         }
+        update() {
+            this.radius += this.speed;
+            this.life = 1 - (this.radius / this.maxRadius);
+        }
+        draw() {
+            if (this.life <= 0) return;
+            ctx.beginPath();
+            ctx.ellipse(this.x, this.y, this.radius, this.radius * 0.35, 0, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(180, 210, 255, ${this.life * 0.15})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+        }
+    }
+    function spawnRipple(x) { ripples.push(new Ripple(x)); }
+
+    // --- Init drops ---
+    const drops = [];
+    layers.forEach(L => {
+        for (let i = 0; i < L.count; i++) drops.push(new Drop(L));
     });
 
-    // --- Lightning System ---
-    let flashActive = 0;
-
-    function doLightning() {
-        if (Math.random() > 0.995) {
-            flashActive = 4;
-        }
+    // --- Lightning ---
+    let flashAlpha = 0;
+    function maybeFlash() {
+        if (Math.random() > 0.997) flashAlpha = 0.25;
     }
 
-    // --- Main Draw Loop ---
+    // --- Ground Mist ---
+    let mistPhase = 0;
+    function drawMist() {
+        mistPhase += 0.003;
+        const gradient = ctx.createLinearGradient(0, H - 30, 0, H);
+        gradient.addColorStop(0, 'rgba(10, 10, 15, 0)');
+        gradient.addColorStop(1, `rgba(20, 25, 35, ${0.15 + Math.sin(mistPhase) * 0.05})`);
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, H - 30, W, 30);
+    }
+
+    // --- Main Loop ---
+    let time = 0;
     function draw() {
-        doLightning();
+        time++;
+        maybeFlash();
 
-        // Background fade
-        if (flashActive > 0) {
-            ctx.fillStyle = `rgba(200, 210, 230, ${flashActive * 0.06})`;
-            flashActive--;
+        // Wind oscillation for natural variation
+        if (time % 120 === 0) windTarget = WIND + (Math.random() - 0.5) * 0.12;
+        windCurrent += (windTarget - windCurrent) * 0.02;
+        const wind = windCurrent;
+
+        // Clear with fade (for trail effect)
+        if (flashAlpha > 0) {
+            ctx.fillStyle = `rgba(160, 180, 220, ${flashAlpha})`;
+            flashAlpha *= 0.8;
+            if (flashAlpha < 0.01) flashAlpha = 0;
         } else {
-            ctx.fillStyle = 'rgba(10, 10, 15, 0.25)';
+            ctx.fillStyle = 'rgba(10, 10, 15, 0.18)';
         }
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillRect(0, 0, W, H);
 
-        // Update and draw rain
-        drops.forEach(drop => {
-            drop.update();
-            // During flash, boost opacity
-            if (flashActive > 0) {
-                const origOpacity = drop.opacity;
-                drop.opacity = Math.min(0.6, drop.opacity * 3);
-                drop.draw();
-                drop.opacity = origOpacity;
-            } else {
-                drop.draw();
-            }
-        });
+        // Drops
+        for (const d of drops) { d.update(wind); d.draw(wind); }
 
-        // Update and draw splashes
+        // Splashes
         for (let i = splashes.length - 1; i >= 0; i--) {
-            splashes[i].update();
-            splashes[i].draw();
-            if (splashes[i].life <= 0) {
-                splashes.splice(i, 1);
-            }
+            splashes[i].update(); splashes[i].draw();
+            if (splashes[i].life <= 0) splashes.splice(i, 1);
         }
+
+        // Ripples
+        for (let i = ripples.length - 1; i >= 0; i--) {
+            ripples[i].update(); ripples[i].draw();
+            if (ripples[i].life <= 0) ripples.splice(i, 1);
+        }
+
+        // Ground mist
+        drawMist();
 
         requestAnimationFrame(draw);
     }
-
     draw();
 });
