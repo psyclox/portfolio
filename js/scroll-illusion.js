@@ -137,34 +137,40 @@ function initScrollIllusion() {
         // ═══════════════════════════════════════
 
         // "Im Karthikeyan" explodes outward
-        tl.to(heroChars, {
-            x: "random(-800, 800, 10)",
-            y: "random(200, 800, 10)",
-            rotationZ: "random(-360, 360, 5)",
-            scale: "random(0.2, 1.5, 0.1)",
-            opacity: 0,
-            duration: 0.25,
-            ease: "power2.in",
-            stagger: 0.005
-        }, 0);
+        tl.fromTo(heroChars,
+            { x: 0, y: 0, rotationZ: 0, scale: 1, autoAlpha: 1 },
+            {
+                x: "random(-800, 800, 10)",
+                y: "random(200, 800, 10)",
+                rotationZ: "random(-360, 360, 5)",
+                scale: "random(0.2, 1.5, 0.1)",
+                autoAlpha: 0,
+                duration: 0.25,
+                ease: "power2.in",
+                stagger: 0.005
+            }, 0);
 
         // Subtitle flies up
         const typingText = document.querySelector('.hero-subtitle');
         if (typingText) {
-            tl.to(typingText, { y: -300, opacity: 0, duration: 0.25, ease: "power1.in" }, 0);
+            tl.fromTo(typingText,
+                { y: 0, autoAlpha: 1 },
+                { y: -300, autoAlpha: 0, duration: 0.25, ease: "power1.in" }, 0);
         }
 
         // Description, CTAs, socials scatter
-        tl.to('.hero-description, .hero-cta > *, .social-link', {
-            x: "random(-400, 400, 10)",
-            y: "random(100, 600, 10)",
-            rotationZ: "random(-60, 60, 5)",
-            opacity: 0,
-            scale: 0.5,
-            duration: 0.25,
-            ease: "power2.in",
-            stagger: 0.02
-        }, 0);
+        tl.fromTo('.hero-description, .hero-cta > *, .social-link',
+            { x: 0, y: 0, rotationZ: 0, scale: 1, autoAlpha: 1 },
+            {
+                x: "random(-400, 400, 10)",
+                y: "random(100, 600, 10)",
+                rotationZ: "random(-60, 60, 5)",
+                autoAlpha: 0,
+                scale: 0.5,
+                duration: 0.25,
+                ease: "power2.in",
+                stagger: 0.02
+            }, 0);
 
         // ═══════════════════════════════════════════
         // PHASE 2 (0.15 → 0.5): PSYCLOX assembles
@@ -239,7 +245,7 @@ function initScrollIllusion() {
         // ═══════════════════════════════════════════════
 
         tl.to(morphLayer, {
-            opacity: 0,
+            autoAlpha: 0,
             y: -100,
             scale: 0.9,
             duration: 0.2,

@@ -4155,9 +4155,9 @@ html body [data-theme="light"] .roadmap-node .cert-card.locked-oscp .cert-icon-s
     display: inline-block;
     perspective: 1000px;
     /* Enable 3D transforms for chars */
-    opacity: 1 !important;
+    opacity: 1;
     /* Force Visible */
-    visibility: visible !important;
+    visibility: visible;
 }
 
 .hero-title .title-name span {
