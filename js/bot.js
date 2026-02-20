@@ -1,30 +1,43 @@
 /* ========================================
-   CYBER BOT COMPANION — JavaScript
-   - Pupil follows cursor
-   - Core shifts slightly towards cursor
+   ROBOTO ROBOT COMPANION — JavaScript
+   - 3D Head rotation tracks cursor
+   - Golden eyes shift towards cursor
    - Visible from About → Contact
    - Reacts to interactive elements
    ======================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
     const robot = document.getElementById('cyber-bot');
-    const core = document.getElementById('bot-core');
-    const pupil = document.getElementById('bot-pupil');
+    const head = document.getElementById('bot-head');
+    const eyes = document.getElementById('bot-eyes');
 
-    if (!robot || !core || !pupil) return;
+    if (!robot || !head || !eyes) return;
 
     // Config
-    const maxCoreShift = 10;
-    const maxPupilMove = 8;
-    const lerpSpeed = 0.08;
+    const maxHeadRotateY = 35; // degrees
+    const maxHeadRotateX = 25; // degrees
+    const maxEyeShift = 8; // pixels
+
+    // Base Rest Rotations
+    const baseRotZ = 10;
+    const baseRotY = -15;
+    const baseRotX = 10;
 
     // State
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
-    let currentCoreX = 0;
-    let currentCoreY = 0;
-    let currentPupilX = 0;
-    let currentPupilY = 0;
+
+    // Physics State
+    let headRotX = 0, headRotY = 0;
+    let headVX = 0, headVY = 0;
+    let eyeX = 0, eyeY = 0;
+    let eyeVX = 0, eyeVY = 0;
+
+    // Physics constants
+    const stiffness = 0.06;
+    const damping = 0.65;
+    const eyeStiffness = 0.08;
+    const eyeDamping = 0.7;
 
     const aboutSection = document.getElementById('about');
     const contactSection = document.getElementById('contact');
@@ -34,9 +47,25 @@ document.addEventListener('DOMContentLoaded', () => {
         mouseY = e.clientY;
     });
 
-    function lerp(current, target, speed) {
-        return current + (target - current) * speed;
+
+    // Random Idling Offset
+    let idleOffsetX = 0;
+    let idleOffsetY = 0;
+
+    function randomIdleLooking() {
+        if (!robot.classList.contains('hidden') && !robot.classList.contains('curious')) {
+            // Occasionally look around if not hovering anything
+            if (Math.random() > 0.6) {
+                idleOffsetX = (Math.random() - 0.5) * 800; // Big fake movements
+                idleOffsetY = (Math.random() - 0.5) * 800;
+            } else {
+                idleOffsetX = 0;
+                idleOffsetY = 0;
+            }
+        }
+        setTimeout(randomIdleLooking, 2000 + Math.random() * 3000);
     }
+    setTimeout(randomIdleLooking, 1000);
 
     function update() {
         // Calculate center of the bot to determine delta
@@ -44,31 +73,45 @@ document.addEventListener('DOMContentLoaded', () => {
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
 
-        const dx = mouseX - cx;
-        const dy = mouseY - cy;
+        const targetX = mouseX - cx + idleOffsetX;
+        const targetY = mouseY - cy + idleOffsetY;
 
-        // Core shifting
-        const dist = Math.hypot(dx, dy);
-        const angle = Math.atan2(dy, dx);
+        // Dist from center relative to screen size to calculate angle percentages
+        const pctX = (targetX / (window.innerWidth / 2));
+        const pctY = (targetY / (window.innerHeight / 2));
 
-        const clampCore = Math.min(maxCoreShift, dist / 40);
-        const targetCoreX = Math.cos(angle) * clampCore;
-        const targetCoreY = Math.sin(angle) * clampCore;
+        // --- Head Spring Physics (Rotations) ---
+        // clamp to max rotation mapped by mouse percentage distance
+        const tHeadY = Math.max(-maxHeadRotateY, Math.min(maxHeadRotateY, pctX * maxHeadRotateY));
+        const tHeadX = Math.max(-maxHeadRotateX, Math.min(maxHeadRotateX, -pctY * maxHeadRotateX));
 
-        currentCoreX = lerp(currentCoreX, targetCoreX, lerpSpeed);
-        currentCoreY = lerp(currentCoreY, targetCoreY, lerpSpeed);
+        const ax = (tHeadX - headRotX) * stiffness;
+        const ay = (tHeadY - headRotY) * stiffness;
+        headVX = (headVX + ax) * damping;
+        headVY = (headVY + ay) * damping;
+        headRotX += headVX;
+        headRotY += headVY;
 
-        core.style.transform = `translate(${currentCoreX}px, ${currentCoreY}px)`;
+        if (!robot.classList.contains('curious')) {
+            head.style.transform = `rotateZ(${baseRotZ}deg) rotateY(${baseRotY + headRotY}deg) rotateX(${baseRotX + headRotX}deg)`;
+        }
 
-        // Pupil tracking
-        const clampPupil = Math.min(maxPupilMove, dist / 20);
-        const targetPX = Math.cos(angle) * clampPupil;
-        const targetPY = Math.sin(angle) * clampPupil;
+        // --- Eye Spring Physics (Translation) ---
+        const dist = Math.hypot(targetX, targetY);
+        const angle = Math.atan2(targetY, targetX);
 
-        currentPupilX = lerp(currentPupilX, targetPX, lerpSpeed * 1.5);
-        currentPupilY = lerp(currentPupilY, targetPY, lerpSpeed * 1.5);
+        const clampEye = Math.min(maxEyeShift, dist / 25);
+        const targetPX = Math.cos(angle) * clampEye;
+        const targetPY = Math.sin(angle) * clampEye;
 
-        pupil.style.transform = `translate(${currentPupilX}px, ${currentPupilY}px)`;
+        const pax = (targetPX - eyeX) * eyeStiffness;
+        const pay = (targetPY - eyeY) * eyeStiffness;
+        eyeVX = (eyeVX + pax) * eyeDamping;
+        eyeVY = (eyeVY + pay) * eyeDamping;
+        eyeX += eyeVX;
+        eyeY += eyeVY;
+
+        eyes.style.transform = `translate(${eyeX}px, ${eyeY}px) translateY(-5px)`;
 
         requestAnimationFrame(update);
     }
@@ -86,9 +129,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const showRobot = aboutTop < window.innerHeight * 0.6;
 
         let pastContact = false;
-        if (contactSection) {
-            const contactBottom = contactSection.getBoundingClientRect().bottom;
-            pastContact = contactBottom < 0;
+        const footer = document.querySelector('footer');
+        if (footer) {
+            const footerTop = footer.getBoundingClientRect().top;
+            if (footerTop < window.innerHeight) {
+                pastContact = true;
+            }
         }
 
         if (showRobot && !pastContact) {

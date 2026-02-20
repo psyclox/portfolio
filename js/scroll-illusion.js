@@ -1,12 +1,16 @@
 /* =============================================
    SCROLL ILLUSION — Hero Text Animation
-   Uses GSAP ScrollTrigger with the #about section
-   as the trigger endpoint. As user scrolls past
-   the hero, text scatters → nav-logo fades in.
+   Complete rework: Uses GSAP ScrollTrigger.
+   Phase 1: "Im Karthikeyan" + UI scatter outward
+   Phase 2: "PSYCLOX" + "SECURITY" + "ENGINEER" +
+            "ETHICAL HACKER" assemble center-screen
+   Phase 3: Color shift to red
+   Phase 4: Nav-logo appears
+   Phase 5: Everything fades → About section
    ============================================= */
 
 window.addEventListener('load', () => {
-    // 1. Force visibility — no FOUC
+    // Force visibility — no FOUC
     const heroElements = document.querySelectorAll('.hero-content, .title-name, .title-name span, .hero-subtitle');
     heroElements.forEach(el => {
         el.style.opacity = '1';
@@ -32,16 +36,17 @@ function initScrollIllusion() {
     const heroName = document.querySelector('.title-name');
     const navLogo = document.querySelector('.nav-logo');
     const header = document.querySelector('.header');
-    const heroElementsToFade = document.querySelectorAll(
-        '.hero-subtitle, .hero-description, .hero-cta, .hero-socials, .hero-bg-video, .hero-overlay, .title-line, .scroll-indicator'
-    );
+    const titleLine = document.querySelector('.title-line');
 
-    if (!heroName || !navLogo || !heroSection) return;
+    // New structure: morph targets at section level
+    const morphLayer = document.querySelector('.hero-morph-layer');
+    const psycloxTitle = document.querySelector('.hero-title-psyclox');
+    const landingWords = document.querySelectorAll('.hero-landing-word');
 
-    const scrambleChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*_+-=<>?";
+    if (!heroName || !navLogo || !heroSection || !titleLine || !psycloxTitle || !morphLayer) return;
 
-    // --- Prepare hero text into individual characters ---
-    function prepareHeroText(element) {
+    // --- Split text into individual characters for animation ---
+    function splitToChars(element) {
         if (!element) return [];
         const text = element.innerText;
         element.innerHTML = '';
@@ -51,7 +56,6 @@ function initScrollIllusion() {
         text.split('').forEach(char => {
             const span = document.createElement('span');
             span.innerText = char;
-            span.dataset.original = char;
             span.style.display = 'inline-block';
             span.style.opacity = '1';
             span.style.visibility = 'visible';
@@ -63,14 +67,51 @@ function initScrollIllusion() {
         return chars;
     }
 
-    const heroChars = prepareHeroText(heroName);
+    // Split "Im" and "Karthikeyan" into chars
+    const nameChars = splitToChars(heroName);
+    const lineChars = splitToChars(titleLine);
+    const heroChars = [...lineChars, ...nameChars];
 
-    // Initial state — hide nav-logo
+    // Split "PSYCLOX" into chars
+    const psycloxChars = splitToChars(psycloxTitle);
+
+    // Split each landing word into chars
+    const landingWordChars = [];
+    landingWords.forEach(word => {
+        landingWordChars.push(splitToChars(word));
+    });
+
+    // Initial states
     gsap.set(navLogo, { autoAlpha: 0 });
+    gsap.set(morphLayer, { opacity: 1 });
 
-    // --- Gradient masking animation on hero name (runs on load) ---
-    const maskTl = gsap.timeline({ repeat: -1, yoyo: true });
-    maskTl.to(heroName, {
+    // Pre-scatter all morph target chars (PSYCLOX + landing words) invisibly
+    const random = (min, max) => Math.random() * (max - min) + min;
+
+    psycloxChars.forEach(char => {
+        gsap.set(char, {
+            x: random(-800, 800),
+            y: random(-500, 500),
+            rotationZ: random(-360, 360),
+            opacity: 0,
+            scale: random(2, 5)
+        });
+    });
+
+    landingWordChars.forEach(wordChars => {
+        wordChars.forEach(char => {
+            gsap.set(char, {
+                x: random(-600, 600),
+                y: random(-300, 300),
+                rotationZ: random(-180, 180),
+                opacity: 0,
+                scale: random(1.5, 3)
+            });
+        });
+    });
+
+    // --- Gradient shimmer on hero name ---
+    gsap.timeline({ repeat: -1, yoyo: true }).to(heroName, {
         backgroundPosition: '200% center',
         duration: 4,
         ease: 'sine.inOut'
@@ -82,57 +123,144 @@ function initScrollIllusion() {
             scrollTrigger: {
                 trigger: heroSection,
                 start: "top top",
-                end: "bottom top",      // When hero scrolls completely out
-                scrub: 1.2,
-                pin: false,
-                anticipatePin: 0
+                end: "+=900",
+                scrub: 1,
+                pin: true,
+                onLeave: () => ScrollTrigger.refresh()
             }
         });
 
-        // PHASE 1: Smooth character transition to nav-logo
-        heroChars.forEach((char, i) => {
-            const logoRect = navLogo.getBoundingClientRect();
-            const charRect = char.getBoundingClientRect();
+        // ═══════════════════════════════════════
+        // PHASE 1 (0 → 0.25): Scatter everything
+        // ═══════════════════════════════════════
 
-            const finalDistX = logoRect.left + (logoRect.width / 2) - (charRect.left + charRect.width / 2);
-            const finalDistY = logoRect.top + (logoRect.height / 2) - (charRect.top + charRect.height / 2);
-
-            tl.fromTo(char,
-                { x: 0, y: 0, opacity: 1, scale: 1, rotation: 0, color: "#ffffff" },
-                {
-                    x: finalDistX,
-                    y: finalDistY,
-                    scale: 0.2,
-                    opacity: 0,
-                    duration: 0.8,
-                    ease: "power3.inOut"
-                }, 0);
+        // "Im Karthikeyan" explodes outward
+        heroChars.forEach(char => {
+            tl.to(char, {
+                x: random(-800, 800),
+                y: random(200, 800),
+                rotationZ: random(-360, 360),
+                scale: random(0.2, 1.5),
+                opacity: 0,
+                duration: 0.25,
+                ease: "power2.in"
+            }, 0);
         });
 
-        // PHASE 2: Fade out other hero elements with stagger
-        tl.fromTo(heroElementsToFade,
-            { opacity: 1, y: 0, scale: 1 },
-            { opacity: 0, y: -40, scale: 0.97, duration: 0.4, stagger: 0.03 },
-            0.15
-        );
+        // Subtitle flies up
+        const typingText = document.querySelector('.hero-subtitle');
+        if (typingText) {
+            tl.to(typingText, { y: -300, opacity: 0, duration: 0.25, ease: "power1.in" }, 0);
+        }
 
-        // PHASE 3: Nav-logo appears (late in the scroll)
-        tl.fromTo(navLogo,
-            { autoAlpha: 0, scale: 0.5, filter: "blur(10px)" },
-            { autoAlpha: 1, scale: 1, filter: "blur(0px)", duration: 0.2, ease: "back.out(2)" },
-            0.75
-        );
+        // Description, CTAs, socials scatter
+        document.querySelectorAll('.hero-description, .hero-cta > *, .social-link').forEach(el => {
+            tl.to(el, {
+                x: random(-400, 400),
+                y: random(100, 600),
+                rotationZ: random(-60, 60),
+                opacity: 0,
+                scale: 0.5,
+                duration: 0.25,
+                ease: "power2.in"
+            }, 0);
+        });
 
-        // PHASE 4: Header gets background
+        // ═══════════════════════════════════════════
+        // PHASE 2 (0.15 → 0.5): PSYCLOX assembles
+        // ═══════════════════════════════════════════
+
+        psycloxChars.forEach((char, i) => {
+            tl.to(char, {
+                x: 0,
+                y: 0,
+                rotationZ: 0,
+                opacity: 1,
+                scale: 1,
+                duration: 0.3,
+                ease: "back.out(1.7)"
+            }, 0.15 + i * 0.01);
+        });
+
+        // ═══════════════════════════════════════════════
+        // PHASE 2.5 (0.25 → 0.55): Landing words assemble
+        // ═══════════════════════════════════════════════
+
+        landingWordChars.forEach((wordChars, wordIndex) => {
+            wordChars.forEach((char, charIndex) => {
+                tl.to(char, {
+                    x: 0,
+                    y: 0,
+                    rotationZ: 0,
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.25,
+                    ease: "back.out(1.4)"
+                }, 0.25 + wordIndex * 0.06 + charIndex * 0.008);
+            });
+        });
+
+        // ═══════════════════════════════════════════
+        // PHASE 3 (0.55 → 0.7): Color shift to red
+        // ═══════════════════════════════════════════
+
+        tl.to(psycloxTitle, {
+            color: '#ff4757',
+            textShadow: '0 0 60px rgba(255, 71, 87, 0.8), 0 0 120px rgba(255, 71, 87, 0.3)',
+            duration: 0.15,
+            ease: "power2.inOut"
+        }, 0.55);
+
+        // Landing words shift to subtle red
+        landingWords.forEach((word, i) => {
+            tl.to(word, {
+                color: 'rgba(255, 71, 87, 0.6)',
+                duration: 0.1,
+                ease: "power1.inOut"
+            }, 0.58 + i * 0.03);
+        });
+
+        // ═══════════════════════════════════════════
+        // PHASE 4 (0.65 → 0.8): Nav-logo + header
+        // ═══════════════════════════════════════════
+
         tl.to(header, {
             backgroundColor: "rgba(10, 10, 10, 0.92)",
             backdropFilter: "blur(20px)",
             borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
-            duration: 0.15
-        }, 0.75);
+            duration: 0.1
+        }, 0.65);
 
-        // Force refresh geometry
+        tl.fromTo(navLogo,
+            { autoAlpha: 0, scale: 0.5, filter: "blur(10px)" },
+            { autoAlpha: 1, scale: 1, filter: "blur(0px)", duration: 0.1, ease: "back.out(2)" },
+            0.7
+        );
+
+        // ═══════════════════════════════════════════════
+        // PHASE 5 (0.8 → 1.0): Fade out → About section
+        // ═══════════════════════════════════════════════
+
+        tl.to(morphLayer, {
+            opacity: 0,
+            y: -80,
+            scale: 0.95,
+            duration: 0.2,
+            ease: "power2.in"
+        }, 0.8);
+
+        // Parallax scroll text
+        const scrollIllusionText = document.getElementById('hero-scroll-text');
+        if (scrollIllusionText) {
+            gsap.fromTo(scrollIllusionText,
+                { x: '10%' },
+                {
+                    x: '-40%', opacity: 0,
+                    scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom top", scrub: 1.5 }
+                }
+            );
+        }
+
         ScrollTrigger.refresh();
-
     }, 200);
 }

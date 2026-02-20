@@ -971,204 +971,392 @@
     //  🎲  3D RUBIK'S CUBE — Pattern Match
     // ═══════════════════════════════════════════
     function startCube() {
-        setHint('MATCH THE TARGET PATTERN DIRECTLY ON THE CUBE');
+        setHint('DRAG TO ROTATE CUBE | DBL CLICK TO SCRAMBLE');
         setPlayerVisibility(false);
-        canvasContainer.innerHTML = '';
+        canvasContainer.innerHTML = ''; // Clear previous games
 
         if (controlsHint) {
             controlsHint.innerHTML = `
                 <div style="font-family:'Rajdhani',monospace; font-size:14px; line-height:1.6;">
                     <strong style="color:#fff; font-size:16px;">CUBE CONTROLS:</strong>
                     <br><br>
-                    <span style="color:#ff6b6b">ARROWS / WASD</span><br>Rotate 3D Cube
+                    <span style="color:#ff6b6b">DRAG IN SPACE</span><br>Rotate Whole Cube
                     <br><br>
-                    <span style="color:#ff6b6b">LEFT CLICK</span><br>Paint Tile Color
+                    <span style="color:#ff6b6b">DRAG ON CUBE</span><br>Rotate Specific Layer
                     <br><br>
-                    <span style="color:#ff6b6b">SPACE</span><br>Generate New Target
-                    <br><br>
-                    <em style="color:#aaa;">Match the target pattern on the active face to advance to the next level!</em>
+                    <span style="color:#ff6b6b">SCRAMBLE</span><br>Click 'SCRAMBLE' button
                 </div>
             `;
         }
 
-        const COLORS = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#a55eea', '#2ed573'];
-        const FACES = ['front', 'back', 'right', 'left', 'top', 'bottom'];
-
+        // UI Setup
         const wrapper = document.createElement('div');
         wrapper.className = 'cube-game-area';
 
-        let facesHTML = '';
-        FACES.forEach((face, fi) => {
-            let tilesHTML = '';
-            for (let t = 0; t < 9; t++) {
-                tilesHTML += `<div class="cube-tile" data-face="${fi}" data-tile="${t}"></div>`;
-            }
-            facesHTML += `<div class="cube-face ${face}" data-face="${fi}">${tilesHTML}</div>`;
-        });
-
         wrapper.innerHTML = `
-            <div class="cube-scene rubik">
-                <div class="cube-3d" id="cube3d">${facesHTML}</div>
-            </div>
-            <div class="cube-info">
-                <div class="cube-level">LEVEL <span id="cube-level-num">1</span></div>
-                <div class="cube-status" id="cube-status">MATCH THE PATTERN!</div>
-                <div class="cube-moves">MOVES: <span id="cube-moves">0</span></div>
-                <div class="cube-target" id="cube-target"></div>
+            <div id="cube-canvas-container" style="width: 100%; height: 60vh; position: relative;"></div>
+            <div class="cube-info" style="display: flex; gap: 20px; text-align: center; margin-top: 10px;">
+                <div class="cube-status" id="cube-status" style="font-size: 1.2rem; color: #ff4757; font-weight: bold;">RUBIK'S CUBE</div>
+                <button id="scramble-btn" class="sidebar-btn" style="padding: 5px 15px; font-size: 0.9rem;">SCRAMBLE</button>
             </div>
         `;
         canvasContainer.appendChild(wrapper);
 
-        const cube = document.getElementById('cube3d');
-        const tiles = wrapper.querySelectorAll('.cube-tile');
-        const levelEl = document.getElementById('cube-level-num');
+        const container3D = document.getElementById('cube-canvas-container');
         const statusEl = document.getElementById('cube-status');
-        const movesEl = document.getElementById('cube-moves');
-        const targetEl = document.getElementById('cube-target');
+        const scrambleBtn = document.getElementById('scramble-btn');
 
-        let level = 1, score = 0, moves = 0;
-        let rotX = -25, rotY = 35;
-
-        // We will store the current colors for EVERY tile [face][tile]
-        let cubeState = Array(6).fill(0).map(() => Array(9).fill(0));
-        let targetPattern = [];
-        let numColors = 2; // Starts with 2 colors
-
-        function updateRotation() {
-            cube.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-        }
-        updateRotation();
-
-        function generateTarget() {
-            numColors = Math.min(2 + Math.floor(level / 3), COLORS.length);
-            targetPattern = [];
-            for (let i = 0; i < 9; i++) {
-                targetPattern.push(Math.floor(Math.random() * numColors));
-            }
-            renderTarget();
+        // Three.js Setup
+        if (typeof THREE === 'undefined') {
+            statusEl.textContent = 'ERROR: Three.js failed to load.';
+            return;
         }
 
-        function renderTarget() {
-            targetEl.innerHTML = '<div class="target-label">TARGET PATTERN:</div><div class="target-grid"></div>';
-            const grid = targetEl.querySelector('.target-grid');
-            grid.style.display = 'grid';
-            grid.style.gridTemplateColumns = 'repeat(3, 22px)';
-            grid.style.gap = '3px';
-            grid.style.marginTop = '10px';
-            targetPattern.forEach(c => {
-                const sq = document.createElement('div');
-                sq.style.cssText = `width:22px;height:22px;border-radius:3px;background:${COLORS[c]};box-shadow:inset 0 0 5px rgba(0,0,0,0.3)`;
-                grid.appendChild(sq);
-            });
-        }
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, container3D.clientWidth / container3D.clientHeight, 0.1, 100);
+        camera.position.set(5.5, 4.5, 6.5);
+        camera.lookAt(0, 0, 0);
 
-        function initAllFaces() {
-            cubeState = Array(6).fill(0).map(() => Array(9).fill(0)); // Reset all to color 0
-            tiles.forEach(t => {
-                t.style.background = COLORS[0];
-                t.style.boxShadow = `inset 0 0 10px rgba(0,0,0,0.2)`;
-            });
-        }
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(container3D.clientWidth, container3D.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container3D.appendChild(renderer.domElement);
 
-        function checkWin(faceIndex) {
-            for (let i = 0; i < 9; i++) {
-                if (cubeState[faceIndex][i] !== targetPattern[i]) return false;
-            }
-            return true;
-        }
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight.position.set(10, 20, 10);
+        scene.add(dirLight);
 
-        function startLevel() {
-            moves = 0;
-            movesEl.textContent = '0';
-            statusEl.textContent = 'MATCH THE PATTERN!';
-            statusEl.style.color = '#fff';
-            levelEl.textContent = level;
-            initAllFaces();
-            generateTarget();
-        }
+        // Colors (Standard Rubik's: U:White, D:Yellow, F:Green, B:Blue, L:Orange, R:Red)
+        // Adjusting colors to fit the dark theme slightly better, but keeping recognizable Rubik's colors
+        const colors = {
+            right: 0xff3333, // Red
+            left: 0xff8c00, // Orange
+            top: 0xeeeeee, // White
+            bottom: 0xffd700, // Yellow
+            front: 0x00cc44, // Green
+            back: 0x2266ff  // Blue
+        };
 
-        tiles.forEach(tile => {
-            tile.addEventListener('click', (e) => {
-                const fi = parseInt(tile.dataset.face);
-                const ti = parseInt(tile.dataset.tile);
+        const materials = [
+            new THREE.MeshPhongMaterial({ color: colors.right, shininess: 50 }),
+            new THREE.MeshPhongMaterial({ color: colors.left, shininess: 50 }),
+            new THREE.MeshPhongMaterial({ color: colors.top, shininess: 50 }),
+            new THREE.MeshPhongMaterial({ color: colors.bottom, shininess: 50 }),
+            new THREE.MeshPhongMaterial({ color: colors.front, shininess: 50 }),
+            new THREE.MeshPhongMaterial({ color: colors.back, shininess: 50 }),
+        ];
 
-                // Cycle color for this tile
-                cubeState[fi][ti] = (cubeState[fi][ti] + 1) % numColors;
+        const blackMat = new THREE.MeshPhongMaterial({ color: 0x111111 });
 
-                moves++;
-                movesEl.textContent = moves;
-                tile.style.background = COLORS[cubeState[fi][ti]];
-                tile.style.boxShadow = `inset 0 0 10px rgba(0,0,0,0.2), 0 0 8px ${COLORS[cubeState[fi][ti]]}60`;
-                tile.style.transform = 'scale(1.1)';
-                setTimeout(() => tile.style.transform = 'scale(1)', 150);
+        const cubeGroup = new THREE.Group();
+        scene.add(cubeGroup);
 
-                if (checkWin(fi)) {
-                    const bonus = Math.max(0, 50 - moves * 2);
-                    score += level * 15 + bonus;
-                    setScore(score);
-                    setHighscore('cube', score);
-                    statusEl.textContent = `✓ LEVEL ${level} CLEARED!`;
-                    statusEl.style.color = '#2ed573';
+        const cubies = [];
+        const gap = 0.05;
+        const size = 1;
 
-                    // Small celebration spin
-                    rotY += 360; updateRotation();
+        // Build 3x3x3
+        for (let x = -1; x <= 1; x++) {
+            for (let y = -1; y <= 1; y++) {
+                for (let z = -1; z <= 1; z++) {
+                    const geometry = new THREE.BoxGeometry(size, size, size);
+                    // Determine which faces need color based on position
+                    const mats = [];
+                    mats.push(x === 1 ? materials[0] : blackMat);  // Right
+                    mats.push(x === -1 ? materials[1] : blackMat); // Left
+                    mats.push(y === 1 ? materials[2] : blackMat);  // Top
+                    mats.push(y === -1 ? materials[3] : blackMat); // Bottom
+                    mats.push(z === 1 ? materials[4] : blackMat);  // Front
+                    mats.push(z === -1 ? materials[5] : blackMat); // Back
 
-                    setTimeout(() => { level++; startLevel(); }, 1500);
+                    const mesh = new THREE.Mesh(geometry, mats);
+                    mesh.position.set(
+                        x * (size + gap),
+                        y * (size + gap),
+                        z * (size + gap)
+                    );
+
+                    // Add slight bevel/edge effect by adding a slightly larger wireframe or black box
+                    const edgeGeo = new THREE.EdgesGeometry(geometry);
+                    const edgeMat = new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 2 });
+                    const edges = new THREE.LineSegments(edgeGeo, edgeMat);
+                    mesh.add(edges);
+
+                    mesh.userData = { x, y, z };
+                    cubies.push(mesh);
+                    cubeGroup.add(mesh);
                 }
-            });
-        });
+            }
+        }
 
-        // Mouse Drag Rotation Variables
+        // --- Interaction Logic ---
         let isDragging = false;
-        let pMx = 0, pMy = 0;
+        let isRotatingLayer = false;
+        let previousMousePosition = { x: 0, y: 0 };
 
-        cube.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            pMx = e.clientX;
-            pMy = e.clientY;
-            cube.style.cursor = 'grabbing';
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        let selectedCubie = null;
+        let intersectNormal = null;
+        let dragAxis = null; // 'x', 'y', or 'z'
+        let dragLayer = null; // array of cubies to rotate
+        let dragStartAngle = 0;
+        let currentDragAngle = 0;
+
+        container3D.addEventListener('mousedown', (e) => {
+            const rect = container3D.getBoundingClientRect();
+            mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(cubies);
+
+            if (intersects.length > 0) {
+                // Clicked on a cubie - prepare for layer rotation
+                selectedCubie = intersects[0].object;
+                intersectNormal = intersects[0].face.normal.clone().transformDirection(cubeGroup.matrixWorld).round();
+                isRotatingLayer = true;
+                dragAxis = null;
+                dragLayer = null;
+            } else {
+                // Clicked empty space - whole cube rotation
+                isDragging = true;
+            }
+            previousMousePosition = { x: e.clientX, y: e.clientY };
         });
 
-        window.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            let dx = e.clientX - pMx;
-            let dy = e.clientY - pMy;
-            rotY += dx * 0.5;
-            rotX -= dy * 0.5;
-            updateRotation();
-            pMx = e.clientX;
-            pMy = e.clientY;
+        container3D.addEventListener('mousemove', (e) => {
+            const deltaMove = {
+                x: e.clientX - previousMousePosition.x,
+                y: e.clientY - previousMousePosition.y
+            };
+
+            if (isDragging) {
+                const rotSpeed = 0.01;
+                const deltaRotationQuaternion = new THREE.Quaternion().setFromEuler(
+                    new THREE.Euler(deltaMove.y * rotSpeed, deltaMove.x * rotSpeed, 0, 'XYZ')
+                );
+                cubeGroup.quaternion.multiplyQuaternions(deltaRotationQuaternion, cubeGroup.quaternion);
+            } else if (isRotatingLayer && selectedCubie) {
+                // Determine drag axis on first significant movement
+                if (!dragAxis && (Math.abs(deltaMove.x) > 3 || Math.abs(deltaMove.y) > 3)) {
+                    const nAbs = { x: Math.abs(intersectNormal.x), y: Math.abs(intersectNormal.y), z: Math.abs(intersectNormal.z) };
+
+                    // Determine which axis to rotate around based on face clicked and drag direction
+                    // If clicking the Right/Left face (normal X)
+                    if (nAbs.x > 0.5) {
+                        dragAxis = Math.abs(deltaMove.y) > Math.abs(deltaMove.x) ? 'z' : 'y';
+                    }
+                    // If clicking Top/Bottom face (normal Y)
+                    else if (nAbs.y > 0.5) {
+                        dragAxis = Math.abs(deltaMove.y) > Math.abs(deltaMove.x) ? 'x' : 'z';
+                    }
+                    // If clicking Front/Back face (normal Z)
+                    else if (nAbs.z > 0.5) {
+                        // Moving X (left/right) -> rotate around Y axis (top to bottom)
+                        // Moving Y (up/down) -> rotate around X axis (left to right)
+                        dragAxis = Math.abs(deltaMove.x) > Math.abs(deltaMove.y) ? 'y' : 'x';
+                    }
+
+                    // Collect cubies in the same layer
+                    dragLayer = [];
+                    const threshold = 0.5;
+                    const layerValue = selectedCubie.position[dragAxis];
+
+                    cubies.forEach(c => {
+                        if (Math.abs(c.position[dragAxis] - layerValue) < threshold) {
+                            dragLayer.push(c);
+                        }
+                    });
+                }
+
+                if (dragAxis && dragLayer) {
+                    // Apply visual rotation based on mouse movement
+                    let angle = 0;
+
+                    if (dragAxis === 'x') angle = deltaMove.y * 0.02; // Dragging up/down spins X
+                    else if (dragAxis === 'y') angle = deltaMove.x * 0.02; // Dragging left/right spins Y
+                    else if (dragAxis === 'z') {
+                        // Z depends on which face was grabbed
+                        const nAbs = { x: Math.abs(intersectNormal.x), y: Math.abs(intersectNormal.y) };
+                        if (nAbs.x > 0.5) angle = deltaMove.y * -0.02; // Drag up/down on X face
+                        else angle = deltaMove.x * 0.02; // Drag left/right on Y face
+                    }
+
+                    currentDragAngle += angle;
+
+                    const axisVec = new THREE.Vector3(
+                        dragAxis === 'x' ? 1 : 0,
+                        dragAxis === 'y' ? 1 : 0,
+                        dragAxis === 'z' ? 1 : 0
+                    );
+
+                    // Apply rotation to each cubie in the layer
+                    dragLayer.forEach(c => {
+                        c.position.applyAxisAngle(axisVec, angle);
+                        c.rotateOnWorldAxis(axisVec, angle);
+                    });
+                }
+            }
+
+            previousMousePosition = { x: e.clientX, y: e.clientY };
         });
 
         window.addEventListener('mouseup', () => {
             isDragging = false;
-            cube.style.cursor = 'grab';
+            if (isRotatingLayer && dragLayer && dragAxis) {
+                // Determine direction based on angle
+                const snapAngle = Math.round(currentDragAngle / (Math.PI / 2)) * (Math.PI / 2);
+                const diff = snapAngle - currentDragAngle;
+
+                // Create a temporary pivot to snap the entire layer accurately
+                const pivot = new THREE.Object3D();
+                pivot.rotation.set(0, 0, 0);
+                cubeGroup.add(pivot);
+
+                // Attach layer pieces to pivot
+                dragLayer.forEach(c => {
+                    pivot.attach(c);
+                });
+
+                // Apply the remaining difference to snap
+                const axisVec = new THREE.Vector3(
+                    dragAxis === 'x' ? 1 : 0,
+                    dragAxis === 'y' ? 1 : 0,
+                    dragAxis === 'z' ? 1 : 0
+                );
+
+                pivot.rotateOnAxis(axisVec, diff);
+                pivot.updateMatrixWorld();
+
+                // Detach back to cubeGroup
+                dragLayer.forEach(c => {
+                    cubeGroup.attach(c);
+
+                    // Force strict grid rounding to entirely eliminate floating point drift
+                    c.position.x = Math.round(c.position.x / (size + gap)) * (size + gap);
+                    c.position.y = Math.round(c.position.y / (size + gap)) * (size + gap);
+                    c.position.z = Math.round(c.position.z / (size + gap)) * (size + gap);
+
+                    // Cleanly align rotations
+                    const euler = new THREE.Euler().setFromQuaternion(c.quaternion);
+                    euler.x = Math.round(euler.x / (Math.PI / 2)) * (Math.PI / 2);
+                    euler.y = Math.round(euler.y / (Math.PI / 2)) * (Math.PI / 2);
+                    euler.z = Math.round(euler.z / (Math.PI / 2)) * (Math.PI / 2);
+                    c.quaternion.setFromEuler(euler);
+
+                    c.updateMatrix();
+
+                    // Update userData for logical state
+                    c.userData.x = Math.round(c.position.x / (size + gap));
+                    c.userData.y = Math.round(c.position.y / (size + gap));
+                    c.userData.z = Math.round(c.position.z / (size + gap));
+                });
+
+                // Cleanup pivot
+                cubeGroup.remove(pivot);
+            }
+            isRotatingLayer = false;
+            selectedCubie = null;
+            dragLayer = null;
+            currentDragAngle = 0;
+            dragAxis = null;
         });
 
-        function onKeyDown(e) {
-            if (activeGame !== 'cube') { document.removeEventListener('keydown', onKeyDown); return; }
-            if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) {
-                e.preventDefault();
+        // Real Scramble — programmatic face rotations
+        let isScrambling = false;
+        function scramble() {
+            if (isScrambling) return;
+            isScrambling = true;
+            statusEl.textContent = 'SCRAMBLING...';
+            statusEl.style.color = '#f9ca24';
+
+            const axes = ['x', 'y', 'z'];
+            const layerValues = [-(size + gap), 0, (size + gap)];
+            let moveIndex = 0;
+            const totalMoves = 20;
+
+            function doMove() {
+                if (moveIndex >= totalMoves) {
+                    statusEl.textContent = 'SOLVE IT!';
+                    statusEl.style.color = '#00cc44';
+                    isScrambling = false;
+                    return;
+                }
+
+                const axis = axes[Math.floor(Math.random() * 3)];
+                const layerVal = layerValues[Math.floor(Math.random() * 3)];
+                const direction = Math.random() > 0.5 ? 1 : -1;
+                const rotAngle = direction * Math.PI / 2;
+                const threshold = 0.5;
+
+                // Collect cubies in this layer
+                const layer = cubies.filter(c => Math.abs(c.position[axis] - layerVal) < threshold);
+
+                const axisVec = new THREE.Vector3(
+                    axis === 'x' ? 1 : 0,
+                    axis === 'y' ? 1 : 0,
+                    axis === 'z' ? 1 : 0
+                );
+
+                // Apply rotation
+                layer.forEach(c => {
+                    c.position.applyAxisAngle(axisVec, rotAngle);
+                    c.rotateOnWorldAxis(axisVec, rotAngle);
+
+                    // Snap position
+                    c.position.x = Math.round(c.position.x / (size + gap)) * (size + gap);
+                    c.position.y = Math.round(c.position.y / (size + gap)) * (size + gap);
+                    c.position.z = Math.round(c.position.z / (size + gap)) * (size + gap);
+
+                    // Snap rotation
+                    const euler = new THREE.Euler().setFromQuaternion(c.quaternion);
+                    euler.x = Math.round(euler.x / (Math.PI / 2)) * (Math.PI / 2);
+                    euler.y = Math.round(euler.y / (Math.PI / 2)) * (Math.PI / 2);
+                    euler.z = Math.round(euler.z / (Math.PI / 2)) * (Math.PI / 2);
+                    c.quaternion.setFromEuler(euler);
+                    c.updateMatrix();
+
+                    c.userData.x = Math.round(c.position.x / (size + gap));
+                    c.userData.y = Math.round(c.position.y / (size + gap));
+                    c.userData.z = Math.round(c.position.z / (size + gap));
+                });
+
+                moveIndex++;
+                setTimeout(doMove, 80); // Animate at ~12fps
             }
 
-            const rotSpeed = 15;
-            if (e.code === 'ArrowUp' || e.code === 'KeyW') { rotX += rotSpeed; updateRotation(); }
-            if (e.code === 'ArrowDown' || e.code === 'KeyS') { rotX -= rotSpeed; updateRotation(); }
-            if (e.code === 'ArrowLeft' || e.code === 'KeyA') { rotY -= rotSpeed; updateRotation(); }
-            if (e.code === 'ArrowRight' || e.code === 'KeyD') { rotY += rotSpeed; updateRotation(); }
-
-            if (e.code === 'Space') {
-                moves = 0;
-                movesEl.textContent = '0';
-                statusEl.textContent = 'NEW TARGET GENERATED';
-                statusEl.style.color = '#f9ca24';
-                generateTarget();
-                initAllFaces();
-                setTimeout(() => { statusEl.textContent = 'MATCH THE PATTERN!'; statusEl.style.color = '#fff'; }, 1000);
-            }
+            doMove();
         }
-        document.addEventListener('keydown', onKeyDown);
-        startLevel();
+
+        scrambleBtn.addEventListener('click', scramble);
+
+        // Render Loop
+        gameLoopId = requestAnimationFrame(function animate() {
+            renderer.render(scene, camera);
+            if (activeGame === 'cube') {
+                gameLoopId = requestAnimationFrame(animate);
+            }
+        });
+
+        // Handle Resize within container
+        const resizeObserver = new ResizeObserver(entries => {
+            if (!activeGame || activeGame !== 'cube') return;
+            for (let entry of entries) {
+                camera.aspect = entry.contentRect.width / entry.contentRect.height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(entry.contentRect.width, entry.contentRect.height);
+            }
+        });
+        resizeObserver.observe(container3D);
+
+        // Initial gentle spin
+        cubeGroup.rotation.x = 0.5;
+        cubeGroup.rotation.y = -0.5;
     }
 
     // ═══════════════════════════════════════════
@@ -1193,12 +1381,17 @@
 
         setPlayerVisibility(false);
 
+        // Re-bind click events so games actually launch
+        sidebarBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const game = btn.getAttribute('data-game');
+                if (game) launchGame(game);
+            });
+        });
+
         toggleInput.addEventListener('change', () => {
             toggleInput.checked ? animateToGameMode() : animateToSystemMode();
         });
 
-        sidebarBtns.forEach(btn => {
-            btn.addEventListener('click', () => launchGame(btn.dataset.game));
-        });
     });
 })();

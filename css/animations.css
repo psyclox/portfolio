@@ -52,6 +52,28 @@
     animation: particleFloat 8s ease-in-out infinite;
 }
 
+/* ========================================
+   HERO SCROLL ILLUSION
+   ======================================== */
+.hero-scroll-illusion {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 15rem;
+    font-weight: 900;
+    font-family: 'Orbitron', monospace;
+    white-space: nowrap;
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.12);
+    /* Increased from 0.03 for visibility */
+    pointer-events: none;
+    z-index: 1;
+    /* Below the hero content but above video */
+    text-transform: uppercase;
+    letter-spacing: -5px;
+}
+
 @keyframes particleFloat {
     0% {
         opacity: 0;

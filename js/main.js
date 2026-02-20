@@ -1790,24 +1790,23 @@ function initAboutCardsParallax() {
     const wall = document.getElementById('about-card-wall');
     if (!wall) return;
 
-    // We listen to the document or just the section
     const aboutSection = document.getElementById('about');
     if (!aboutSection) return;
+
+    const cards = wall.querySelectorAll('.float-card');
 
     let targetX = 0;
     let targetY = 0;
     let currentX = 0;
     let currentY = 0;
 
+    // Initial alignment (will be animated by JS)
+    wall.style.transform = 'rotateX(15deg) rotateY(20deg) rotateZ(-5deg)';
+
     aboutSection.addEventListener('mousemove', (e) => {
         const rect = aboutSection.getBoundingClientRect();
-        // Calculate mouse position relative to center of the section (-1 to 1)
-        const x = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
-        const y = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
-
-        // Target rotation variations
-        targetX = y * -10; // degrees
-        targetY = x * 10;
+        targetX = ((e.clientX - rect.left) / rect.width - 0.5) * 2; // -1 to 1
+        targetY = ((e.clientY - rect.top) / rect.height - 0.5) * 2; // -1 to 1
     });
 
     aboutSection.addEventListener('mouseleave', () => {
@@ -1816,11 +1815,28 @@ function initAboutCardsParallax() {
     });
 
     function animate() {
-        currentX += (targetX - currentX) * 0.1;
-        currentY += (targetY - currentY) * 0.1;
+        // Decrease lerp factor for heavier, more premium smoothing
+        currentX += (targetX - currentX) * 0.05;
+        currentY += (targetY - currentY) * 0.05;
 
-        // Combine base rotation with parallax
-        wall.style.transform = `rotateX(${15 + currentX}deg) rotateY(${-15 + currentY}deg) rotateZ(5deg)`;
+        // 1. Dynamic Rotation of the entire wall (pivoting on mouse)
+        // Base: rotateX(15deg) rotateY(20deg) rotateZ(-5deg)
+        const rotX = 15 - (currentY * 8); // Tilt up/down up to 8 deg
+        const rotY = 20 + (currentX * 8); // Pan left/right up to 8 deg
+        wall.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(-5deg)`;
+
+        // 2. Apply distinct translation depth to each card physically
+        cards.forEach(card => {
+            const depth = parseFloat(card.getAttribute('data-depth')) || 0;
+            // Provide base depth projection even if mouse is 0
+            if (depth === 0) {
+                card.style.transform = `translate3d(0px, 0px, 0px)`;
+            } else {
+                const cx = currentX * depth * -25;
+                const cy = currentY * depth * -25;
+                card.style.transform = `translate3d(${cx}px, ${cy}px, calc(${depth} * 60px))`;
+            }
+        });
 
         requestAnimationFrame(animate);
     }
