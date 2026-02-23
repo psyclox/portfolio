@@ -125,7 +125,7 @@ function initScrollIllusion() {
                 trigger: heroSection,
                 start: "top top",
                 end: "+=900",
-                scrub: 1,
+                scrub: 0.2,
                 pin: true,
                 invalidateOnRefresh: true,
                 onLeave: () => ScrollTrigger.refresh()
@@ -140,8 +140,8 @@ function initScrollIllusion() {
         tl.fromTo(heroChars,
             { x: 0, y: 0, rotationZ: 0, scale: 1, autoAlpha: 1 },
             {
-                x: "random(-800, 800, 10)",
-                y: "random(200, 800, 10)",
+                x: "random(-1500, 1500, 10)",
+                y: "random(-1500, 1500, 10)",
                 rotationZ: "random(-360, 360, 5)",
                 scale: "random(0.2, 1.5, 0.1)",
                 autoAlpha: 0,
@@ -162,8 +162,8 @@ function initScrollIllusion() {
         tl.fromTo('.hero-description, .hero-cta > *, .social-link',
             { x: 0, y: 0, rotationZ: 0, scale: 1, autoAlpha: 1 },
             {
-                x: "random(-400, 400, 10)",
-                y: "random(100, 600, 10)",
+                x: "random(-1500, 1500, 10)",
+                y: "random(-1500, 1500, 10)",
                 rotationZ: "random(-60, 60, 5)",
                 autoAlpha: 0,
                 scale: 0.5,
@@ -259,7 +259,7 @@ function initScrollIllusion() {
                 { x: '10%' },
                 {
                     x: '-40%', opacity: 0,
-                    scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom top", scrub: 1.5 }
+                    scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom top", scrub: 0.5 }
                 }
             );
         }
