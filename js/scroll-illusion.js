@@ -124,8 +124,8 @@ function initScrollIllusion() {
             scrollTrigger: {
                 trigger: heroSection,
                 start: "top top",
-                end: "+=900",
-                scrub: 0.2,
+                end: "+=500",
+                scrub: 0.5,
                 pin: true,
                 invalidateOnRefresh: true,
                 onLeave: () => ScrollTrigger.refresh()
