@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="css/animations.css?v=2">
     <link rel="stylesheet" href="css/responsive.css?v=2">
     <link rel="stylesheet" href="css/redesign.css?v=2">
+    <link rel="stylesheet" href="css/aesthetic.css">
     <!-- <link rel="stylesheet" href="css/light-theme-redesign.css"> REMOVED -->
     <link rel="stylesheet" href="css/hideout.css?v=2">
     <!-- FORCE SCROLL TO TOP IMMEDIATELY -->
@@ -131,75 +132,43 @@
     <main>
         <!-- SCROLL TRACK REMOVED - Fixed Empty Section Issue -->
         <!-- Hero Section -->
-        <section class="hero section-dark" id="home" style="height: 100vh; overflow: hidden; position: relative;">
-            <div class="hero-bg">
-                <video autoplay muted loop playsinline class="hero-bg-video">
-                    <source src="assets/vids/psyclox.mp4" type="video/mp4">
-                </video>
-                <div class="hero-particles" id="particles"></div>
-                <div class="hero-grid"></div>
-                <!-- OLED Overlay -->
-                <!-- Big Scrolling Illusion Text Removed per user request -->
-                <div class="hero-overlay"></div>
-            </div>
+        <section class="hero section-dark" id="home">
+            <!-- Background Neon Wave -->
+            <svg class="hero-neon-wave" viewBox="0 0 1440 800" preserveAspectRatio="none">
+                <path d="M720,400 C1020,200 1120,600 1440,400" />
+            </svg>
 
-            <!-- Full-viewport morph targets (outside the grid) -->
-            <div class="hero-morph-layer"
-                style="position: absolute; inset: 0; z-index: 25; pointer-events: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0;">
-                <div class="hero-title-psyclox"
-                    style="font-family: 'Rajdhani', sans-serif; font-size: clamp(4rem, 10vw, 8rem); font-weight: 700; color: #ffffff; text-shadow: 0 0 40px rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 8px; line-height: 1; opacity: 0;">
-                    PSYCLOX</div>
-                <div class="hero-landing-word"
-                    style="font-family: 'Rajdhani', sans-serif; font-size: clamp(1.8rem, 3.5vw, 3rem); font-weight: 600; color: #ff4757; text-transform: uppercase; letter-spacing: 10px; line-height: 1.3; opacity: 0; margin-top: 8px;">
-                    SECURITY ENGINEER</div>
-                <div class="hero-landing-word"
-                    style="font-family: 'Rajdhani', sans-serif; font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 600; color: rgba(255,71,87,0.7); text-transform: uppercase; letter-spacing: 12px; line-height: 1.3; opacity: 0;">
-                    ETHICAL HACKER</div>
-                <div class="hero-landing-word"
-                    style="font-family: 'Rajdhani', sans-serif; font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 500; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 14px; line-height: 1.3; opacity: 0; margin-top: 6px;">
-                    RED TEAM &bull; VAPT &bull; SOC</div>
-            </div>
+            <!-- Background elements matching user's existing style -->
+            <div class="hero-particles" id="particles"></div>
+            <div class="hero-grid"></div>
 
-            <div class="hero-content container">
-                <div class="hero-left">
-                    <!-- Atmospheric watermark words -->
-                    <div
-                        style="display: flex; flex-direction: column; justify-content: center; height: 100%; opacity: 0.04;">
-                        <div
-                            style="font-family: 'Rajdhani', sans-serif; font-size: clamp(3rem, 6vw, 5rem); font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 12px; line-height: 1;">
-                            BREAK</div>
-                        <div
-                            style="font-family: 'Rajdhani', sans-serif; font-size: clamp(3rem, 6vw, 5rem); font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 12px; line-height: 1;">
-                            BUILD</div>
-                        <div
-                            style="font-family: 'Rajdhani', sans-serif; font-size: clamp(3rem, 6vw, 5rem); font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 12px; line-height: 1;">
-                            SECURE</div>
-                    </div>
-                </div>
-
-                <div class="hero-right">
-
-
+            <!-- Two-column content layout -->
+            <div class="hero-content">
+                <!-- Left Text Section -->
+                <!-- Left Text Section -->
+                <div class="hero-left-aesthetic">
                     <!-- The initial text -->
-                    <h1 class="hero-title"
-                        style="position: relative; z-index: 10; display: flex; align-items: baseline; flex-wrap: wrap; gap: 15px; margin-bottom: 1.5rem;">
-                        <span class="title-line" style="display: inline-block; margin: 0;">Im</span>
-                        <span class="title-name gradient-text"
+                    <h1 class="hero-heading-main"
+                        style="position: relative; z-index: 10; display: flex; align-items: baseline; flex-wrap: wrap; gap: 15px; margin-bottom: 0.5rem;">
+                        <span class="title-line"
+                            style="display: inline-block; margin: 0; font-family: 'Space Grotesk', sans-serif;">Im</span>
+                        <span class="title-name hero-heading-gradient"
                             style="display: inline-block; margin: 0;">Karthikeyan</span>
                     </h1>
 
-                    <h2 class="hero-subtitle">
+                    <h2 class="hero-subtitle" style="margin-bottom: 1.5rem;">
                         <span class="subtitle-dynamic" id="typewriter"></span>
                         <span class="cursor-blink">|</span>
                     </h2>
 
-                    <p class="hero-description">
+                    <p class="hero-subtext">
                         Security enthusiast specialized in Vulnerability Assessment, Penetration Testing,
                         and SOC operations. Breaking systems to make them stronger.
                     </p>
 
                     <div class="hero-cta">
-                        <a href="#contact" class="btn btn-primary">
+                        <a href="#contact" class="btn btn-primary"
+                            style="background: linear-gradient(90deg, #ff4d6d, #b5179e); border: none; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);">
                             <span>Hire Me</span>
                             <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
@@ -221,13 +190,13 @@
                         </a>
 
                         <!-- Relocated Badge -->
-                        <div class="hero-badge">
+                        <div class="hero-badge" style="position: relative;">
                             <span class="badge-dot"></span>
                             <span>Available</span>
                         </div>
                     </div>
 
-                    <div class="hero-socials">
+                    <div class="hero-socials" style="margin-top: 2rem;">
                         <a href="https://github.com/psyclox" target="_blank" rel="noopener" class="social-link"
                             aria-label="GitHub">
                             <svg viewBox="0 0 24 24" fill="currentColor">
@@ -251,12 +220,31 @@
                         </a>
                     </div>
                 </div>
+
+                <!-- Right Stacked Cards Section -->
+                <div class="hero-right-aesthetic">
+                    <div class="cards-container">
+                        <!-- Bottom Card -->
+                        <div class="stacked-card card-3"></div>
+                        <!-- Middle Card -->
+                        <div class="stacked-card card-2"></div>
+                        <!-- Top Front Card -->
+                        <div class="stacked-card card-1">
+                            <video autoplay loop muted playsinline class="card-video-bg">
+                                <source src="assets/vids/psyclox.mp4" type="video/mp4">
+                            </video>
+                            <div class="card-brand">
+                                <span style="font-weight: 800; color: #fff; font-size: 1.2rem;">PSYCLOX</span>
+                            </div>
+                            <h2 class="card-title">Security<br>Engineer</h2>
+                            <!-- Floating cube decoration -->
+                            <div class="floating-cube"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-
-
             <div class="scroll-indicator">
-
                 <div class="scroll-arrow">
                     <span></span>
                     <span></span>

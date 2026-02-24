@@ -1,0 +1,310 @@
+/* ========================================
+   MODERN HERO SECTION AESTHETIC REDESIGN
+   ======================================== */
+
+.hero.section-dark {
+    position: relative;
+    overflow: hidden;
+    background-color: #0d0d0d !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 80px;
+}
+
+/* Background Wave SVG */
+.hero-neon-wave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+}
+
+.hero-neon-wave path {
+    fill: none;
+    stroke: #b5179e;
+    stroke-width: 3px;
+    filter: drop-shadow(0 0 12px rgba(181, 23, 158, 0.8));
+    animation: wavePulse 4s infinite alternate;
+}
+
+@keyframes wavePulse {
+    0% {
+        filter: drop-shadow(0 0 8px rgba(181, 23, 158, 0.4));
+    }
+
+    100% {
+        filter: drop-shadow(0 0 20px rgba(181, 23, 158, 1));
+    }
+}
+
+/* Two column layout */
+.hero-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1400px;
+    z-index: 10;
+    position: relative;
+    padding: 0 5%;
+}
+
+/* Left Text Section */
+.hero-left-aesthetic {
+    flex: 1;
+    max-width: 600px;
+    padding-right: 2rem;
+}
+
+.hero-heading-main {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+}
+
+.hero-heading-gradient {
+    background: linear-gradient(90deg, #ff758c 0%, #ff7eb3 33%, #b5179e 66%, #ff4d6d 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    animation: gradientShift 4s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.hero-subtext {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+}
+
+.hero-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.btn-primary-aesthetic {
+    background: linear-gradient(90deg, #ff4d6d, #b5179e);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+    cursor: pointer;
+}
+
+.btn-primary-aesthetic:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 77, 109, 0.6);
+}
+
+.btn-secondary-text {
+    color: white;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s ease;
+}
+
+.btn-secondary-text:hover {
+    color: #ff758c;
+}
+
+/* Right Stacked Cards Section */
+.hero-right-aesthetic {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 500px;
+    perspective: 1200px;
+}
+
+.cards-container {
+    position: relative;
+    width: 400px;
+    height: 300px;
+    transform-style: preserve-3d;
+    transform: rotateY(-15deg) rotateX(10deg);
+}
+
+.stacked-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    background-size: cover;
+    background-position: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Card 3 (Back/Bottom) */
+.card-3 {
+    background-color: #1a0b1c;
+    background-image: linear-gradient(135deg, rgba(80, 0, 0, 0.8), rgba(20, 0, 20, 0.9));
+    transform: translateZ(-80px) translateY(-30px) translateX(30px);
+    z-index: 1;
+    opacity: 0.6;
+}
+
+/* Card 2 (Middle) */
+.card-2 {
+    background-color: #0a192f;
+    background-image: linear-gradient(135deg, rgba(0, 50, 100, 0.8), rgba(0, 20, 50, 0.9));
+    transform: translateZ(-40px) translateY(-15px) translateX(15px);
+    z-index: 2;
+    opacity: 0.8;
+}
+
+/* Card 1 (Front/Top) */
+.card-1 {
+    background-color: #000;
+    transform: translateZ(0);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.card-video-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.6;
+}
+
+.card-1::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><circle cx="2" cy="2" r="1.5" fill="rgba(255,255,255,0.05)"/></svg>') repeat;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.card-title {
+    font-family: 'Orbitron', 'Space Grotesk', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: white;
+    line-height: 1.1;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    margin: 0;
+    position: relative;
+    z-index: 10;
+}
+
+.card-brand {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    z-index: 10;
+}
+
+.floating-cube {
+    position: absolute;
+    bottom: -30px;
+    right: -30px;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #222, #0d0d0d);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 2px 5px rgba(255, 255, 255, 0.1);
+    transform: rotateX(45deg) rotateY(45deg);
+    animation: floatCube 4s ease-in-out infinite alternate;
+    z-index: 4;
+}
+
+@keyframes floatCube {
+    0% {
+        transform: translateY(0) rotateX(45deg) rotateY(45deg);
+    }
+
+    100% {
+        transform: translateY(-20px) rotateX(55deg) rotateY(35deg);
+    }
+}
+
+@media (max-width: 991px) {
+    .hero-content {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding-top: 2rem;
+    }
+
+    .hero-left-aesthetic {
+        padding-right: 0;
+        margin-bottom: 4rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-subtext {
+        text-align: center;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .cards-container {
+        transform: rotateY(0) rotateX(10deg) scale(0.9);
+    }
+}
