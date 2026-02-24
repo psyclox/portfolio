@@ -32,8 +32,6 @@
     <link rel="stylesheet" href="css/redesign.css?v=2">
     <!-- <link rel="stylesheet" href="css/light-theme-redesign.css"> REMOVED -->
     <link rel="stylesheet" href="css/hideout.css?v=2">
-    <link rel="stylesheet" href="css/bot.css?v=1">
-
     <!-- FORCE SCROLL TO TOP IMMEDIATELY -->
     <script>
         history.scrollRestoration = "manual";
@@ -1134,7 +1132,7 @@
                             <div class="terminal-dots">
                                 <span></span><span></span><span></span>
                             </div>
-                            <span class="terminal-title">COMPOSE_SECURE_PACKET</span>
+                            <span class="terminal-title">TRANSMISSION</span>
                         </div>
 
                         <form class="cyber-form" id="contact-form">
@@ -1146,21 +1144,21 @@
                             </div>
 
                             <div class="cyber-input-group">
-                                <label for="email" class="cyber-label">> REPLY_FREQUENCY</label>
+                                <label for="email" class="cyber-label">> UNIQUE_ID</label>
                                 <input type="email" id="email" name="email" class="cyber-input"
                                     placeholder="_enter_email" required>
                                 <div class="input-line"></div>
                             </div>
 
                             <div class="cyber-input-group full-width">
-                                <label for="message" class="cyber-label">> DATA_PAYLOAD</label>
+                                <label for="message" class="cyber-label">> MESSAGE</label>
                                 <textarea id="message" name="message" class="cyber-textarea"
                                     placeholder="_enter_message_content" rows="4" required></textarea>
                                 <div class="input-line"></div>
                             </div>
 
                             <button type="submit" class="cyber-btn">
-                                <span class="btn-glitch-text">INITIALIZE_TRANSMISSION</span>
+                                <span class="btn-glitch-text">SEND</span>
                                 <div class="btn-progress"></div>
                             </button>
                         </form>
@@ -1169,34 +1167,6 @@
             </div>
         </section>
 
-        <!-- Cyber Companion Bot (Roboto Robot) -->
-        <div id="cyber-bot" class="cyber-bot hidden">
-            <div class="bot-assembly" id="bot-assembly">
-                <!-- Head -->
-                <div class="bot-head" id="bot-head">
-                    <div class="bot-ear"></div>
-                    <div class="bot-face">
-                        <div class="bot-eyes-container" id="bot-eyes">
-                            <div class="bot-eye"></div>
-                            <div class="bot-eye"></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Neck -->
-                <div class="bot-neck">
-                    <div class="bot-neck-joint"></div>
-                    <div class="bot-neck-joint bot-neck-joint-2"></div>
-                </div>
-                <!-- Base -->
-                <div class="bot-base">
-                    <div class="bot-base-top"></div>
-                    <div class="bot-base-left"></div>
-                    <div class="bot-base-front"></div>
-                    <div class="bot-tracks"></div>
-                </div>
-            </div>
-            <div class="bot-shadow"></div>
-        </div>
 
     </main>
 
@@ -1391,7 +1361,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="js/hideout.js" defer></script>
     <script src="js/footer-rain.js"></script>
-    <script src="js/bot.js" defer></script>
     <!-- EMERGENCY FIXES for Visibility & Scroll -->
     <style>
         /* Force Nav Items Visible */
