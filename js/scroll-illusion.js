@@ -264,6 +264,8 @@ function initScrollIllusion() {
             );
         }
 
+
+
         ScrollTrigger.refresh();
     }, 200);
 }

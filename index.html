@@ -253,152 +253,78 @@
         </section>
         <!-- hero-scroll-track removed -->
 
-        <!-- About Section — Floating Glass Dashboard -->
-        <section class="about section-light" id="about">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">&lt;about&gt;</span>
-                    <h2 class="section-title">About <span class="gradient-text-2">Me</span></h2>
-                </div>
+        <!-- About Section — UI Inspired Redesign -->
+        <section class="about section-dark ui-about-section" id="about">
+            <div class="ui-about-bg"></div>
 
-                <!-- About: Left Text + Right Card Wall -->
-                <div class="about-split">
-                    <!-- LEFT: Text Content -->
-                    <div class="about-text-side">
-                        <h2 class="about-headline">
-                            Security intelligence,<br>
-                            <span class="about-headline-accent">personified.</span>
-                        </h2>
-                        <p class="about-desc">
-                            Cybersecurity professional bridging offensive and defensive security.
-                            Specialized in <strong>Vulnerability Assessment &amp; Penetration Testing</strong>,
-                            <strong>SOC operations</strong>, and <strong>AI-driven security</strong>.
-                            B.Tech in CS &amp; Business Systems.
-                        </p>
-                        <div class="about-roles-v3">
-                            <span class="role-badge-v3"><span class="role-dot" style="background:#ff6b6b"></span>Purple
-                                Teamer</span>
-                            <span class="role-badge-v3"><span class="role-dot" style="background:#4ecdc4"></span>Ethical
-                                Hacker</span>
-                            <span class="role-badge-v3"><span class="role-dot"
-                                    style="background:#45b7d1"></span>Security Analyst</span>
-                            <span class="role-badge-v3"><span class="role-dot" style="background:#f9ca24"></span>Bug
-                                Hunter</span>
-                        </div>
-                        <div class="about-cta-row">
-                            <a href="#contact" class="about-cta-primary">
-                                <span>Get in Touch</span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"
-                                    height="16">
-                                    <path d="M5 12h14M12 5l7 7-7 7" />
-                                </svg>
-                            </a>
-                            <a href="#projects" class="about-cta-ghost"><span>View Projects</span></a>
-                        </div>
-                    </div>
-
-                    <!-- RIGHT: 3D Floating Card Wall (Oscilar Dense Grid Style) -->
-                    <div class="about-card-wall" id="about-card-wall">
-
-                        <!-- Base Slate -->
-                        <div class="float-card card-dark" data-depth="0"
-                            style="left: -10%; top: -10%; width: 120%; height: 120%; background: #0a0a0f; border-radius: 20px; box-shadow: 10px 10px 30px rgba(0,0,0,0.9); z-index: -1;">
-                        </div>
-
-                        <!-- Card 1: Red Teaming -->
-                        <div class="float-card card-red" data-depth="0.7" style="left: 0%; top: 0%; width: 220px;">
-                            <div class="fc-inner">
-                                <div class="fc-label" style="color:rgba(255,255,255,0.7);">Red Teaming</div>
-                                <div
-                                    style="font-size: 0.85rem; color:#fff; margin-top:4px; font-weight:bold; text-transform:uppercase; letter-spacing:1px;">
-                                    VAPT &amp; Offensive Ops
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 2: Certification -->
-                        <div class="float-card card-dark" data-depth="0.9" style="left: 20%; top: 25%; width: 240px;">
-                            <div class="fc-inner" style="border-left: 3px solid #3498db;">
-                                <div class="fc-label" style="color:rgba(255,255,255,0.5);">Certification</div>
-                                <div style="font-size: 1.1rem; font-weight:bold; margin-top:4px; color:#fff;">OSCP</div>
-                            </div>
-                        </div>
-
-                        <!-- Card 3: Status -->
-                        <div class="float-card card-dark" data-depth="0.5" style="left: 60%; top: 40%; width: 220px;">
-                            <div class="fc-inner">
-                                <div class="fc-label" style="color:#ff4757;">Status</div>
-                                <div style="display:flex; align-items:center; gap:8px; margin-top:6px;">
-                                    <span
-                                        style="width:8px;height:8px;background:#00cc44;border-radius:50%; box-shadow:0 0 8px #00cc44;"></span>
-                                    <span style="color:#fff; font-size:0.9rem;">Available</span>
-                                </div>
-                                <div style="display:flex; align-items:center; gap:8px; margin-top:4px;">
-                                    <span
-                                        style="width:8px;height:8px;background:#3498db;border-radius:50%; box-shadow:0 0 8px #3498db;"></span>
-                                    <span style="color:rgba(255,255,255,0.7); font-size:0.9rem;">Online</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 4: Focus -->
-                        <div class="float-card card-dark" data-depth="1.2" style="left: -15%; top: 45%; width: 220px;">
-                            <div class="fc-inner" style="border-left: 3px solid #3498db;">
-                                <div class="fc-label" style="color:rgba(255,255,255,0.5);">Focus</div>
-                                <div style="font-size: 1rem; font-weight:bold; margin-top:4px; color:#fff;">Web &amp;
-                                    Network Security</div>
-                            </div>
-                        </div>
-
-                        <!-- Card 5: Metrics -->
-                        <div class="float-card card-dark" data-depth="1.0" style="left: 5%; top: 68%; width: 220px;">
-                            <div class="fc-inner" style="border-left: 3px solid #ff4757;">
-                                <div class="fc-label" style="color:rgba(255,255,255,0.5);">Metrics</div>
-                                <div style="display:flex; align-items:baseline; gap:5px; margin-top:4px;">
-                                    <span style="font-size:1.4rem; font-weight:bold; color:#ff4757;">73</span>
-                                    <span style="color:#fff; font-size:0.85rem;">CTFs Solved</span>
-                                </div>
-                                <div style="display:flex; align-items:baseline; gap:5px; margin-top:2px;">
-                                    <span style="font-size:1.4rem; font-weight:bold; color:#ff4757;">3</span>
-                                    <span style="color:#fff; font-size:0.85rem;">Certifications</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card 6: Specialty -->
-                        <div class="float-card card-dark" data-depth="0.8" style="left: 45%; top: 60%; width: 240px;">
-                            <div class="fc-inner" style="border-left: 3px solid #ff4757;">
-                                <div class="fc-label" style="color:rgba(255,255,255,0.5);">Specialty</div>
-                                <div style="font-size:1rem; font-weight:bold; margin-top:4px; color:#fff;">Vulnerability
-                                    Analysis</div>
-                            </div>
-                        </div>
-
-                        <!-- Card 7: Domain -->
-                        <div class="float-card card-red" data-depth="1.4" style="left: 35%; top: 85%; width: 220px;">
-                            <div class="fc-inner">
-                                <div class="fc-label" style="color:rgba(255,255,255,0.7);">Domain</div>
-                                <div
-                                    style="font-size:0.85rem; font-weight:bold; margin-top:4px; color:#fff; text-transform:uppercase; letter-spacing:1px;">
-                                    SOC &amp; Threat Intel
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Right Edge: Red Solid Button -->
-                        <div class="float-card card-red" data-depth="0.6"
-                            style="left: 90%; top: 60%; width: 100px; height: 100px;">
-                            <div class="fc-inner" style="display:flex; justify-content:center; align-items:center;">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" width="30"
-                                    height="30">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <path d="M16 12l-4-4-4 4M12 8v8"></path>
-                                </svg>
-                            </div>
-                        </div>
-
+            <!-- Slanted Dynamic Background Image/Text Banners -->
+            <div class="ui-about-slanted-group">
+                <!-- Top Left Banner -->
+                <div class="ui-slanted-banner banner-top">
+                    <div class="ui-banner-track">
+                        <span>PSYCLOX • ADVANCED SECURITY SOLUTIONS</span>
+                        <span class="ui-banner-stroke">THREATS REQUIRE PRECISION</span>
+                        <span>PSYCLOX • ADVANCED SECURITY SOLUTIONS</span>
+                        <span class="ui-banner-stroke">THREATS REQUIRE PRECISION</span>
+                        <span>PSYCLOX • ADVANCED SECURITY SOLUTIONS</span>
+                        <span class="ui-banner-stroke">THREATS REQUIRE PRECISION</span>
+                        <span>PSYCLOX • ADVANCED SECURITY SOLUTIONS</span>
+                        <span class="ui-banner-stroke">THREATS REQUIRE PRECISION</span>
                     </div>
                 </div>
+
+                <!-- Top Pics Marquee -->
+                <div class="ui-pics-marquee">
+                    <div class="ui-pics-track">
+                        <div class="ui-pic-card"><img src="assets/pics/1.png" alt="About Pic 1" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/2.png" alt="About Pic 2" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/3.png" alt="About Pic 3" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/4.png" alt="About Pic 4" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/5.png" alt="About Pic 5" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/6.png" alt="About Pic 6" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/7.png" alt="About Pic 7" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/8.png" alt="About Pic 8" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/9.png" alt="About Pic 9" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/10.png" alt="About Pic 10" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/11.png" alt="About Pic 11" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/12.png" alt="About Pic 12" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/13.png" alt="About Pic 13" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/14.png" alt="About Pic 14" loading="lazy"></div>
+                        <!-- duplicated set -->
+                        <div class="ui-pic-card"><img src="assets/pics/1.png" alt="About Pic 1" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/2.png" alt="About Pic 2" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/3.png" alt="About Pic 3" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/4.png" alt="About Pic 4" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/5.png" alt="About Pic 5" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/6.png" alt="About Pic 6" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/7.png" alt="About Pic 7" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/8.png" alt="About Pic 8" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/9.png" alt="About Pic 9" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/10.png" alt="About Pic 10" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/11.png" alt="About Pic 11" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/12.png" alt="About Pic 12" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/13.png" alt="About Pic 13" loading="lazy"></div>
+                        <div class="ui-pic-card"><img src="assets/pics/14.png" alt="About Pic 14" loading="lazy"></div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="container ui-about-container">
+                <!-- Central Text Block -->
+                <div class="ui-about-center">
+                    <h2 class="ui-about-statement">
+                        cybersecurity professional bridging offensive and defensive security to eliminate critical
+                        vulnerabilities, respond to threats in record time, and build resilient infrastructure
+                    </h2>
+                    <div class="ui-about-actions">
+                        <a href="#contact" class="ui-btn-primary">Connect Now</a>
+                        <a href="#projects" class="ui-btn-outline">View Operations</a>
+                    </div>
+                </div>
+
+
             </div>
         </section>
 
@@ -596,6 +522,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </section>
         <!-- Projects Section -->
         <section class="projects section-light" id="projects">
@@ -662,7 +589,7 @@
 
                         <div class="holo-content">
                             <div class="holo-header">
-                                <h3 class="holo-title">VAPT Assessment</h3>
+                                <h3 class="holo-title">VAPT Assess</h3>
                                 <div class="holo-status">
                                     <span class="status-dot"></span>
                                     Classified
