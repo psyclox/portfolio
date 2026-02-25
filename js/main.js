@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initExperienceCards();
     initAboutCardsParallax();
     initHeroStartupAnimations();
+    initCardTextCyclers();
 });
 
 /* ========================================
@@ -709,6 +710,72 @@ function initTypewriter() {
 
     // Start typing after a delay
     setTimeout(type, 1000);
+}
+
+/* ========================================
+   CARD DYNAMIC TEXT CYCLING
+   ======================================== */
+function initCardTextCyclers() {
+    const brandElement = document.getElementById('card-dynamic-brand');
+    const phraseElement = document.getElementById('card-dynamic-phrase');
+
+    // Helper for typewriter effect
+    function runTypewriter(element, words, typeSpeed, deleteSpeed, pauseEnd) {
+        if (!element) return;
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentWord = words[wordIndex];
+
+            if (isDeleting) {
+                element.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                element.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let nextSpeed = isDeleting ? deleteSpeed : typeSpeed;
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                // Done typing word, pause then delete
+                nextSpeed = pauseEnd;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                // Done deleting, move to next
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                nextSpeed = 500; // Pause before typing next word
+            }
+
+            setTimeout(type, nextSpeed);
+        }
+
+        // Start typing
+        setTimeout(type, 1000);
+    }
+
+    // Initialize Brand Typewriter
+    if (brandElement) {
+        // Ensure starting text is empty before first type
+        brandElement.textContent = '';
+        runTypewriter(brandElement, ['PSYCLOX', 'KARTHIKEYAN'], 120, 60, 5000);
+    }
+
+    // Initialize Phrase Typewriter
+    if (phraseElement) {
+        phraseElement.textContent = '';
+        runTypewriter(phraseElement, [
+            'Move Your Cursor',
+            'Explore Everyday',
+            'click NEW for updated portfolio',
+            'Break The Matrix',
+            'Find The Limits',
+            'Think Outside The Box'
+        ], 80, 40, 2500);
+    }
 }
 
 /* ========================================
