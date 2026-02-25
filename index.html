@@ -62,32 +62,49 @@
     </div>
 
     <!-- Loader -->
-    <div class="loader glitch-loader" id="loader">
-        <div class="loader-content">
-            <div class="loader-psyclox">PSYCLOX</div>
-            <div class="loader-track">
-                <div class="loader-fill" id="loader-progress"></div>
-            </div>
-        </div>
+    <div class="loader glitch-loader" id="loader"
+        style="background: #000; display: flex; align-items: center; justify-content: center; z-index: 10000;">
+        <video autoplay muted="muted" playsinline preload="auto" id="loader-video"
+            style="max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none;">
+            <source src="./assets/loading/1k.mp4" type="video/mp4">
+        </video>
+        <script>
+            // Force play immediately since some browsers block autoplay without interaction
+            document.addEventListener('DOMContentLoaded', () => {
+                const v = document.getElementById('loader-video');
+                if (v) {
+                    v.load();
+                    const playPromise = v.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(e => console.log('Autoplay blocked by browser:', e));
+                    }
+                }
+            });
+        </script>
     </div>
 
     <!-- Navigation -->
     <header class="header" id="header">
         <nav class="nav container">
-            <a href="#home" class="nav-logo">
-                <span class="logo-bracket">&lt;</span>
-                <span class="logo-text">Psyclox</span>
-                <span class="logo-bracket">/&gt;</span>
+            <a href="#home" class="nav-logo" title="Psyclox | Ethical Hacker Portfolio"
+                style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
+                <div style="display: flex; align-items: center;">
+                    <span class="logo-bracket">&lt;</span>
+                    <span class="logo-text">Psyclox</span>
+                    <span class="logo-bracket">/&gt;</span>
+                </div>
             </a>
 
             <ul class="nav-menu" id="nav-menu">
-                <li class="nav-item"><a href="#home" class="nav-link active">Home</a></li>
                 <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
                 <li class="nav-item"><a href="#projects" class="nav-link">Projects</a></li>
                 <li class="nav-item"><a href="#experience" class="nav-link">Experience</a></li>
                 <li class="nav-item"><a href="#certifications" class="nav-link">Certifications</a></li>
                 <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="https://psyclox.github.io/portfolio/" target="_blank" class="nav-link"
+                        style="color: transparent; -webkit-text-stroke: 1px #00ff00; font-weight: bold; opacity: 0.8; transition: opacity 0.3s ease;">NEW</a>
+                </li>
             </ul>
 
 
@@ -102,13 +119,16 @@
     <div class="mobile-menu-overlay" id="mobile-menu">
         <div class="mobile-menu-content">
             <ul class="mobile-nav-list">
-                <li><a href="#home" class="mobile-nav-link" data-index="01">Home</a></li>
-                <li><a href="#about" class="mobile-nav-link" data-index="02">About</a></li>
-                <li><a href="#skills" class="mobile-nav-link" data-index="03">Skills</a></li>
+                <li><a href="#about" class="mobile-nav-link" data-index="01">About</a></li>
+                <li><a href="#skills" class="mobile-nav-link" data-index="02">Skills</a></li>
                 <li><a href="#projects" class="mobile-nav-link" data-index="04">Projects</a></li>
                 <li><a href="#experience" class="mobile-nav-link" data-index="05">Experience</a></li>
                 <li><a href="#certifications" class="mobile-nav-link" data-index="06">Certifications</a></li>
                 <li><a href="#contact" class="mobile-nav-link" data-index="07">Contact</a></li>
+                <li><a href="https://psyclox.github.io/portfolio/" target="_blank" class="mobile-nav-link"
+                        data-index="08"
+                        style="color: transparent; -webkit-text-stroke: 1px #00ff00; font-weight: bold; opacity: 0.8; transition: opacity 0.3s ease;">NEW</a>
+                </li>
             </ul>
             <div class="mobile-menu-footer">
                 <div class="social-links">
@@ -256,7 +276,7 @@
         <!-- hero-scroll-track removed -->
 
         <!-- Unified Background Wrapper for About & Skills -->
-        <div class="unified-bg-wrapper" style="position: relative; overflow: hidden; background-color: #050505;">
+        <div class="unified-bg-wrapper" style="position: relative; overflow: hidden; background-color: transparent;">
             <canvas id="unified-nodes-canvas"
                 style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0;"></canvas>
 
@@ -1266,6 +1286,23 @@
                         <span class="sb-icon">🎲</span><span class="sb-label">CUBE</span>
                     </button>
                 </div>
+
+                <!-- Chess AI Toggle (Only visible when Chess is active) -->
+                <div id="chess-ai-container"
+                    style="display: none; padding: 10px 15px; border-top: 1px solid rgba(255, 71, 87, 0.2); border-bottom: 1px solid rgba(255, 71, 87, 0.2); margin: 5px 0; align-items: center; justify-content: space-between;">
+                    <span class="ai-label"
+                        style="color: #ff4757; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 1px;">GM
+                        AI BOT</span>
+                    <label class="cyber-switch"
+                        style="position: relative; display: inline-block; width: 40px; height: 20px;">
+                        <input type="checkbox" id="chess-ai-toggle" checked style="opacity: 0; width: 0; height: 0;">
+                        <span class="slider"
+                            style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 20px;"></span>
+                        <span class="slider-knob"
+                            style="position: absolute; content: ''; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: #fff; transition: .4s; border-radius: 50%;"></span>
+                    </label>
+                </div>
+
                 <div class="sidebar-actions">
                     <button id="undo-btn" class="action-btn" title="Undo" disabled>UNDO</button>
                     <button id="redo-btn" class="action-btn" title="Redo" disabled>REDO</button>

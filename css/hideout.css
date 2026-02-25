@@ -619,3 +619,17 @@ canvas.game-canvas {
     grid-template-columns: repeat(3, 18px);
     gap: 2px;
 }
+
+/* Chess AI Toggle Switch */
+.cyber-switch input:checked+.slider {
+    background-color: #ff4757;
+    box-shadow: 0 0 8px rgba(255, 71, 87, 0.6);
+}
+
+.cyber-switch input:focus+.slider {
+    box-shadow: 0 0 1px #ff4757;
+}
+
+.cyber-switch input:checked+.slider .slider-knob {
+    transform: translateX(20px);
+}

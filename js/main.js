@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initLoader() {
     const loader = document.getElementById('loader');
+    const loaderVideo = document.getElementById('loader-video');
 
     if (!loader) return;
 
@@ -59,7 +60,8 @@ function initLoader() {
         }, 800); // Wait for CSS glitch out animation to finish
     };
 
-    // Check if already loaded from cache quickly
+    // COMMENTED OUT FOR TESTING: Check if already loaded from cache quickly
+    /*
     if (sessionStorage.getItem('hasLoadedBefore')) {
         loader.style.display = 'none';
         document.body.classList.remove('page-loading');
@@ -69,22 +71,19 @@ function initLoader() {
         setTimeout(() => window.dispatchEvent(new Event('loaderFinished')), 50);
         return;
     }
-
     sessionStorage.setItem('hasLoadedBefore', 'true');
+    */
 
-    // Animate progress bar
-    const progressBar = document.getElementById('loader-progress');
-    if (progressBar) {
-        // slight delay to allow rendering
-        setTimeout(() => {
-            progressBar.style.transition = 'width 2.3s cubic-bezier(0.1, 0.7, 1.0, 0.1)';
-            progressBar.style.width = '100%';
-        }, 50);
+    if (loaderVideo) {
+        // Ensure video plays
+        loaderVideo.play().catch(e => console.log('Autoplay prevented:', e));
+
+        // Wait for video to end or fallback timeout
+        loaderVideo.addEventListener('ended', finishLoading);
+        setTimeout(finishLoading, 4000); // Fallback if video is longer or fails
+    } else {
+        setTimeout(finishLoading, 2500);
     }
-
-    // Run the glitch text animation for a set duration before exiting
-    // Using 2.5s guarantees they see the high-quality tearing effect a few cycles
-    setTimeout(finishLoading, 2500);
 }
 
 /* ========================================
