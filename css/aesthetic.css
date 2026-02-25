@@ -53,6 +53,8 @@
     z-index: 10;
     position: relative;
     padding: 0 5%;
+    zoom: 0.75;
+    /* Simulate 75% browser zoom out */
 }
 
 /* Left Text Section */

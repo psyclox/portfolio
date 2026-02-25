@@ -44,6 +44,9 @@
     <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <!-- Three.js for 3D Hero -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/hero-3d.js" defer></script>
 </head>
 
 <body>
@@ -133,14 +136,9 @@
         <!-- SCROLL TRACK REMOVED - Fixed Empty Section Issue -->
         <!-- Hero Section -->
         <section class="hero section-dark" id="home">
-            <!-- Background Neon Wave -->
-            <svg class="hero-neon-wave" viewBox="0 0 1440 800" preserveAspectRatio="none">
-                <path d="M720,400 C1020,200 1120,600 1440,400" />
-            </svg>
-
-            <!-- Background elements matching user's existing style -->
-            <div class="hero-particles" id="particles"></div>
-            <div class="hero-grid"></div>
+            <!-- 3D WebGL Canvas Background -->
+            <canvas class="hero-3d-canvas" id="hero-3d-bg"
+                style="position: absolute; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events: none;"></canvas>
 
             <!-- Two-column content layout -->
             <div class="hero-content">
