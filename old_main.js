@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initActiveNavHighlight();
     initExperienceCards();
     initAboutCardsParallax();
-    initHeroStartupAnimations();
 });
 
 /* ========================================
@@ -40,51 +39,25 @@ document.addEventListener('DOMContentLoaded', () => {
 function initLoader() {
     const loader = document.getElementById('loader');
 
-    if (!loader) return;
-
-    // Prevent scrolling while loading
-    document.body.classList.add('page-loading');
-
-    // Function to hide loader with brutal glitch exit
-    const finishLoading = () => {
-        loader.classList.add('loader-glitch-out');
+    // Function to hide loader
+    const hideLoader = () => {
+        document.body.classList.add('page-loading');
         setTimeout(() => {
             loader.classList.add('hidden');
             document.body.classList.remove('loading');
             document.body.classList.remove('page-loading');
             document.body.classList.add('page-loaded');
-
-            // Dispatch event for other animations (like hero 3D) to know loading is done
-            window.dispatchEvent(new Event('loaderFinished'));
-        }, 800); // Wait for CSS glitch out animation to finish
+        }, 1500);
     };
 
-    // Check if already loaded from cache quickly
-    if (sessionStorage.getItem('hasLoadedBefore')) {
-        loader.style.display = 'none';
-        document.body.classList.remove('page-loading');
-        document.body.classList.add('page-loaded');
-
-        // Ensure other scripts know we are done
-        setTimeout(() => window.dispatchEvent(new Event('loaderFinished')), 50);
-        return;
+    // Check if already loaded
+    if (document.readyState === 'complete') {
+        hideLoader();
+    } else {
+        window.addEventListener('load', hideLoader);
+        // Fallback safety timeout (5s)
+        setTimeout(hideLoader, 5000);
     }
-
-    sessionStorage.setItem('hasLoadedBefore', 'true');
-
-    // Animate progress bar
-    const progressBar = document.getElementById('loader-progress');
-    if (progressBar) {
-        // slight delay to allow rendering
-        setTimeout(() => {
-            progressBar.style.transition = 'width 2.3s cubic-bezier(0.1, 0.7, 1.0, 0.1)';
-            progressBar.style.width = '100%';
-        }, 50);
-    }
-
-    // Run the glitch text animation for a set duration before exiting
-    // Using 2.5s guarantees they see the high-quality tearing effect a few cycles
-    setTimeout(finishLoading, 2500);
 }
 
 /* ========================================
@@ -746,47 +719,6 @@ function createParticle(container) {
 }
 
 /* ========================================
-   HERO STARTUP ANIMATIONS
-   ======================================== */
-
-function initHeroStartupAnimations() {
-    if (typeof gsap === 'undefined') return;
-
-    const runHeroGSAP = () => {
-        const tl = gsap.timeline();
-
-        // Ensure hero elements start visible if they were hidden by CSS
-        gsap.set('.hero-left-aesthetic > *, .hero-3d-cards', { clearProps: 'all' });
-
-        tl.from('.hero-left-aesthetic > *', {
-            y: 40,
-            autoAlpha: 0,
-            stagger: 0.15,
-            duration: 1,
-            ease: 'power3.out'
-        })
-            .from('.hero-3d-cards', {
-                x: 60,
-                autoAlpha: 0,
-                rotationY: -15,
-                duration: 1.2,
-                ease: 'back.out(1.2)'
-            }, "-=0.6");
-
-        // Refresh ScrollTrigger to recalculate layout now that loader is gone
-        if (typeof ScrollTrigger !== 'undefined') {
-            ScrollTrigger.refresh();
-        }
-    };
-
-    if (document.body.classList.contains('page-loaded')) {
-        runHeroGSAP();
-    } else {
-        window.addEventListener('loaderFinished', runHeroGSAP);
-    }
-}
-
-/* ========================================
    GSAP SCROLL ANIMATIONS
    ======================================== */
 
@@ -815,38 +747,66 @@ function initScrollAnimations() {
         });
     });
 
-    // About Section (New UI)
-    gsap.from('.ui-about-slanted-group', {
+    // About section
+    gsap.from('.about-image-wrapper', {
         scrollTrigger: {
-            trigger: '#about',
-            start: 'top 80%'
+            trigger: '.about-content',
+            start: 'top 70%'
         },
-        y: 100,
+        x: -80,
         opacity: 0,
-        duration: 1.2,
+        duration: 1,
         ease: 'power3.out'
     });
 
-    gsap.from('.ui-about-center', {
+    gsap.from('.about-text', {
         scrollTrigger: {
-            trigger: '.ui-about-center',
-            start: 'top 85%'
+            trigger: '.about-content',
+            start: 'top 70%'
         },
-        y: 50,
+        x: 80,
         opacity: 0,
-        scale: 0.95,
         duration: 1,
-        ease: 'power4.out'
+        delay: 0.2,
+        ease: 'power3.out'
     });
 
-    // Skills Arsenal Cards
-    gsap.utils.toArray('.arsenal-card').forEach((card, i) => {
-        gsap.from(card, {
+    // About Section Parallax Text Illusion
+    const parallaxTimeline = gsap.timeline({
+        scrollTrigger: {
+            trigger: "#about",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1
+        }
+    });
+
+    parallaxTimeline
+        .fromTo(".layer-cyan", { xPercent: 10 }, { xPercent: -60, ease: "none" }, 0)
+        .fromTo(".layer-main", { xPercent: 5 }, { xPercent: -40, ease: "none" }, 0);
+
+    // Existing About Animations
+    gsap.from('.about-hologram', {
+        scrollTrigger: {
+            trigger: '.about',
+            start: 'top 70%'
+        },
+        x: -50,
+        opacity: 0,
+        duration: 1,
+        delay: 0.2,
+        ease: 'power3.out'
+    });
+
+
+    // Skill categories
+    gsap.utils.toArray('.skill-category').forEach((category, i) => {
+        gsap.from(category, {
             scrollTrigger: {
-                trigger: card,
-                start: 'top 85%'
+                trigger: category,
+                start: 'top 80%'
             },
-            y: 50,
+            y: 60,
             opacity: 0,
             duration: 0.8,
             delay: i * 0.15,
