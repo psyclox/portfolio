@@ -48,7 +48,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="js/hero-3d.js" defer></script>
     <!-- Custom JS Skills/About Background -->
-    <script src="js/skills-bg.js" defer></script>
+    <!-- Removed skills-bg.js -->
 </head>
 
 <body>
@@ -280,316 +280,312 @@
         </section>
         <!-- hero-scroll-track removed -->
 
-        <!-- Unified Background Wrapper for About & Skills -->
-        <div class="unified-bg-wrapper" style="position: relative; overflow: hidden; background-color: transparent;">
-            <canvas id="unified-nodes-canvas"
-                style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0;"></canvas>
+        <!-- Unified Background Wrapper Removed for About & Skills -->
 
-            <!-- About Section — UI Inspired Redesign -->
-            <section class="about section-dark ui-about-section" id="about"
-                style="background-color: transparent !important;">
-                <!-- Internal background removed in favor of unified canvas -->
+        <!-- About Section — UI Inspired Redesign -->
+        <section class="about grid-reflex-section ui-about-section" id="about">
+            <div class="cert-grid-lines"></div>
+            <!-- Internal background removed in favor of grid-reflex-section -->
 
-                <!-- Slanted Dynamic Background Image/Text Banners -->
-                <div class="ui-about-slanted-group">
-                    <!-- Top Left Banner -->
-                    <div class="ui-slanted-banner banner-top">
-                        <div class="ui-banner-track">
-                            <span>PSYCLOX • ADVANCED SECURITY SOLUTIONS</span>
-                            <span class="ui-banner-stroke">THREATS REQUIRE PRECISION</span>
-                            <span>PSYCLOX • ADVANCED SECURITY SOLUTIONS</span>
-                            <span class="ui-banner-stroke">THREATS REQUIRE PRECISION</span>
-                            <span>PSYCLOX • ADVANCED SECURITY SOLUTIONS</span>
-                            <span class="ui-banner-stroke">THREATS REQUIRE PRECISION</span>
-                            <span>PSYCLOX • ADVANCED SECURITY SOLUTIONS</span>
-                            <span class="ui-banner-stroke">THREATS REQUIRE PRECISION</span>
-                        </div>
+            <!-- Slanted Dynamic Background Image/Text Banners -->
+            <div class="ui-about-slanted-group">
+                <!-- Top Left Banner -->
+                <div class="ui-slanted-banner banner-top">
+                    <div class="ui-banner-track">
+                        <span>PSYCLOX • ADVANCED SECURITY SOLUTIONS</span>
+                        <span class="ui-banner-stroke">THREATS REQUIRE PRECISION</span>
+                        <span>PSYCLOX • ADVANCED SECURITY SOLUTIONS</span>
+                        <span class="ui-banner-stroke">THREATS REQUIRE PRECISION</span>
+                        <span>PSYCLOX • ADVANCED SECURITY SOLUTIONS</span>
+                        <span class="ui-banner-stroke">THREATS REQUIRE PRECISION</span>
+                        <span>PSYCLOX • ADVANCED SECURITY SOLUTIONS</span>
+                        <span class="ui-banner-stroke">THREATS REQUIRE PRECISION</span>
                     </div>
-
-                    <!-- Top Pics Marquee -->
-                    <div class="ui-pics-marquee">
-                        <div class="ui-pics-track">
-                            <div class="ui-pic-card"><img src="assets/pics/1.png" alt="About Pic 1" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/2.png" alt="About Pic 2" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/3.png" alt="About Pic 3" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/4.png" alt="About Pic 4" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/5.png" alt="About Pic 5" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/6.png" alt="About Pic 6" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/7.png" alt="About Pic 7" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/8.png" alt="About Pic 8" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/9.png" alt="About Pic 9" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/10.png" alt="About Pic 10" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/11.png" alt="About Pic 11" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/12.png" alt="About Pic 12" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/13.png" alt="About Pic 13" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/14.png" alt="About Pic 14" loading="lazy">
-                            </div>
-                            <!-- duplicated set -->
-                            <div class="ui-pic-card"><img src="assets/pics/1.png" alt="About Pic 1" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/2.png" alt="About Pic 2" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/3.png" alt="About Pic 3" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/4.png" alt="About Pic 4" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/5.png" alt="About Pic 5" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/6.png" alt="About Pic 6" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/7.png" alt="About Pic 7" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/8.png" alt="About Pic 8" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/9.png" alt="About Pic 9" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/10.png" alt="About Pic 10" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/11.png" alt="About Pic 11" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/12.png" alt="About Pic 12" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/13.png" alt="About Pic 13" loading="lazy">
-                            </div>
-                            <div class="ui-pic-card"><img src="assets/pics/14.png" alt="About Pic 14" loading="lazy">
-                            </div>
-                        </div>
-                    </div>
-
-
                 </div>
 
-                <div class="container ui-about-container">
-                    <!-- Central Text Block -->
-                    <div class="ui-about-center">
-                        <h2 class="ui-about-statement">
-                            cybersecurity professional bridging offensive and defensive security to eliminate critical
-                            vulnerabilities, respond to threats in record time, and build resilient infrastructure
-                        </h2>
-                        <div class="ui-about-actions">
-                            <a href="#contact" class="ui-btn-primary">Connect Now</a>
-                            <a href="#projects" class="ui-btn-outline">View Operations</a>
+                <!-- Top Pics Marquee -->
+                <div class="ui-pics-marquee">
+                    <div class="ui-pics-track">
+                        <div class="ui-pic-card"><img src="assets/pics/1.png" alt="About Pic 1" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/2.png" alt="About Pic 2" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/3.png" alt="About Pic 3" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/4.png" alt="About Pic 4" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/5.png" alt="About Pic 5" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/6.png" alt="About Pic 6" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/7.png" alt="About Pic 7" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/8.png" alt="About Pic 8" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/9.png" alt="About Pic 9" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/10.png" alt="About Pic 10" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/11.png" alt="About Pic 11" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/12.png" alt="About Pic 12" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/13.png" alt="About Pic 13" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/14.png" alt="About Pic 14" loading="lazy">
+                        </div>
+                        <!-- duplicated set -->
+                        <div class="ui-pic-card"><img src="assets/pics/1.png" alt="About Pic 1" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/2.png" alt="About Pic 2" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/3.png" alt="About Pic 3" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/4.png" alt="About Pic 4" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/5.png" alt="About Pic 5" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/6.png" alt="About Pic 6" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/7.png" alt="About Pic 7" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/8.png" alt="About Pic 8" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/9.png" alt="About Pic 9" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/10.png" alt="About Pic 10" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/11.png" alt="About Pic 11" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/12.png" alt="About Pic 12" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/13.png" alt="About Pic 13" loading="lazy">
+                        </div>
+                        <div class="ui-pic-card"><img src="assets/pics/14.png" alt="About Pic 14" loading="lazy">
                         </div>
                     </div>
-
-
                 </div>
-            </section>
 
-            <!-- Skills Section -->
-            <section class="skills section-light" id="skills"
-                style="background-color: transparent !important; position: relative; z-index: 10;">
-                <div class="container">
-                    <div class="section-header">
-                        <span class="section-tag">&lt;skills&gt;</span>
-                        <h2 class="section-title">My <span class="gradient-text">Skills</span></h2>
+
+            </div>
+
+            <div class="container ui-about-container">
+                <!-- Central Text Block -->
+                <div class="ui-about-center">
+                    <h2 class="ui-about-statement">
+                        cybersecurity professional bridging offensive and defensive security to eliminate critical
+                        vulnerabilities, respond to threats in record time, and build resilient infrastructure
+                    </h2>
+                    <div class="ui-about-actions">
+                        <a href="#contact" class="ui-btn-primary">Connect Now</a>
+                        <a href="#projects" class="ui-btn-outline">View Operations</a>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="skills grid-reflex-section" id="skills" style="position: relative; z-index: 10;">
+            <div class="cert-grid-lines"></div>
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">&lt;skills&gt;</span>
+                    <h2 class="section-title">My <span class="gradient-text">Skills</span></h2>
+                </div>
+
+                <div class="arsenal-grid">
+                    <!-- Security (Offensive) -->
+                    <div class="arsenal-card" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
+                        <div class="card-glass"></div>
+                        <div class="card-header">
+                            <div class="card-icon security-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                </svg>
+                            </div>
+                            <h3>Offensive Security</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="competency-list">
+                                <li>Web Application VAPT</li>
+                                <li>Network Infrastructure Testing</li>
+                                <li>Manual Exploitation & POCs</li>
+                                <li>LLM & GenAI Security Testing</li>
+                                <li>Cloud Security Assessments</li>
+                                <li>API Security Testing</li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <div class="arsenal-grid">
-                        <!-- Security (Offensive) -->
-                        <div class="arsenal-card" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
-                            <div class="card-glass"></div>
-                            <div class="card-header">
-                                <div class="card-icon security-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                                    </svg>
-                                </div>
-                                <h3>Offensive Security</h3>
+                    <!-- Technical Ops -->
+                    <div class="arsenal-card" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
+                        <div class="card-glass"></div>
+                        <div class="card-header">
+                            <div class="card-icon tech-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="16 18 22 12 16 6" />
+                                    <polyline points="8 6 2 12 8 18" />
+                                </svg>
                             </div>
-                            <div class="card-body">
-                                <ul class="competency-list">
-                                    <li>Web Application VAPT</li>
-                                    <li>Network Infrastructure Testing</li>
-                                    <li>Manual Exploitation & POCs</li>
-                                    <li>LLM & GenAI Security Testing</li>
-                                    <li>Cloud Security Assessments</li>
-                                    <li>API Security Testing</li>
-                                </ul>
-                            </div>
+                            <h3>Technical Ops</h3>
                         </div>
-
-                        <!-- Technical Ops -->
-                        <div class="arsenal-card" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
-                            <div class="card-glass"></div>
-                            <div class="card-header">
-                                <div class="card-icon tech-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="16 18 22 12 16 6" />
-                                        <polyline points="8 6 2 12 8 18" />
-                                    </svg>
-                                </div>
-                                <h3>Technical Ops</h3>
-                            </div>
-                            <div class="card-body">
-                                <ul class="competency-list">
-                                    <li>Secure Code Review & Auditing</li>
-                                    <li>AI-Driven Threat Detection</li>
-                                    <li>SOC & SIEM Monitoring</li>
-                                    <li>Threat Modeling & Analysis</li>
-                                    <li>Python Security Automation</li>
-                                    <li>Vulnerability Management</li>
-                                </ul>
-                            </div>
+                        <div class="card-body">
+                            <ul class="competency-list">
+                                <li>Secure Code Review & Auditing</li>
+                                <li>AI-Driven Threat Detection</li>
+                                <li>SOC & SIEM Monitoring</li>
+                                <li>Threat Modeling & Analysis</li>
+                                <li>Python Security Automation</li>
+                                <li>Vulnerability Management</li>
+                            </ul>
                         </div>
+                    </div>
 
-                        <!-- Tools (Icons) -->
-                        <div class="arsenal-card tools-card" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
-                            <div class="card-glass"></div>
-                            <div class="card-header">
-                                <div class="card-icon tools-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path
-                                            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-                                    </svg>
-                                </div>
-                                <h3>Deployment Tools</h3>
+                    <!-- Tools (Icons) -->
+                    <div class="arsenal-card tools-card" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
+                        <div class="card-glass"></div>
+                        <div class="card-header">
+                            <div class="card-icon tools-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                                </svg>
                             </div>
-                            <div class="tools-grid-icons expanded-arsenal">
-                                <!-- Row 1: The Heavy Hitters -->
-                                <div class="tool-icon-item" title="Burp Suite Professional">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path
-                                            d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9" />
-                                    </svg>
-                                    <span>Burp Pro</span>
-                                </div>
-                                <div class="tool-icon-item" title="Nessus Vulnerability Scanner">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10" />
-                                        <path d="M12 6v6l4 2" />
-                                    </svg>
-                                    <span>Nessus</span>
-                                </div>
-                                <div class="tool-icon-item" title="Metasploit Framework">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                                    </svg>
-                                    <span>Metasploit</span>
-                                </div>
-                                <div class="tool-icon-item" title="Cobalt Strike / BeEF">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M5 12h14M12 5l7 7-7 7" />
-                                    </svg>
-                                    <span>BeEF</span>
-                                </div>
+                            <h3>Deployment Tools</h3>
+                        </div>
+                        <div class="tools-grid-icons expanded-arsenal">
+                            <!-- Row 1: The Heavy Hitters -->
+                            <div class="tool-icon-item" title="Burp Suite Professional">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9" />
+                                </svg>
+                                <span>Burp Pro</span>
+                            </div>
+                            <div class="tool-icon-item" title="Nessus Vulnerability Scanner">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M12 6v6l4 2" />
+                                </svg>
+                                <span>Nessus</span>
+                            </div>
+                            <div class="tool-icon-item" title="Metasploit Framework">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                </svg>
+                                <span>Metasploit</span>
+                            </div>
+                            <div class="tool-icon-item" title="Cobalt Strike / BeEF">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                                <span>BeEF</span>
+                            </div>
 
-                                <!-- Row 2: Active Directory & Ops -->
-                                <div class="tool-icon-item" title="Active Directory / BloodHound">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                        <circle cx="9" cy="7" r="4" />
-                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                                    </svg>
-                                    <span>Active Dir</span>
-                                </div>
-                                <div class="tool-icon-item" title="Pentest GPT / AI Ops">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 2a10 10 0 1 0 10 10H12V2z" />
-                                        <path d="M12 12L2.5 14.5M12 12l9.5-2.5" />
-                                    </svg>
-                                    <span>PentestGPT</span>
-                                </div>
-                                <div class="tool-icon-item" title="Kali Linux">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path
-                                            d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                                        <polyline points="12 8 12 16" />
-                                    </svg>
-                                    <span>Kali</span>
-                                </div>
-                                <div class="tool-icon-item" title="Wireshark">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
-                                        <circle cx="12" cy="12" r="3" />
-                                    </svg>
-                                    <span>Wireshark</span>
-                                </div>
+                            <!-- Row 2: Active Directory & Ops -->
+                            <div class="tool-icon-item" title="Active Directory / BloodHound">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                </svg>
+                                <span>Active Dir</span>
+                            </div>
+                            <div class="tool-icon-item" title="Pentest GPT / AI Ops">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2a10 10 0 1 0 10 10H12V2z" />
+                                    <path d="M12 12L2.5 14.5M12 12l9.5-2.5" />
+                                </svg>
+                                <span>PentestGPT</span>
+                            </div>
+                            <div class="tool-icon-item" title="Kali Linux">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                    <polyline points="12 8 12 16" />
+                                </svg>
+                                <span>Kali</span>
+                            </div>
+                            <div class="tool-icon-item" title="Wireshark">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                                <span>Wireshark</span>
+                            </div>
 
-                                <!-- Row 3: Cracking & Web -->
-                                <div class="tool-icon-item" title="Hashcat">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                                    </svg>
-                                    <span>Hashcat</span>
-                                </div>
-                                <div class="tool-icon-item" title="OWASP ZAP">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                                    </svg>
-                                    <span>ZAP</span>
-                                </div>
-                                <div class="tool-icon-item" title="Nmap">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polygon points="3 11 22 2 13 21 11 13 3 11" />
-                                    </svg>
-                                    <span>Nmap</span>
-                                </div>
-                                <div class="tool-icon-item" title="Hydra">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path
-                                            d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.1.2-2.2.5-3.3.3-1.1 1.09-2.2 2-3.3.99-1.09 2.5-1.9 4-2.7" />
-                                    </svg>
-                                    <span>Hydra</span>
-                                </div>
+                            <!-- Row 3: Cracking & Web -->
+                            <div class="tool-icon-item" title="Hashcat">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                </svg>
+                                <span>Hashcat</span>
+                            </div>
+                            <div class="tool-icon-item" title="OWASP ZAP">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                                </svg>
+                                <span>ZAP</span>
+                            </div>
+                            <div class="tool-icon-item" title="Nmap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="3 11 22 2 13 21 11 13 3 11" />
+                                </svg>
+                                <span>Nmap</span>
+                            </div>
+                            <div class="tool-icon-item" title="Hydra">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.1.2-2.2.5-3.3.3-1.1 1.09-2.2 2-3.3.99-1.09 2.5-1.9 4-2.7" />
+                                </svg>
+                                <span>Hydra</span>
+                            </div>
 
-                                <!-- Row 4: SOC & Defense -->
-                                <div class="tool-icon-item" title="Splunk SIEM">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path
-                                            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                                        <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-                                        <line x1="12" y1="22.08" x2="12" y2="12" />
-                                    </svg>
-                                    <span>Splunk</span>
-                                </div>
-                                <div class="tool-icon-item" title="Wazuh EDR">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                                        <path d="M9 12l2 2 4-4" />
-                                    </svg>
-                                    <span>Wazuh</span>
-                                </div>
-                                <div class="tool-icon-item" title="Snort IDS">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10" />
-                                        <line x1="12" y1="8" x2="12" y2="12" />
-                                        <line x1="12" y1="16" x2="12.01" y2="16" />
-                                    </svg>
-                                    <span>Snort</span>
-                                </div>
-                                <div class="tool-icon-item" title="AlienVault / Sentinel">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-                                        <line x1="8" y1="21" x2="16" y2="21" />
-                                        <line x1="12" y1="17" x2="12" y2="21" />
-                                    </svg>
-                                    <span>AlienVault</span>
-                                </div>
+                            <!-- Row 4: SOC & Defense -->
+                            <div class="tool-icon-item" title="Splunk SIEM">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                                    <line x1="12" y1="22.08" x2="12" y2="12" />
+                                </svg>
+                                <span>Splunk</span>
+                            </div>
+                            <div class="tool-icon-item" title="Wazuh EDR">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                    <path d="M9 12l2 2 4-4" />
+                                </svg>
+                                <span>Wazuh</span>
+                            </div>
+                            <div class="tool-icon-item" title="Snort IDS">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <line x1="12" y1="8" x2="12" y2="12" />
+                                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                                </svg>
+                                <span>Snort</span>
+                            </div>
+                            <div class="tool-icon-item" title="AlienVault / Sentinel">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                                    <line x1="8" y1="21" x2="16" y2="21" />
+                                    <line x1="12" y1="17" x2="12" y2="21" />
+                                </svg>
+                                <span>AlienVault</span>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div> <!-- End of unified-bg-wrapper -->
-
+            </div>
+        </section>
         <!-- Projects Section -->
-        <section class="projects section-light" id="projects">
+        <section class="projects grid-reflex-section" id="projects">
+            <div class="cert-grid-lines"></div>
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">&lt;projects&gt;</span>
@@ -827,7 +823,8 @@
         </section>
 
         <!-- Experience Section -->
-        <section class="experience section-dark" id="experience">
+        <section class="experience grid-reflex-section" id="experience">
+            <div class="cert-grid-lines"></div>
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">&lt;experience&gt;</span>
@@ -1037,7 +1034,8 @@
         </section>
 
         <!-- Contact Section -->
-        <section class="contact section-dark" id="contact">
+        <section class="contact grid-reflex-section" id="contact">
+            <div class="cert-grid-lines"></div>
             <div class="container">
                 <div class="section-header light">
                     <span class="section-tag">&lt;contact&gt;</span>
