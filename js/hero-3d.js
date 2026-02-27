@@ -232,8 +232,8 @@ document.addEventListener("DOMContentLoaded", () => {
             velPosition: new THREE.Vector3(0, 0, 0),
 
             // Graffico Spring Properties
-            tension: 0.04 + (Math.random() * 0.04),
-            friction: 0.88 + (Math.random() * 0.05),
+            tension: 0.01 + (Math.random() * 0.02), // Softer, more gentle spring tracking
+            friction: 0.94 + (Math.random() * 0.03), // Higher friction to prevent chaotic bouncing
             blastDelay: Math.random() * 0.6
         };
 
@@ -303,7 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
             dir.normalize();
 
             // Gentle blast force so movement is trackable
-            const force = 40 + Math.random() * 60;
+            const force = 15 + Math.random() * 25; // Greatly reduced for smaller movement range
 
             data.velPosition.x = dir.x * force;
             data.velPosition.y = dir.y * force;
@@ -319,8 +319,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
                 data.tension = 0.02; // floaty spring
                 data.friction = 0.90;
-            } else if (index % 4 === 0) {
-                // AESTHETIC BACKGROUND (~112 pieces)
+            } else if (index % 2 === 0) {
+                // AESTHETIC BACKGROUND (200+ pieces)
                 data.targetPosition.set(
                     (Math.random() - 0.5) * 120,
                     (Math.random() - 0.5) * 80,
@@ -332,7 +332,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // THE REST (~335 pieces) - EXPLODE AND DISAPPEAR
                 data.tension = 0;        // Turn off spring
                 data.friction = 0.95;    // Slower continuous glide
-                data.velPosition.multiplyScalar(0.7); // Tamed blast velocity
+                data.velPosition.multiplyScalar(0.4); // Even more tamed blast velocity
                 data.vanish = true;
             }
         });
@@ -342,8 +342,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let clock = new THREE.Clock();
     let time = 0;
 
-    const repelRadius = 35;
-    const repelForce = 12;
+    const repelRadius = 20; // Tighter radius to affect a smaller area on hover
+    const repelForce = 2.5; // Even gentler push to preserve readability of foreground text
 
     function animate() {
         requestAnimationFrame(animate);
@@ -402,8 +402,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     data.velPosition.y += repelDir.y * pushFactor;
                     data.velPosition.z += repelDir.z * pushFactor;
 
-                    piece.rotation.x += repelDir.y * 0.4;
-                    piece.rotation.y += repelDir.x * 0.4;
+                    // Gentle rotation tickle instead of spinning wildly
+                    piece.rotation.x += repelDir.y * 0.08;
+                    piece.rotation.y += repelDir.x * 0.08;
                 }
             }
 
